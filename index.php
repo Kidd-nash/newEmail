@@ -30,6 +30,12 @@ switch ($uri) {
     case '/contact-submit';
         include_once('./src/contact-submit.php');
         break;
+    case '/register';
+        include_once('./src/register.php');
+        break;
+    case '/login';
+        include_once('./src/login.php');
+        break;
     default:
         include_once('./src/404.php');
 }
