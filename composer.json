@@ -1,0 +1,9 @@
+{
+    "name": "root/new-email",
+    "autoload": {
+        "psr-4": {
+            "Root\\NewEmail\\": "src/"
+        }
+    },
+    "require": {}
+}
