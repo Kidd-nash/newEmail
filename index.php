@@ -1,5 +1,8 @@
 <?php 
 
+$loader = require __DIR__ . '/vendor/autoload.php';
+$loader->addPsr4('Acme\\Test\\', __DIR__);
+
 $uri = strtok($_SERVER["REQUEST_URI"], '?');
 
 // $fullUri  = $_SERVER['REQUEST_URI'];
@@ -20,6 +23,12 @@ switch ($uri) {
         break;
     case '/new':
         include_once('./src/new.php');
+        break;
+    case '/contact';
+        include_once('./src/contact.php');
+        break;
+    case '/contact-submit';
+        include_once('./src/contact-submit.php');
         break;
     default:
         include_once('./src/404.php');
