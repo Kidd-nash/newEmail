@@ -47,6 +47,10 @@ a:hover, a:active {
     border: 2px solid rgb(0, 0, 255);
 }
 
+.post-content {
+    border: 1px dotted rgb(0, 0, 255);
+}
+
 .footer {
     border: 2px solid rgb(255, 0, 0);
 }
