@@ -1,5 +1,11 @@
 <?php
+session_start();
 
+$isLoggedIn = false;
+if (isset($_SESSION['userId'])) {
+ $isLoggedIn = true;
+ // include_once('redirect.php');
+} 
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,12 +23,17 @@
                 <h1>Header Text</h1>
             </div>
             <div class="header-signup">
+                <?php if (!$isLoggedIn): ?>
                 <a href="http://email.api:8080/register" target="_self">Register</a>
                 <a href="http://email.api:8080/login" target="_self">Log In</a>
+                <?php else: ?>
+                    <?= $_SESSION['username'] ?>
+                <?php endif; ?>
             </div>
         </div>
         <div class="content">
             <h2>Content</h2>
+            <!-- form for post / content -->
         </div>
         <div class="footer">
             <p>footer</p>

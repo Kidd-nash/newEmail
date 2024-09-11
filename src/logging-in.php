@@ -11,7 +11,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $userQuery = $db->prepare('SELECT * FROM email_users WHERE (username = :user_name_or_email OR email = :user_name_or_email) AND password = :hash_password');
 
-    $userQuery->execute(['user_name_or_email' => $user_name_or_email, 'hash_password' => $hash_password]);
+    $userQuery->execute([
+        'user_name_or_email' => $user_name_or_email,
+        'hash_password' => $hash_password
+    ]);
     
     $user = $userQuery->fetch(PDO::FETCH_ASSOC);
 
