@@ -45,6 +45,12 @@ switch ($uri) {
     case '/connection';
         include_once('./src/connection.php');
         break;
+    case '/autoload-php';
+        include_once('./vendor/autoload.php');
+        break;
+    case '/verify';
+        include_once('./src/verifying.php');
+        break;
     default:
         include_once('./src/404.php');
 }
