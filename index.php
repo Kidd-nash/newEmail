@@ -39,6 +39,9 @@ switch ($uri) {
     case '/registering';
         include_once('./src/registering.php');
         break;
+    case '/logging-in';
+        include_once('./src/logging-in.php');
+        break;
     case '/connection';
         include_once('./src/connection.php');
         break;
