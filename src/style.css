@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    border: 2px solid rgb(255, 255, 0);
+    display: flex;
+}
+
+.header-logo {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    width: 15%;
+}
+
+.header-text {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    width: 70%;
+}
+
+.header-signup {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    width: 15%;
+}
+
+a:link, a:visited {
+    background-color: rgb(115, 194, 251);
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5;
+  }
+  
+a:hover, a:active {
+  background-color: rgb(0, 128, 255);
+}
+
+.content {
+    border: 2px solid rgb(0, 0, 255);
+}
+
+.footer {
+    border: 2px solid rgb(255, 0, 0);
+}
