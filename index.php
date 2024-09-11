@@ -36,6 +36,12 @@ switch ($uri) {
     case '/login';
         include_once('./src/login.php');
         break;
+    case '/registering';
+        include_once('./src/registering.php');
+        break;
+    case '/connection';
+        include_once('./src/connection.php');
+        break;
     default:
         include_once('./src/404.php');
 }
