@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use Symfony\Component\HttpFoundation\Request;
 
 $loader = require __DIR__ . '/vendor/autoload.php';
 $loader->addPsr4('Acme\\Test\\', __DIR__);
@@ -8,7 +10,6 @@ $uri = strtok($_SERVER["REQUEST_URI"], '?');
 // $fullUri  = $_SERVER['REQUEST_URI'];
 // $uriElements = explode('?', $fullUri);
 // $uri = $uriElements[0];
-
 
 
 //c
@@ -50,6 +51,9 @@ switch ($uri) {
         break;
     case '/verify';
         include_once('./src/verifying.php');
+        break;
+    case '/posting';
+        include_once('./src/posting.php');
         break;
     default:
         include_once('./src/404.php');
