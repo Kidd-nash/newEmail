@@ -27,3 +27,5 @@ ob_start();
 
     }
 ob_end_clean();
+header("Location: http://email.api:8080/home");
+die();
