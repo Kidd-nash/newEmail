@@ -37,7 +37,7 @@ if (isset($_SESSION['userId'])) {
                 <p>You can post stuff in here, but you have to be logged in first</p>
             <?php else: ?>
                 <p>Post something?</p>
-                <form class="post-content" method="POST" action="/postings">
+                <form class="post-content" method="POST" action="/posting">
                     <label>Enter Post...</label>
                     <br>
                     <textarea name="content" rows="4" cols="50"></textarea>
