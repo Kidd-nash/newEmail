@@ -4,7 +4,7 @@
     $isLoggedIn = false;
     if (isset($_SESSION['userId'])) {
         $isLoggedIn = true;
-        $id_plus = $_SESSION['userId'] + 782;
+        $id_plus = $_SESSION['userId'];
     } else {
         $id_plus = 0; 
     }
@@ -41,11 +41,12 @@
             </div>
             <div class="header-signup">
                 <?php if (!$isLoggedIn): ?>
-                <a class="signup" href="http://email.api:8080/register" target="_self">Register</a>
-                <a class="signup" href="http://email.api:8080/login" target="_self">Log In</a>
+                <a class="signup" href="/register" target="_self">Register</a>
+                <a class="signup" href="/login" target="_self">Log In</a>
                 <?php else: ?>
                     <?= $_SESSION['username'] ?>
                     <p>, hey there.</p>
+                    <a href="/log-out">Log out</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -68,7 +69,7 @@
                                 echo '<p>' . $_SESSION['username'] . '</p>';
                                 echo '<p>' . $a_post['content'] . '</p>';
                                 echo '<p>' . $a_post['date_posted'] . '</p>';
-                                echo "<p><a href='edit.php?editId=" . $a_post["id"] . "'>Edit</a><p>";
+                                echo "<p><a href='http://email.api:8080/post-editing?editingId=" . $a_post["id"] . "'>Edit</a><p>";
                                 echo "<p><a href='http://email.api:8080/post-delete?deleteId=" . $a_post["id"] . "'>Delete</a><p>";
                             echo '</div>';
                         }
