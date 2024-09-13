@@ -3,14 +3,14 @@
 
     $isLoggedIn = false;
     if (isset($_SESSION['userId'])) {
-    $isLoggedIn = true;
-    } 
-    
-    if (isset($_SESSION['userId'])) {
+        $isLoggedIn = true;
         $id_plus = $_SESSION['userId'] + 782;
     } else {
         $id_plus = 0; 
     }
+
+    // if (isset($_SESSION['userId'])) {
+    
 
     $author_id = $id_plus;
     include_once('./src/connection.php');
@@ -69,7 +69,7 @@
                                 echo '<p>' . $a_post['content'] . '</p>';
                                 echo '<p>' . $a_post['date_posted'] . '</p>';
                                 echo "<p><a href='edit.php?editId=" . $a_post["id"] . "'>Edit</a><p>";
-                                echo "<p><a href='http://email.api:8080/post-delete" . $a_post["id"] . "'>Delete</a><p>";
+                                echo "<p><a href='http://email.api:8080/post-delete?deleteId=" . $a_post["id"] . "'>Delete</a><p>";
                             echo '</div>';
                         }
                     ?>
