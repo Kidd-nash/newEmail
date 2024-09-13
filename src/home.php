@@ -4,9 +4,13 @@
     $isLoggedIn = false;
     if (isset($_SESSION['userId'])) {
     $isLoggedIn = true;
-    // include_once('redirect.php');
     } 
-    $id_plus = $_SESSION['userId'] + 782;
+    
+    if (isset($_SESSION['userId'])) {
+        $id_plus = $_SESSION['userId'] + 782;
+    } else {
+        $id_plus = 0; 
+    }
 
     $author_id = $id_plus;
     include_once('./src/connection.php');
