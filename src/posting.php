@@ -9,7 +9,7 @@ ob_start();
         $isLoggedIn = true;
         } 
 
-        $id_plus = $_SESSION['userId'] + 782;
+        $id_plus = $_SESSION['userId'];
 
         // $hashed_id= hexdec(sha1($id_plus));
 
