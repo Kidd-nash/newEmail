@@ -14,9 +14,8 @@ ob_start();
         // $hashed_id= hexdec(sha1($id_plus));
 
         $content = $_POST['content'];
-        $author_id = $id_plush;
+        $author_id = $id_plus;
         // $date = $_POST['password'];
-
         // echo 'author_id is:' . $author_id ;
         
 

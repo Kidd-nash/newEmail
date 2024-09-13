@@ -55,6 +55,9 @@ switch ($uri) {
     case '/posting';
         include_once('./src/posting.php');
         break;
+    case '/post-delete';
+        include_once('./src/post-delete.php');
+        break;
     default:
         include_once('./src/404.php');
 }

@@ -29,7 +29,7 @@
     width: 15%;
 }
 
-a:link, a:visited {
+.signup:link, .signup:visited {
     background-color: rgb(115, 194, 251);
     color: white;
     padding: 14px 25px;
@@ -39,7 +39,7 @@ a:link, a:visited {
     border-radius: 5;
   }
   
-a:hover, a:active {
+.signup:hover, .signup:active {
   background-color: rgb(0, 128, 255);
 }
 
@@ -49,6 +49,10 @@ a:hover, a:active {
 
 .post-content {
     border: 1px dotted rgb(0, 0, 255);
+}
+
+.each_post {
+    border: 1px solid rgb(97, 192, 255);
 }
 
 .footer {
