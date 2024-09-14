@@ -3,16 +3,32 @@
     padding: 0;
 }
 
+body {
+    font-family: 'Space Mono', monospace;
+    color: rgb(4,12,36);
+    background-color: rgb(247, 247, 247);
+}
+
+.body-div{
+    border: 2px solid rgb(86,137,136);
+}
+
 .header {
-    border: 2px solid rgb(255, 255, 0);
     display: flex;
+    background-color: rgb(220, 234, 240);
+}
+
+.p-logo {
+    border: 1px solid rgb(252, 225, 109);
+    padding: 22px 17px;
+    margin: 15px 0px 15px 15px;
+    background-color: rgb(252, 225, 109);
 }
 
 .header-logo {
     display: flex;
-    flex-flow: column wrap;
-    align-items: center;
     width: 15%;
+    background-color: rgb(220, 234, 240);
 }
 
 .header-text {
@@ -20,19 +36,23 @@
     flex-flow: column wrap;
     align-items: center;
     width: 70%;
+    background-color: rgb(220, 234, 240);
 }
 
 .header-signup {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    width: 15%;
+    background-color: rgb(220, 234, 240);
 }
 
 .signup:link, .signup:visited {
     background-color: rgb(115, 194, 251);
+    border: 1px solid rgb(115, 194, 251);
+    border-radius: 5px;
     color: white;
-    padding: 14px 25px;
+    padding: 6px 12px;
+    margin: 0px 2px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -43,18 +63,51 @@
   background-color: rgb(0, 128, 255);
 }
 
+.content-posts {
+    background-color: rgb(247, 247, 247);
+    border: 2px solid rgb(86,137,136);
+    width: 70%;
+    margin: 0 0 0 15%;
+}
+
 .content {
-    border: 2px solid rgb(0, 0, 255);
+    background-color: rgb(236, 229, 222);
 }
 
 .post-content {
-    border: 1px dotted rgb(0, 0, 255);
+    /* border: 1px dotted rgb(0, 0, 255); */
+    padding: 8px 30px;
 }
 
 .each_post {
-    border: 1px solid rgb(97, 192, 255);
+    border: 2px solid rgb(97, 192, 255);
+    margin: 15px 5px;
+    padding: 10px 25px;
 }
 
 .footer {
-    border: 2px solid rgb(255, 0, 0);
+    background-color: rgb(220, 234, 240);
+}
+
+/* register form only */
+
+.sign-up-body {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.sign-up-form {
+    border: 3px solid rgb(86,137,136);
+    border-radius: 15px;
+    padding: 10px;
+    margin: 30px;
+    width: 30%;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.form-div {
+    padding: 15px;
 }
