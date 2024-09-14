@@ -12,7 +12,8 @@ use PHPMailer\PHPMailer\Exception;
 //Load Composer's autoloader
 // require 'vendor/autoload.php';
 
-function sendEmail($emailTo, $emailFrom, $subject, $content) {
+function sendEmail($emailTo, $emailFrom, $subject, $content)
+{
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
 
@@ -51,7 +52,4 @@ function sendEmail($emailTo, $emailFrom, $subject, $content) {
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
-
 }
-
-?>
