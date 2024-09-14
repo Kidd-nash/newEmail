@@ -30,5 +30,3 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 }
 ob_end_clean();
-// header("Location: http://localhost:8080/newCars/home.php");
-// die();
