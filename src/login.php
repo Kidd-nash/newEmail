@@ -1,10 +1,4 @@
 <?php
-//     session_start();
-
-//    if (isset($_SESSION['userId'])) {
-
-//     include_once('redirect.php');
-//    } else { }
 ?>
 <!DOCTYPE html>
 <html lang="en">
