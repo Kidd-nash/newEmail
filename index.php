@@ -74,8 +74,8 @@ switch ($uri) {
         include_once('./src/trials/trial.php');
         break;
     case '/submit';
-        // include_once('./src/trials/submit.php');
-        include_once('./src/trials/trial.php');
+        include_once('./src/trials/submit.php');
+        // include_once('./src/trials/trial.php');
         break;
     default:
         include_once('./src/404.php');
