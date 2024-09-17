@@ -6,7 +6,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     include_once('./src/connection.php');
 
     $id = $_POST["id"] ?? null;
-    $content = $_POST["content"] ?? null;
+    $content = $_POST["content"] . '- edited' ?? null;
     
     $userQuery = $db->prepare("UPDATE post_a_note SET content = :content WHERE id = :id");
     
