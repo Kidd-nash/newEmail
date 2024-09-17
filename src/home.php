@@ -51,7 +51,7 @@ $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
             <?php else: ?>
                 <?= $_SESSION['username'] ?>
                 <p>, hey there.</p>
-                <a href="/log-out">Log out</a>
+                <a class="signout" href="/log-out">Log out</a>
             <?php endif; ?>
         </div>
     </div>

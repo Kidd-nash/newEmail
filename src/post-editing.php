@@ -2,8 +2,6 @@
 
 include_once('./src/connection.php');
 
-echo 'editing page';
-
 $editingId = $_GET["editingId"] ?? null;
 
 echo "Editing Post id:" . $editingId;
@@ -19,7 +17,10 @@ $editing_post = $post["content"];
 ?>
 
 <html lang="en">
-    <head></head>
+    <head>
+        <title>Edit Page</title>
+        <link rel="stylesheet" href="src/style.css">
+    </head>
     <body>
         <?php if (isset($_SESSION['userName'])): ?>
             <p>Hi, <?php echo $_SESSION['userName'] ?>
