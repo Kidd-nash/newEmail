@@ -63,6 +63,23 @@ body {
   background-color: rgb(0, 128, 255);
 }
 
+.signout:link, .signout:visited {
+    background-color: rgb(252, 125, 125);
+    border: 1px solid rgb(252, 125, 125);
+    border-radius: 5px;
+    color: white;
+    padding: 6px 12px;
+    margin: 0px 2px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5;
+  }
+  
+.signout:hover, .signout:active {
+  background-color: rgb(241, 66, 66);
+}
+
 .content-posts {
     background-color: rgb(247, 247, 247);
     border: 2px solid rgb(86,137,136);
@@ -83,6 +100,8 @@ body {
     border: 2px solid rgb(97, 192, 255);
     margin: 15px 5px;
     padding: 10px 25px;
+    border-radius: 15px;
+    background-color: rgb(200, 230, 255)
 }
 
 .footer {
@@ -110,4 +129,13 @@ body {
 
 .form-div {
     padding: 15px;
+}
+
+.error-class {
+    color: red;
+}
+
+.message-error {
+    color: white;
+    background-color: red;
 }
