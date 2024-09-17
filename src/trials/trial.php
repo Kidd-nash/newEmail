@@ -52,13 +52,20 @@
             <button type="submit">Submit</button>
         </form>
         <script>
+
             function validateForm() {
                 var email = document.forms["sign-up-form"]["email"].value;
                 var userName = document.forms["sign-up-form"]["user-name"].value;
                 var emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
                 var userNamePattern = /^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/;
+
                 var emailErrorSpan = document.forms["sign-up-form"]["email-error"];
                 var userNameErrorSpan = document.forms["sign-up-form"]["username-error"];
+
+                let isValid = true;
+
+                // emailErrorSpan.innerHTML = "";
+                // userNameErrorSpan.innerHTML = "";
                 
                 if (!emailPattern.test(email)) {
                     // alert("Please enter a valid email.");
@@ -74,11 +81,14 @@
                 return true;
             }
 
-            document.forms["sign-up-form"].addEventListener('submit', function(e) {
+            document.getElementById("sign-up-form").addEventListener('submit', function(e) {
                 e.preventDefault();
-                var isValid = validateForm();
-                if (isValid) {
-                    document.forms["sign-up-form"].submit;
+                if (validateForm()) {
+                    // Remove error messages once form is valid
+                    document.getElementById("email-error").innerHTML = "";
+                    document.getElementById("username-error").innerHTML = "";
+                    // Submit form if validation passes
+                    e.target.submit();
                 }
             });
         </script>
