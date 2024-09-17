@@ -2,6 +2,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+
 $loader = require __DIR__ . '/vendor/autoload.php';
 $loader->addPsr4('Acme\\Test\\', __DIR__);
 
@@ -16,9 +17,24 @@ $uri = strtok($_SERVER["REQUEST_URI"], '?');
 //r
 //u
 //d
+use Root\NewEmail\Message;
+
+$message = new Message();
+// $message->echoHello();
+// die('test');
 
 
 switch ($uri) {
+    case '/message/list':
+        echo $message->doList();
+        break;
+    case '/message/create':
+        echo $message->doCreate();
+        break;
+    case '/message/submit':
+        echo $message->handleSubmit();
+        break;
+
     case '/home':
         include_once('./src/home.php');
         break;

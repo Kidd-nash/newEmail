@@ -96,7 +96,7 @@ body {
     padding: 8px 30px;
 }
 
-.each_post {
+.each-post {
     border: 2px solid rgb(97, 192, 255);
     margin: 15px 5px;
     padding: 10px 25px;
@@ -138,4 +138,15 @@ body {
 .message-error {
     color: white;
     background-color: red;
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+    border: 2px solid white;
+}
+
+.inner-dark-mode {
+    background-color: black;
+    color: white;
 }
