@@ -51,7 +51,7 @@
             </div>
             <button type="submit">Submit</button>
         </form>
-        <script>
+        <!-- <script>
 
             function validateForm() {
                 var email = document.forms["sign-up-form"]["email"].value;
@@ -91,7 +91,7 @@
                     e.target.submit();
                 }
             });
-        </script>
+        </script> -->
     </body>
 </html>
 
