@@ -62,7 +62,7 @@
                         echo '<p>' . $a_post['content'] . '</p>';
                         echo '<p>' . $a_post['date_posted'] . '</p>';
                         echo "<p><a href='http://email.api:8080/post-editing?editingId=" . $a_post["id"] . "'>Edit</a><p>";
-                        echo "<p><a href='http://email.api:8080/post-delete?deleteId=" . $a_post["id"] . "'>Delete</a><p>";
+                        echo "<p><a href='http://email.api:8080/class-post-delete?deleteId=" . $a_post["id"] . "'>Delete</a><p>";
                         echo '</div>';
                     }
                     ?>

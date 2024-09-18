@@ -101,7 +101,20 @@ class Post {
 
     public function deletingPost() 
     {
-        return "deleting";
+        ob_start();
+
+        $deleteId = $_GET["deleteId"] ?? null;
+
+        echo "Deleting Post id:" . $deleteId;
+
+        $userQuery = $this->connection->prepare("DELETE FROM post_a_note WHERE id = :deleteId");
+
+        $userQuery->execute(['deleteId' => $deleteId]);
+
+        ob_end_clean();
+
+        header("Location: http://email.api:8080/new-home");
+        die();
     }
 
 }
