@@ -42,6 +42,9 @@ switch ($uri) {
     case '/new-registering':
         echo $signup->submitRegistration();
         break;
+    case '/new-login':
+        include_once('./src/login-class.php');
+        break;
 
     
     case '/home':
