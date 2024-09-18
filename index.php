@@ -27,7 +27,10 @@ switch ($uri) {
     case '/posts/delete':
         echo $post->deletingPost();
         break;
-
+    
+    case '/new-home':
+        echo $post->listPost();
+        break;
     case '/home':
         include_once('./src/home.php');
         break;
