@@ -43,7 +43,7 @@
             <?php if (!$isLoggedIn): ?>
                 <p>You can post stuff in here, but you have to be logged in first</p>
             <?php else: ?>                
-                <form class="post-content" method="POST" action="/posting" id="content-form">
+                <form class="post-content" method="POST" action="/new-posting" id="content-form">
                     <p>Post something?</p>
                     <label>Enter Post...</label>
                     <br>
