@@ -21,8 +21,8 @@
         </div>
         <div class="header-signup" id="header-signup">
             <?php if (!$isLoggedIn): ?>
-                <a class="signup" href="/register" target="_self">Register</a>
-                <a class="signup" href="/login" target="_self">Log In</a>
+                <a class="signup" href="/new-register" target="_self">Register</a>
+                <a class="signup" href="/new-login" target="_self">Log In</a>
             <?php else: ?>
                 <?= $_SESSION['username'] ?>
                 <p>, hey there.</p>
