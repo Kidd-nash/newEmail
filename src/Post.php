@@ -1,10 +1,8 @@
 <?php
 
-// include_once('./src/connection.php');
-
 namespace Root\NewEmail;
 
-use \Pdo;
+use \PDO;
 
 class Post {
 
@@ -13,17 +11,17 @@ class Post {
     public function __construct()
     {
 
-                $hostname = 'db_postgres_lab'; //get host name
+                $hostname = 'db_postgres_lab'; 
 
-                $dbname = 'first'; // Set the database name
+                $dbname = 'first'; 
         
-                $username = 'pguser'; // Set the username with permissions to the database
+                $username = 'pguser'; 
         
-                $password = 'pgpwd'; // Set the password with permissions to the database
+                $password = 'pgpwd'; 
         
-                $dsn = "pgsql:host=$hostname;dbname=$dbname"; // Create the DSN (data source name) by combining the database type (PostgreSQL), hostname and dbname
+                $dsn = "pgsql:host=$hostname;dbname=$dbname"; 
         
-                $this->connection = new PDO($dsn, $username, $password); //Create PDO
+                $this->connection = new PDO($dsn, $username, $password); 
 
     }
 
@@ -58,18 +56,10 @@ class Post {
         ]);
 
         $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
-        // $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE author_id = :author_id');
 
-        // $postQuery->execute([
-        //     'author_id' => 798,
-        // ]);
         ob_start();
-        
-        // include_once(__DIR__ . '/home-class.php');
 
         include_once('./src/home-class.php');
-
-        // return "retrieving " . print_r($posts, true);
 
         return ob_get_clean();
     }
