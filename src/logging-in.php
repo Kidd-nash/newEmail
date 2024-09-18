@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['userId'] = $userId;
         $_SESSION['username'] = $user['username'];
         ob_end_clean();
-        header("Location: http://email.api:8080/new-home");
+        header("Location: http://email.api:8080/home");
         die();
     }
 }
