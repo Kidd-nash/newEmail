@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="src/style.css">
     </head>
     <body class="sign-up-body">
-        <form method="POST" action="/logging-in" class="sign-up-form">
+        <form method="POST" action="/new-loggingin" class="sign-up-form">
             <h2>Log In</h2>
             <div class="form-div">
                 <label>Email or Username:</label>
