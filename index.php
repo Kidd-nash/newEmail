@@ -10,8 +10,12 @@ $uri = strtok($_SERVER["REQUEST_URI"], '?');
 
 
 use Root\NewEmail\Post;
+use Root\NewEmail\Signup;
 
 $post = new Post();
+$signup = new Signup();
+
+
 
 
 switch ($uri) {
@@ -27,10 +31,19 @@ switch ($uri) {
     case '/posts/delete':
         echo $post->deletingPost();
         break;
+
     
     case '/new-home':
         echo $post->listPost();
         break;
+    case '/new-register':
+        include_once('./src/register-class.php');
+        break;
+    case '/new-registering':
+        echo $signup->submitRegistration();
+        break;
+
+    
     case '/home':
         include_once('./src/home.php');
         break;
