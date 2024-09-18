@@ -8,31 +8,24 @@ $loader->addPsr4('Acme\\Test\\', __DIR__);
 
 $uri = strtok($_SERVER["REQUEST_URI"], '?');
 
-// $fullUri  = $_SERVER['REQUEST_URI'];
-// $uriElements = explode('?', $fullUri);
-// $uri = $uriElements[0];
 
+use Root\NewEmail\Post;
 
-//c
-//r
-//u
-//d
-use Root\NewEmail\Message;
-
-$message = new Message();
-// $message->echoHello();
-// die('test');
+$post = new Post();
 
 
 switch ($uri) {
-    case '/message/list':
-        echo $message->doList();
+    case '/posts/create':
+        echo $post->createPost();
         break;
-    case '/message/create':
-        echo $message->doCreate();
+    case '/posts/retrieve':
+        echo $post->listPost();
         break;
-    case '/message/submit':
-        echo $message->handleSubmit();
+    case '/posts/edit':
+        echo $post->updatingPost();
+        break;
+    case '/posts/delete':
+        echo $post->deletingPost();
         break;
 
     case '/home':
@@ -41,55 +34,55 @@ switch ($uri) {
     case '/new':
         include_once('./src/new.php');
         break;
-    case '/contact';
+    case '/contact':
         include_once('./src/contact.php');
         break;
-    case '/contact-submit';
+    case '/contact-submit':
         include_once('./src/contact-submit.php');
         break;
-    case '/register';
+    case '/register':
         include_once('./src/register.php');
         break;
-    case '/login';
+    case '/login':
         include_once('./src/login.php');
         break;
-    case '/registering';
+    case '/registering':
         include_once('./src/registering.php');
         break;
-    case '/logging-in';
+    case '/logging-in':
         include_once('./src/logging-in.php');
         break;
-    case '/connection';
+    case '/connection':
         include_once('./src/connection.php');
         break;
-    case '/autoload-php';
+    case '/autoload-php':
         include_once('./vendor/autoload.php');
         break;
-    case '/verify';
+    case '/verify':
         include_once('./src/verifying.php');
         break;
-    case '/posting';
+    case '/posting':
         include_once('./src/posting.php');
         break;
-    case '/post-delete';
+    case '/post-delete':
         include_once('./src/post-delete.php');
         break;
-    case '/post-editing';
+    case '/post-editing':
         include_once('./src/post-editing.php');
         break;
-    case '/log-out';
+    case '/log-out':
         include_once('./src/logout.php');
         break;
-    case '/post-updating';
+    case '/post-updating':
         include_once('./src/post-updating.php');
         break;
-    case '/trials';
+    case '/trials':
         include_once('./src/trials/trials.php');
         break;
-    case '/trial';
+    case '/trial':
         include_once('./src/trials/trial.php');
         break;
-    case '/submit';
+    case '/submit':
         include_once('./src/trials/submit.php');
         // include_once('./src/trials/trial.php');
         break;
