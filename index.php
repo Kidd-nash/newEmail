@@ -19,12 +19,12 @@ $signup = new Signup();
 
 
 switch ($uri) {
-    case '/posts/create':
-        echo $post->createPost();
-        break;
-    case '/posts/retrieve':
-        echo $post->listPost();
-        break;
+    // case '/posts/create':
+    //     echo $post->createPost();
+    //     break;
+    // case '/posts/retrieve':
+    //     echo $post->listPost();
+    //     break;
     case '/posts/edit':
         echo $post->updatingPost();
         break;
@@ -44,6 +44,12 @@ switch ($uri) {
         break;
     case '/new-login':
         include_once('./src/login-class.php');
+        break;
+    case '/new-loggingin':
+        echo $signup->submitLogin();
+        break;
+    case '/new-posting':
+        echo $post->createPost();
         break;
 
     
