@@ -54,6 +54,12 @@ switch ($uri) {
     case '/class-post-delete':
         echo $post->deletingPost();
         break;
+    case '/class-post-editing':
+        echo $post->editingPost();
+        break;
+    case '/class-post-updating':
+        echo $post->updatingPost();
+        break;
 
     
     case '/home':
