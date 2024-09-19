@@ -94,9 +94,45 @@ class Post {
         return ob_get_clean();
     }
 
+    public function editingPost()
+    {
+        $editingId = $_GET["editingId"] ?? null;
+
+        echo "Editing Post id:" . $editingId;
+
+        $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE id = :editId');
+
+        $postQuery->execute(['editId' => $editingId]);
+
+        $post = $postQuery->fetch(PDO::FETCH_ASSOC);
+
+        $editing_post = $post["content"];
+
+        ob_start();
+
+        include_once("./src/edit-class.php");
+
+        return ob_get_clean();
+    }
+
     public function updatingPost() 
     {
-        return "updating";
+        session_start();
+        ob_start();
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST["id"] ?? null;
+            $content = $_POST["content"] . '- edited' ?? null;
+            
+            $userQuery = $this->connection->prepare("UPDATE post_a_note SET content = :content WHERE id = :id");
+            
+            $userQuery->execute(['content' => $content, 'id' => $id]);
+
+            $_SESSION['saved'] = true;
+
+        }
+        ob_end_clean();
+        header("Location: http://email.api:8080/new-home");
+        die();
     }
 
     public function deletingPost() 
