@@ -10,27 +10,58 @@ $uri = strtok($_SERVER["REQUEST_URI"], '?');
 
 
 use Root\NewEmail\Post;
+use Root\NewEmail\Signup;
 
 $post = new Post();
+$signup = new Signup();
+
+
 
 
 switch ($uri) {
-    case '/posts/create':
-        echo $post->createPost();
-        break;
-    case '/posts/retrieve':
-        echo $post->listPost();
-        break;
+    // case '/posts/create':
+    //     echo $post->createPost();
+    //     break;
+    // case '/posts/retrieve':
+    //     echo $post->listPost();
+    //     break;
     case '/posts/edit':
         echo $post->updatingPost();
         break;
     case '/posts/delete':
         echo $post->deletingPost();
         break;
+
     
     case '/new-home':
         echo $post->listPost();
         break;
+    case '/new-register':
+        include_once('./src/register-class.php');
+        break;
+    case '/new-registering':
+        echo $signup->submitRegistration();
+        break;
+    case '/new-login':
+        include_once('./src/login-class.php');
+        break;
+    case '/new-loggingin':
+        echo $signup->submitLogin();
+        break;
+    case '/new-posting':
+        echo $post->createPost();
+        break;
+    case '/class-post-delete':
+        echo $post->deletingPost();
+        break;
+    case '/class-post-editing':
+        echo $post->editingPost();
+        break;
+    case '/class-post-updating':
+        echo $post->updatingPost();
+        break;
+
+    
     case '/home':
         include_once('./src/home.php');
         break;

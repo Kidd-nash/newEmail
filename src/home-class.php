@@ -21,8 +21,8 @@
         </div>
         <div class="header-signup" id="header-signup">
             <?php if (!$isLoggedIn): ?>
-                <a class="signup" href="/register" target="_self">Register</a>
-                <a class="signup" href="/login" target="_self">Log In</a>
+                <a class="signup" href="/new-register" target="_self">Register</a>
+                <a class="signup" href="/new-login" target="_self">Log In</a>
             <?php else: ?>
                 <?= $_SESSION['username'] ?>
                 <p>, hey there.</p>
@@ -43,7 +43,7 @@
             <?php if (!$isLoggedIn): ?>
                 <p>You can post stuff in here, but you have to be logged in first</p>
             <?php else: ?>                
-                <form class="post-content" method="POST" action="/posting" id="content-form">
+                <form class="post-content" method="POST" action="/new-posting" id="content-form">
                     <p>Post something?</p>
                     <label>Enter Post...</label>
                     <br>
@@ -61,8 +61,8 @@
                         echo '<p>' . $_SESSION['username'] . '</p>';
                         echo '<p>' . $a_post['content'] . '</p>';
                         echo '<p>' . $a_post['date_posted'] . '</p>';
-                        echo "<p><a href='http://email.api:8080/post-editing?editingId=" . $a_post["id"] . "'>Edit</a><p>";
-                        echo "<p><a href='http://email.api:8080/post-delete?deleteId=" . $a_post["id"] . "'>Delete</a><p>";
+                        echo "<p><a href='http://email.api:8080/class-post-editing?editingId=" . $a_post["id"] . "'>Edit</a><p>";
+                        echo "<p><a href='http://email.api:8080/class-post-delete?deleteId=" . $a_post["id"] . "'>Delete</a><p>";
                         echo '</div>';
                     }
                     ?>

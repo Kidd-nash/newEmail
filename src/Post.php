@@ -1,10 +1,8 @@
 <?php
 
-// include_once('./src/connection.php');
-
 namespace Root\NewEmail;
 
-use \Pdo;
+use \PDO;
 
 class Post {
 
@@ -13,23 +11,53 @@ class Post {
     public function __construct()
     {
 
-                $hostname = 'db_postgres_lab'; //get host name
+                $hostname = 'db_postgres_lab'; 
 
-                $dbname = 'first'; // Set the database name
+                $dbname = 'first'; 
         
-                $username = 'pguser'; // Set the username with permissions to the database
+                $username = 'pguser'; 
         
-                $password = 'pgpwd'; // Set the password with permissions to the database
+                $password = 'pgpwd'; 
         
-                $dsn = "pgsql:host=$hostname;dbname=$dbname"; // Create the DSN (data source name) by combining the database type (PostgreSQL), hostname and dbname
+                $dsn = "pgsql:host=$hostname;dbname=$dbname"; 
         
-                $this->connection = new PDO($dsn, $username, $password); //Create PDO
+                $this->connection = new PDO($dsn, $username, $password); 
 
     }
 
     public function createPost() 
     {
-        return "creating";
+        session_start();
+
+        ob_start();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            session_start();
+
+            $isLoggedIn = false;
+            if (isset($_SESSION['userId'])) {
+                $isLoggedIn = true;
+            } else {
+                $_SESSION['accessDeniedError'];
+                ob_end_clean();
+                header("Location: http://email.api:8080/new-home");
+                die();
+            }
+
+            $id_plus = $_SESSION['userId'];
+
+            $content = $_POST['content'];
+            $author_id = $id_plus;
+
+            $userQuery = $this->connection->prepare('INSERT INTO post_a_note (content, date_posted, author_id) VALUES (:content, :date_posted, :author_id)');
+            $userQuery->execute(['content' => $content, 'date_posted' => date('Y-m-d'), 'author_id' => $author_id]);
+
+            $_SESSION['saved'] = true;
+        }
+        ob_end_clean();
+
+        header("Location: http://email.api:8080/new-home");
+        die();
     }
 
     public function listPost()
@@ -58,30 +86,71 @@ class Post {
         ]);
 
         $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
-        // $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE author_id = :author_id');
 
-        // $postQuery->execute([
-        //     'author_id' => 798,
-        // ]);
         ob_start();
-        
-        // include_once(__DIR__ . '/home-class.php');
 
         include_once('./src/home-class.php');
 
-        // return "retrieving " . print_r($posts, true);
+        return ob_get_clean();
+    }
+
+    public function editingPost()
+    {
+        $editingId = $_GET["editingId"] ?? null;
+
+        echo "Editing Post id:" . $editingId;
+
+        $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE id = :editId');
+
+        $postQuery->execute(['editId' => $editingId]);
+
+        $post = $postQuery->fetch(PDO::FETCH_ASSOC);
+
+        $editing_post = $post["content"];
+
+        ob_start();
+
+        include_once("./src/edit-class.php");
 
         return ob_get_clean();
     }
 
     public function updatingPost() 
     {
-        return "updating";
+        session_start();
+        ob_start();
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_POST["id"] ?? null;
+            $content = $_POST["content"] . '- edited' ?? null;
+            
+            $userQuery = $this->connection->prepare("UPDATE post_a_note SET content = :content WHERE id = :id");
+            
+            $userQuery->execute(['content' => $content, 'id' => $id]);
+
+            $_SESSION['saved'] = true;
+
+        }
+        ob_end_clean();
+        header("Location: http://email.api:8080/new-home");
+        die();
     }
 
     public function deletingPost() 
     {
-        return "deleting";
+        ob_start();
+
+        $deleteId = $_GET["deleteId"] ?? null;
+
+        echo "Deleting Post id:" . $deleteId;
+
+        $userQuery = $this->connection->prepare("DELETE FROM post_a_note WHERE id = :deleteId");
+
+        $userQuery->execute(['deleteId' => $deleteId]);
+
+        ob_end_clean();
+
+        header("Location: http://email.api:8080/new-home");
+        die();
     }
 
 }
