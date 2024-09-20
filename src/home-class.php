@@ -26,7 +26,7 @@
             <?php else: ?>
                 <?= $_SESSION['username'] ?>
                 <p>, hey there.</p>
-                <a class="signout" href="/log-out">Log out</a>
+                <a class="signout" href="/new-home">Log out</a>
                 <button onclick="darkMode()">
                     <img src="bulb.svg" />
                 </button>
