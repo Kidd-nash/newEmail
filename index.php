@@ -11,9 +11,11 @@ $uri = strtok($_SERVER["REQUEST_URI"], '?');
 
 use Root\NewEmail\Post;
 use Root\NewEmail\Signup;
+use Root\NewEmail\Account;
 
 $post = new Post();
 $signup = new Signup();
+$account = new Account();
 
 
 
@@ -60,6 +62,19 @@ switch ($uri) {
     case '/class-post-updating':
         echo $post->updatingPost();
         break;
+    case '/forgot-password':
+        include_once('./src/forgot-password.php');
+        break;
+    case '/email-change-password':
+        echo $account->changePasswordEmail();
+        break;
+    case '/change-password':
+        echo $account->changePasswordUpdate();
+        break;
+    case '/change-password-updating':
+        echo $account->changePasswordUpdating();
+        break;
+    
 
     
     case '/home':
