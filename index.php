@@ -74,6 +74,9 @@ switch ($uri) {
     case '/change-password-updating':
         echo $account->changePasswordUpdating();
         break;
+    case '/new-logout':
+        include_once('./src/new-logout.php');
+        break;
     
 
     
