@@ -34,6 +34,7 @@ class Account {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $email = $_POST['email']; 
+            $dateRequest = date_create('now');
             
             $userQuery = $this->connection->prepare('SELECT * FROM email_users WHERE email = :email');
 
@@ -56,13 +57,14 @@ class Account {
             $hashed = md5($email . date('Y-m-d h:i:s'));
 
             $secondQuery = $this->connection->prepare(
-                'INSERT INTO change_pass_users (email, user_id, hashed) VALUES (:email, :user_id, :hashed)'
+                'INSERT INTO change_pass_users (email, user_id, hashed, date) VALUES (:email, :user_id, :hashed, :date)'
             );
 
             $secondQuery->execute([
                 'email' => $email,
                 'user_id' => $userId,
-                'hashed' => $hashed
+                'hashed' => $hashed,
+                'date' => $dateRequest->format('Y-m-d')
             ]);
 
         }
@@ -127,19 +129,31 @@ class Account {
     {
         session_start();
 
-
         $hash = $_GET['hsah'];
         
         $queryGetId = $this->connection->prepare(
             'SELECT * FROM change_pass_users WHERE hashed = :hashed'
         );
 
+        $dateToday = date_create('now');
+
         $queryGetId->execute([
             'hashed' => $hash
         ]);
-        // result = fetch assoc
 
         $user = $queryGetId->fetch(PDO::FETCH_ASSOC);
+
+        $date = $user['date'];
+
+        $dateCompare = date_diff(date_create($date), $dateToday);
+
+        $dateDifference = intval($dateCompare->format('%a'));
+
+        if ($dateDifference > 1) {
+            ob_start();
+                include_once('./src/change-pass-error.php');
+            return ob_get_clean();
+        }
 
         $userId = $user['user_id'] ?? null;
 
@@ -148,27 +162,38 @@ class Account {
         }
         
         include_once('change-password.php');
+
+
     }
 
     public function changePasswordUpdating() 
     {
         session_start();
-        ob_start();
         if($_SERVER['REQUEST_METHOD'] == 'POST') { 
             // include_once('./src/change-password.php');
 
-        $hashed = md5($_POST['password']);
 
-        $changePassQuery = $this->connection->prepare(
-                'UPDATE email_users SET password = :password WHERE id = :id'
-            );
-        }
+                if (empty($_POST['password'])) {
+                    ob_start();
+                    $emptyPasswordError = true;
+                    // includ change-password template/html
+                    return ob_get_clean();
+                }
 
-        $changePassQuery->execute([
-            'password' => $hashed,
-            'id' => $_SESSION['userId']
-        ]);
+                $hashed = md5($_POST['password']);
 
+                $changePassQuery = $this->connection->prepare(
+                    'UPDATE email_users SET password = :password WHERE id = :id'
+                );
+
+                $changePassQuery->execute([
+                    'password' => $hashed,
+                    'id' => $_SESSION['userId']
+                ]);
+                ob_start();
+                // success template
+                return ob_get_clean();
+            }
 
     }
 
@@ -202,4 +227,21 @@ class Account {
 //   execute->('user_id' => $_session['userId']
 
 
+
+// add column for date, 
+// email submiited on forgot password, 
+//  in hash table, set date = today
+// $date = date('Y-m-d')  , sept 20
+
+// change password form
+// check that date is not older than 1 day  sept 24 click link => invvalid
+// check validity of link
+
 }
+
+// $date = date_create("2024-09-21");
+// $dateTwo = date_create("2024-09-23");
+// $dateDiff = date_diff($date, $dateTwo);
+// $difference = intval($dateDiff->format('%a'));
+
+// echo $difference;
