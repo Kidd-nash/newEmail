@@ -62,7 +62,6 @@ class Post {
 
     public function listPost()
     {
-
         session_start();
 
         $isLoggedIn = false;

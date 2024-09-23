@@ -15,6 +15,7 @@
                 <label>Password:</label>
                 <input type="text" name="password" placeholder="Insert Password..."/><br>
             </div>
+            <a class="forgot-password" href="/forgot-password">Forgot Password?</a>
             <button type="submit">Submit</button>
         </form>
     </body>
