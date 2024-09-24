@@ -73,7 +73,10 @@
                         echo "<p><a href='http://email.api:8080/class-post-delete?deleteId=" . $a_post["id"] . "'>Delete</a><p>";
 
                         foreach($a_post['comments'] as $comment) {
-                            echo 'comment: ' . $comment['content'] . ' id: ' . $comment['id'] . '<br>' . 'date commented: ' . $comment['date_posted'] . '<br>'; 
+                            echo '<div class="each-comment">';
+                                echo '<p>' . $comment['content'] . '| by: ' . $comment['author_id'] . '</p>';
+                                echo '<p>on: ' . $comment['date_posted'] . '</p>';
+                            echo '</div>';
                         }
 
                         include('./src/comment-tpl.php');
