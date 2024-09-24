@@ -171,32 +171,33 @@ class Post {
         $author_id = $id_plus;
         
         $query = '
-SELECT
-    p.id AS id,
-    p.content AS content,
-    p.date_posted AS date_posted,
-    c.comment_content AS comment_content,
-    c.id AS comment_id
-FROM
-    post_a_note p
-LEFT JOIN
-    post_a_note_comments c
-ON
-    (p.id = c.post_id)
-ORDER BY p.id DESC
-LIMIT 10
-;
+            SELECT
+                p.id AS id,
+                p.content AS content,
+                p.date_posted AS date_posted,
+                c.comment_content AS comment_content,
+                c.id AS comment_id,
+                c.date_posted AS date_posted
+            FROM
+                post_a_note p
+            LEFT JOIN
+                post_a_note_comments c
+            ON
+                (p.id = c.post_id)
+            ORDER BY p.id DESC
+            LIMIT 10
+            ;
         ';
 
         $postQuery = $this->connection->prepare($query);
 
 
-$array = [];
+        $array = [];
 
-$array[] = ['apple'];
+        $array[] = ['apple'];
 
 
-$array = [];
+        $array = [];
 
 
         $postQuery->execute([
@@ -217,7 +218,8 @@ $array = [];
             if (!empty($post['comment_id'])) {
                 $formattedPosts[$post['id']]['comments'][] = [
                     'id' => $post['comment_id'],
-                    'content' => $post['comment_content']
+                    'content' => $post['comment_content'],
+                    'date_posted' => $post['date_posted']
                 ];
             }
 
