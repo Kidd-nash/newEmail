@@ -55,34 +55,9 @@
                     <p>Saved succesfully</p>
                 <?php endif; ?>
                 <div class="posts" id="content-posts">
-<!-- 
                     <?php foreach($formattedPosts as $a_post): ?>
-                        <?php include('...'); ?>
-                    <?php endforeach; ?> -->
-
-                    <?php
-                    foreach ($formattedPosts as $a_post) {
-
-
-
-                        echo '<div class="each-post">';
-                        echo '<p>' . $_SESSION['username'] . '</p>';
-                        echo '<p>' . $a_post['content'] . '</p>';
-                        echo '<p>' . $a_post['date_posted'] . '</p>';
-                        echo "<p><a href='http://email.api:8080/class-post-editing?editingId=" . $a_post["id"] . "'>Edit</a><p>";
-                        echo "<p><a href='http://email.api:8080/class-post-delete?deleteId=" . $a_post["id"] . "'>Delete</a><p>";
-
-                        foreach($a_post['comments'] as $comment) {
-                            echo '<div class="each-comment">';
-                                echo '<p>' . $comment['content'] . '| by: ' . $comment['author_id'] . '</p>';
-                                echo '<p>on: ' . $comment['date_posted'] . '</p>';
-                            echo '</div>';
-                        }
-
-                        include('./src/comment-tpl.php');
-                        echo '</div>';
-                    }
-                    ?>
+                        <?php include('./src/all-post-tpl.php'); ?>
+                    <?php endforeach; ?>
                 </div>
             <?php endif; ?>
         </div>
