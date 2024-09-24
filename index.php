@@ -77,6 +77,12 @@ switch ($uri) {
     case '/new-logout':
         include_once('./src/new-logout.php');
         break;
+    case '/all-posts':
+        echo $post->allPosts();
+        break;
+    case '/comment-post':
+        echo $post->commentPost();
+        break;
     
 
     
