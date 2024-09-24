@@ -177,7 +177,8 @@ class Post {
                 p.date_posted AS date_posted,
                 c.comment_content AS comment_content,
                 c.id AS comment_id,
-                c.date_posted AS date_posted
+                c.date_posted AS date_posted,
+                c.author_id AS author_id
             FROM
                 post_a_note p
             LEFT JOIN
@@ -219,7 +220,8 @@ class Post {
                 $formattedPosts[$post['id']]['comments'][] = [
                     'id' => $post['comment_id'],
                     'content' => $post['comment_content'],
-                    'date_posted' => $post['date_posted']
+                    'date_posted' => $post['date_posted'],
+                    'author_id' => $post['author_id']
                 ];
             }
 
