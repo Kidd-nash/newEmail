@@ -18,6 +18,7 @@
         </div>
         <div class="header-text" id="header-text">
             <h1>Email Posts</h1>
+            <a class="menu" href="/all-posts">Menu</a>
         </div>
         <div class="header-signup" id="header-signup">
             <?php if (!$isLoggedIn): ?>
