@@ -104,6 +104,12 @@ body {
     background-color: rgb(200, 230, 255)
 }
 
+.each-comment {
+    border: 1px solid rgb(47, 142, 205);
+    margin: 0 0 5px 0;
+    background-color: rgb(255, 255, 255);
+}
+
 .footer {
     background-color: rgb(220, 234, 240);
 }
