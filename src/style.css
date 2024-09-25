@@ -122,6 +122,12 @@ body {
     align-items: center;
 }
 
+.form-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1s linear;
+}
+
 .sign-up-form {
     border: 3px solid rgb(86,137,136);
     border-radius: 15px;
