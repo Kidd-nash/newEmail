@@ -54,8 +54,21 @@
                 <?php if (isset($isSaved)): ?>
                     <p>Saved succesfully</p>
                 <?php endif; ?>
+                <script>
+        function myFunction(elementId) {
+            var x = document.getElementById(elementId);
+
+            console.log()
+            if (x.style.maxHeight == 0) {
+            x.style.maxHeight = "500px";
+            } else {
+            x.style.maxHeight = 0;
+            }
+        }
+    </script>
                 <div class="posts" id="content-posts">
                     <?php foreach($formattedPosts as $a_post): ?>
+                        <?php $formId = 'temp-form-' . $a_post['id']; ?>
                         <?php include('./src/all-post-tpl.php'); ?>
                     <?php endforeach; ?>
                 </div>

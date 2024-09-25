@@ -10,7 +10,9 @@
             <p>on: <?php echo $comment['date_posted'] ?></p>
         </div>
     <?php endforeach; ?>
-    <form method="POST" action="/comment-post" class="sign-up-form" id="sign-up-form">
+    <button onclick="myFunction('<?php echo $formId ?>')">Comment</button>
+    <div id="<?php echo $formId ?>" class="form-wrapper">
+    <form method="POST" action="/comment-post" class="sign-up-form" id="<?php //echo $formId ?>">
         <h2>Make a comment</h2>
         <div class="form-div">
             <p class="message-error" id="comment-error"></p>
@@ -22,4 +24,5 @@
         </div>
         <button type="submit">Submit</button>
     </form>
+    </div>
 </div>

@@ -25,3 +25,12 @@ function darkMode() {
 
     footerPart.classList.toggle("dark-mode");    
 }
+
+// function myFunction() {
+//     var x = document.getElementById("sign-up-form");
+//     if (x.style.display === "none") {
+//       x.style.display = "block";
+//     } else {
+//       x.style.display = "none";
+//     }
+//   }
