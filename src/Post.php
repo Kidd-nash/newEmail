@@ -169,7 +169,7 @@ class Post {
         }
 
         $author_id = $id_plus;
-        
+        // TODO: SELECT upvotes
         $query = '
             SELECT
                 p.id AS id,
@@ -291,6 +291,8 @@ class Post {
         die();
 
     }
+
+    // new function for upvote
 
 }
 // post_a_note
