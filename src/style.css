@@ -104,6 +104,10 @@ body {
     background-color: rgb(200, 230, 255)
 }
 
+.edit-delete {
+    display: inline;
+}
+
 .each-comment {
     border: 1px solid rgb(47, 142, 205);
     margin: 0 0 5px 0;

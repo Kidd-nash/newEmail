@@ -97,6 +97,8 @@ class Post {
     {
         $editingId = $_GET["editingId"] ?? null;
 
+        // $editingId = (int) $editingId;
+
         echo "Editing Post id:" . $editingId;
 
         $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE id = :editId');
@@ -175,6 +177,8 @@ class Post {
                 p.id AS id,
                 p.content AS content,
                 p.date_posted AS date_posted,
+                p.upvotes AS upvotes,
+                p.author_id AS author_id,
                 c.comment_content AS comment_content,
                 c.id AS comment_id,
                 c.date_posted AS date_posted,
@@ -228,7 +232,22 @@ class Post {
             $formattedPosts[$post['id']]['content'] = $post['content'];
             $formattedPosts[$post['id']]['id'] = $post['id'];
             $formattedPosts[$post['id']]['date_posted'] = $post['date_posted'];
-            
+            $formattedPosts[$post['id']]['upvotes'] = $post['upvotes'];
+            $formattedPosts[$post['id']]['author_id'] = $post['author_id'];
+
+            var_dump($post['author_id']);
+
+            // $selectAuthorQuery = $this->connection->prepare(
+            //     'SELECT * FROM email_users WHERE id = :id'
+            // );
+
+            // $selectAuthorQuery->execute([
+            //     'id' => $post['id']
+            // ]);
+
+            // $user = $selectAuthorQuery->fetch(PDO::FETCH_ASSOC);
+
+            // var_dump($user);
 
         }
 
@@ -293,6 +312,182 @@ class Post {
     }
 
     // new function for upvote
+    // public function upVote() {
+    // // select by $_POST['post_id'], select upvote, add one
+    // $upvoteId = $_GET["upvotingId"] ?? null;
+
+    // // echo 'upvoting: ' . $upvoteId;
+
+    // $getPostQuery = $this->connection->prepare(
+    //     'SELECT * FROM post_a_note WHERE id = :id'
+    // );
+
+    // $getPostQuery->execute([
+    //     'id' => $upvoteId
+    // ]);
+
+    // $post = $getPostQuery->fetch(PDO::FETCH_ASSOC);
+
+    // // var_dump($post);
+
+    // // echo $post['upvotes'];
+
+    // // $currentUpvote = $post['upvotes'];
+
+    // // $addedAnUpvote = $currentUpvote + 1 ;
+
+    // // echo 'added' . $addedAnUpvote;
+
+    // $updatePostQuery = $this->connection->prepare(
+    //     'UPDATE post_a_note SET upvotes = :upvotes WHERE id = :id'
+    // );
+
+    // $updatePostQuery->execute([
+    //     'upvotes' => $post['upvotes'] + 1,
+    //     'id' => $upvoteId
+    // ]);
+
+    // return $post['upvotes'] + 1;
+    
+    // }
+
+    // public function upVoting() {
+
+    //     session_start();
+
+    //     $isLoggedIn = false;
+    //     if (isset($_SESSION['userId'])) {
+    //         $isLoggedIn = true;
+    //     } else {
+    //         $_SESSION['accessDeniedError'];
+    //     }
+
+    //     $upvoteId = $_GET["upvoteId"] ?? null;
+    //     echo 'upvoteId: ' . $upvoteId;
+    //     $userId = $_SESSION['userId'] ?? null;
+    //     echo 'user: ' . $userId;
+
+    //     $selectUserQuery = $this->connection->prepare(
+    //         'SELECT FROM user_like_post WHERE userid = :userid AND postid = :postid'
+    //     );
+
+    //     $selectUserQuery->execute([
+    //         'userid' => $userId,
+    //         'postid' => $upvoteId
+    //     ]);
+
+    //     $accLike = $selectUserQuery->fetch(PDO::FETCH_ASSOC);
+
+    //     if (!isset($accLike['postid'])) { //insert works
+    //         $userLikeQuery = $this->connection->prepare(
+    //             'INSERT INTO user_like_post ( userid, postid ) VALUES ( :userid, :postid )' 
+    //         );
+
+    //         $userLikeQuery->execute([
+    //             'userid' => $userId,
+    //             'postid' => $upvoteId
+    //         ]);
+    //     } else {
+    //         echo "you have already liked this post";
+    //     }
+
+    //     //THE PART BELOW WORKS, displaying the upvotes on a post
+
+    //     // $getPostCount = $this->connection->prepare(
+    //     //     'SELECT COUNT(*) FROM user_like_post WHERE postId = :postId'
+    //     // );
+
+    //     // $getPostCount->execute([
+    //     //     'postId' => $upvoteId
+    //     // ]);
+
+    //     // $likeCount = $getPostCount->fetch(PDO::FETCH_ASSOC);
+
+    //     // var_dump($likeCount);
+    //     // var_dump displays = upvoteId: 29user: 788array(1) { ["count"]=> int(4) }
+
+    //     // echo 'like count:' . $likeCount['count'] . 'on post:' . $upvoteId;
+
+
+    // }
+
+    public function upVoting() 
+    {
+        session_start();
+    
+        if (!isset($_SESSION['userId'])) {
+            echo "Access Denied: You must be logged in to upvote.";
+            return;
+        }
+    
+        $userId = $_SESSION['userId'];
+        $upvoteId = $_GET['upvoteId'] ?? null;
+    
+        if ($upvoteId === null) {
+            echo "Invalid post ID.";
+            return;
+        }
+    
+        // echo 'upvoteId: ' . $upvoteId;
+        // echo 'user: ' . $userId;
+    
+        $selectUserQuery = $this->connection->prepare(
+            'SELECT * FROM user_like_post WHERE userid = :userid AND postid = :postid'
+        );
+    
+        $selectUserQuery->execute([
+            'userid' => $userId,
+            'postid' => $upvoteId
+        ]);
+    
+        $accountLiked = $selectUserQuery->fetch(PDO::FETCH_ASSOC);
+    
+        if (!$accountLiked) {
+            $userLikeQuery = $this->connection->prepare(
+                'INSERT INTO user_like_post (userid, postid) VALUES (:userid, :postid)'
+            );
+    
+            $userLikeQuery->execute([
+                'userid' => $userId,
+                'postid' => $upvoteId
+            ]);
+    
+            // echo "Post liked!";
+            $isLiked = true;
+        } else {
+            // echo "You have already liked this post.";
+            $isAlreadyLiked = true;
+        }
+
+        $getPostCount = $this->connection->prepare(
+            'SELECT COUNT(*) FROM user_like_post WHERE postId = :postId'
+        );
+
+        $getPostCount->execute([
+            'postId' => $upvoteId
+        ]);
+
+        $likeCount = $getPostCount->fetch(PDO::FETCH_ASSOC);
+
+        // var_dump($likeCount);
+        // var_dump displays = upvoteId: 29user: 788array(1) { ["count"]=> int(4) }
+
+        // echo 'like count:' . $likeCount['count'] . 'on post:' . $upvoteId;
+
+        //move update only when changes
+
+        $updatePostQuery = $this->connection->prepare(
+            'UPDATE post_a_note SET upvotes = :upvotes WHERE id = :id'
+        );
+    
+        $updatePostQuery->execute([
+            'upvotes' => $likeCount['count'],
+            'id' => $upvoteId
+        ]);
+
+        return $likeCount['count'];
+    }
+
 
 }
 // post_a_note

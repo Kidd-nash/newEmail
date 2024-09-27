@@ -62,6 +62,12 @@ switch ($uri) {
     case '/class-post-updating':
         echo $post->updatingPost();
         break;
+    // case '/class-post-upvoting':
+    //     echo $post->upVote();
+    //     break;
+    case '/class-post-upvote':
+        echo $post->upVoting();
+        break;
     case '/forgot-password':
         include_once('./src/forgot-password.php');
         break;
