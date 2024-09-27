@@ -1,13 +1,19 @@
 <div class="each-post">
-    <p><?php echo $_SESSION['username'] ?></p>
+    <p>Author ID:<?php echo $a_post['author_id'] ?></p>
     <p><?php echo $a_post['content'] ?></p>
     <p><?php echo $a_post['date_posted'] ?></p>
-    <p><a href='http://email.api:8080/class-post-upvoting?upvotingId=<?php echo $a_post["id"] ?>'>Upvote</a></p>
-    <p>Upvotes: <?php echo $a_post['upvotes'] ?></p>
-    <button type="button" onclick="likeClick('<?php echo $upVoteId ?>')">Like</button>
-    <p>Likes: <a id="<?php echo $upVoteId ?>">0</a></p>
-    <p><a href='http://email.api:8080/class-post-editing?editingId=<?php echo $a_post["id"] ?>'>Edit</a></p>
-    <p><a href='http://email.api:8080/class-post-delete?deleteId=<?php echo $a_post["id"] ?>'>Delete</a></p>
+    <!-- <p><a href='http://email.api:8080/class-post-upvote?upvoteId=<?php echo $a_post["id"]?>'>Upvote</a><p> -->
+    <button type="button" onclick="likeClick('<?php echo $upVoteId ?>', <?php echo $a_post['id'] ?>)"><img src="thumbs-up.svg" /></button>
+    <!-- <button type="button" onclick="likeClick('<?php echo $upVoteId ?>', <?php echo $a_post['id'] ?>)">Like</button> -->
+    <span>Likes: <a id="<?php echo $upVoteId ?>"><?php echo $a_post['upvotes'] ?></a></span>
+    <?php if (isset($isLiked)): ?>
+        <p>You liked this post</p>
+    <?php endif; ?>
+    <?php if (isset($isAlreadyLiked)): ?>
+        <p>You have already liked this post</p>
+    <?php endif; ?>
+    <span><a href='http://email.api:8080/class-post-editing?editingId=<?php echo $a_post["id"] ?>'><img src="edit.svg" /></a></span>
+    <span><a href='http://email.api:8080/class-post-delete?deleteId=<?php echo $a_post["id"] ?>'><img src="delete.svg" /></a></span>
     <?php foreach ($a_post['comments'] as $comment): ?>
         <div class="each-comment">
             <p><?php echo $comment['content'] ?> | by: <?php echo $comment['author_id'] ?></p>
