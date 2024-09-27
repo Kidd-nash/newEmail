@@ -68,13 +68,16 @@
                     
                     var clicks = 0;
 
-                    function likeClick(elementId) {
-                            // TODO: replace with fetch
+                    async function upVotePost(postId) {
+                        const response = await fetch('http://email.api:8080/class-post-upvote?upvoteId=' + postId);
 
+                        return await response.text();
+                    }
 
-                        console.log('test');
-                        clicks += 1;
-                        document.getElementById(elementId).innerHTML = clicks;
+                    function likeClick(elementId, postId) {
+                        upVotePost(postId).then(upVotes => {
+                            document.getElementById(elementId).innerHTML = upVotes;
+                        });
                     };
     
                 </script>
