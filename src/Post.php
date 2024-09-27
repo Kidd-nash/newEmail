@@ -97,6 +97,8 @@ class Post {
     {
         $editingId = $_GET["editingId"] ?? null;
 
+        // $editingId = (int) $editingId;
+
         echo "Editing Post id:" . $editingId;
 
         $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE id = :editId');
@@ -175,6 +177,7 @@ class Post {
                 p.id AS id,
                 p.content AS content,
                 p.date_posted AS date_posted,
+                p.upvotes AS upvotes,
                 c.comment_content AS comment_content,
                 c.id AS comment_id,
                 c.date_posted AS date_posted,
@@ -228,6 +231,7 @@ class Post {
             $formattedPosts[$post['id']]['content'] = $post['content'];
             $formattedPosts[$post['id']]['id'] = $post['id'];
             $formattedPosts[$post['id']]['date_posted'] = $post['date_posted'];
+            $formattedPosts[$post['id']]['upvotes'] = $post['upvotes'];
             
 
         }
@@ -293,6 +297,42 @@ class Post {
     }
 
     // new function for upvote
+    public function upVote() {
+    // select by $_POST['post_id'], select upvote, add one
+    $upvoteId = $_GET["upvotingId"] ?? null;
+
+    echo 'upvoting: ' . $upvoteId;
+
+    $getPostQuery = $this->connection->prepare(
+        'SELECT * FROM post_a_note WHERE id = :id'
+    );
+
+    $getPostQuery->execute([
+        'id' => $upvoteId
+    ]);
+
+    $post = $getPostQuery->fetch(PDO::FETCH_ASSOC);
+
+    var_dump($post);
+
+    echo $post['upvotes'];
+
+    $currentUpvote = $post['upvotes'];
+
+    $addedAnUpvote = $currentUpvote + 1 ;
+
+    echo 'added' . $addedAnUpvote;
+
+    $updatePostQuery = $this->connection->prepare(
+        'UPDATE post_a_note SET upvotes = :upvotes WHERE id = :id'
+    );
+
+    $updatePostQuery->execute([
+        'upvotes' => $addedAnUpvote,
+        'id' => $upvoteId
+    ]);
+    
+    }
 
 }
 // post_a_note

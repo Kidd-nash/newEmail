@@ -2,10 +2,12 @@
     <p><?php echo $_SESSION['username'] ?></p>
     <p><?php echo $a_post['content'] ?></p>
     <p><?php echo $a_post['date_posted'] ?></p>
+    <p><a href='http://email.api:8080/class-post-upvoting?upvotingId=<?php echo $a_post["id"] ?>'>Upvote</a></p>
+    <p>Upvotes: <?php echo $a_post['upvotes'] ?></p>
     <button type="button" onclick="likeClick('<?php echo $upVoteId ?>')">Like</button>
     <p>Likes: <a id="<?php echo $upVoteId ?>">0</a></p>
-    <p><a href='http://email.api:8080/class-post-editing?editingId="<?php echo $a_post["id"] ?>"'>Edit</a></p>
-    <p><a href='http://email.api:8080/class-post-delete?deleteId="<?php $a_post["id"] ?>"'>Delete</a></p>
+    <p><a href='http://email.api:8080/class-post-editing?editingId=<?php echo $a_post["id"] ?>'>Edit</a></p>
+    <p><a href='http://email.api:8080/class-post-delete?deleteId=<?php echo $a_post["id"] ?>'>Delete</a></p>
     <?php foreach ($a_post['comments'] as $comment): ?>
         <div class="each-comment">
             <p><?php echo $comment['content'] ?> | by: <?php echo $comment['author_id'] ?></p>
