@@ -89,6 +89,10 @@ switch ($uri) {
     case '/comment-post':
         echo $post->commentPost();
         break;
+    case '/download-pdf':
+        echo $post->downloadPdf();
+        break;
+    
     
 
     
