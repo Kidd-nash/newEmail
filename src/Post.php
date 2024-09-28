@@ -3,6 +3,7 @@
 namespace Root\NewEmail;
 
 use \PDO;
+use Dompdf\Dompdf;
 
 class Post {
 
@@ -181,8 +182,8 @@ class Post {
                 p.author_id AS author_id,
                 c.comment_content AS comment_content,
                 c.id AS comment_id,
-                c.date_posted AS date_posted,
-                c.author_id AS author_id
+                c.date_posted AS comment_date_posted,
+                c.author_id AS comment_author_id
             FROM
                 post_a_note p
             LEFT JOIN
@@ -235,7 +236,7 @@ class Post {
             $formattedPosts[$post['id']]['upvotes'] = $post['upvotes'];
             $formattedPosts[$post['id']]['author_id'] = $post['author_id'];
 
-            var_dump($post['author_id']);
+            // var_dump($post['author_id']);
 
             // $selectAuthorQuery = $this->connection->prepare(
             //     'SELECT * FROM email_users WHERE id = :id'
@@ -486,6 +487,36 @@ class Post {
         ]);
 
         return $likeCount['count'];
+    }
+
+    public function downloadPdf() {
+        $dompdf = new Dompdf();
+
+        $postQuery = $this->connection->prepare('SELECT * FROM post_a_note');
+
+        $postQuery->execute([
+            // 'author_id' => $author_id,
+        ]);
+
+        $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
+     
+
+
+        ob_start();
+        include_once('./src/pdfDownloadTpl.php');
+        $output = ob_get_clean();
+
+        // die($output);
+
+        $dompdf->loadHtml($output);
+        
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream();
     }
 
 
