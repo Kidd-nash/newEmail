@@ -1,10 +1,8 @@
 <div class="each-post">
-    <p>Author ID:<?php echo $a_post['author_id'] ?></p>
-    <p><?php echo $a_post['content'] ?></p>
+    <p class="authors">Author: <?php echo $_SESSION['username'] ?></p>
+    <p class="contents"><?php echo $a_post['content'] ?></p><span class="see-more">See more</span>
     <p><?php echo $a_post['date_posted'] ?></p>
-    <!-- <p><a href='http://email.api:8080/class-post-upvote?upvoteId=<?php echo $a_post["id"]?>'>Upvote</a><p> -->
     <button type="button" onclick="likeClick('<?php echo $upVoteId ?>', <?php echo $a_post['id'] ?>)"><img src="thumbs-up.svg" /></button>
-    <!-- <button type="button" onclick="likeClick('<?php echo $upVoteId ?>', <?php echo $a_post['id'] ?>)">Like</button> -->
     <span>Likes: <a id="<?php echo $upVoteId ?>"><?php echo $a_post['upvotes'] ?></a></span>
     <?php if (isset($isLiked)): ?>
         <p>You liked this post</p>
