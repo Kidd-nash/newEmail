@@ -91,6 +91,11 @@ body {
     background-color: rgb(236, 229, 222);
 }
 
+.contents {
+    color: rgb(20, 20, 20);
+    display: inline;
+}
+
 .post-content {
     /* border: 1px dotted rgb(0, 0, 255); */
     padding: 8px 30px;
