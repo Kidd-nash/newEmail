@@ -690,61 +690,39 @@ class Post {
         ob_start();
 
         $userId = $_SESSION['userId'];
-
-
         $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE author_id = :author_id');
-
         $postQuery->execute([
             'author_id' => $userId
         ]);
         $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
 
-
         $fileName = 'text-test-text.csv';
-
         $fullPath = "/var/www/public/newEmail/$fileName";
 
         $fp = fopen($fullPath, 'w');
-
         fputcsv($fp, ['Date', 'Content', 'Upvotes']);
         foreach ($posts as $post) {
-            // echo '"' . $post['date_posted'] . '", "' . $post['content'] . '", "' . $post['upvotes'] . '"' . PHP_EOL; //End of line
             fputcsv($fp, [
-                $post['date_posted'], 
+                $post['date_posted'],
                 $post['content'],
                 $post['upvotes']
             ]);
         };
-        
-        // foreach ($list as $fields) {
-        //     // fputcsv($fp, $fields);
-        // }
-
         fclose($fp);
 
-        // echo '"Date Posted", "Contents", "Upvotes"' . PHP_EOL;
-        // foreach ($posts as $post) {
-        //     // echo '"' . $post['date_posted'] . '", "' . $post['content'] . '", "' . $post['upvotes'] . '"' . PHP_EOL; //End of line
-        // };
-// die();
         $output = ob_get_clean();
- 
-            header('Content-Description: File Transfer');
-            header('Content-Type: text/csv'); // application/xlsx  -> text/csv
-            header('Content-Disposition: attachment; filename="' . $fileName . '"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($fullPath));
-            readfile($fullPath);
-            echo $output;
-            exit;
 
-        
+        header('Content-Description: File Transfer');
+        header('Content-Type: text/csv'); // application/xlsx  -> text/csv
+        header('Content-Disposition: attachment; filename="' . $fileName . '"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($fullPath));
+        readfile($fullPath);
+        echo $output;
+
+        exit;
     }
-
 }
-// post_a_note
-// post_a_note_comments
-
 
