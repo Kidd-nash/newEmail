@@ -92,7 +92,16 @@ switch ($uri) {
     case '/download-pdf':
         echo $post->downloadPdf();
         break;
-    
+    case '/download-xlsx':
+        $post->spreadSheetDownload();
+        break;
+    case '/download-csv':
+        $post->loadCsv();
+        break;
+    case '/download-fcsv':
+        $post->loadCsvFile();
+        break;
+
     
 
     

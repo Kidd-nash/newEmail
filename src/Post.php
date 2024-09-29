@@ -4,6 +4,8 @@ namespace Root\NewEmail;
 
 use \PDO;
 use Dompdf\Dompdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Post {
 
@@ -519,6 +521,227 @@ class Post {
         $dompdf->stream();
     }
 
+    public function spreadSheetDownload()
+    {
+        session_start();
+        ob_start();
+        $userId = $_SESSION['userId'];
+
+
+        $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE author_id = :author_id');
+
+        $postQuery->execute([
+            'author_id' => $userId
+        ]);
+
+        $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
+
+        $selectEmailQuery = $this->connection->prepare('SELECT * FROM email_users WHERE id = :author_id');
+
+        $selectEmailQuery->execute([
+            'author_id' => $userId
+        ]);
+
+        $emailUser = $selectEmailQuery->fetch(PDO::FETCH_ASSOC);
+
+        // $emailUser = $emailUserArray[0];
+        // var_dump($emailUser);
+        // die();
+    //   ob_start();
+        // var_dump($emailUser);
+
+        $email = $emailUser['email'];
+
+        $user_name = $emailUser['username'];
+
+        // $this->emailSSAttach($email, $user_name); 
+        // ob_end_clean();
+
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'Date Posted');
+        $activeWorksheet->setCellValue('B1', 'Content');
+        $activeWorksheet->setCellValue('C1', 'Upvotes');
+
+        $a_value = 1;
+
+        foreach ($posts as $post) {
+            $a_value++;
+            $activeWorksheet->setCellValue('A' . $a_value, $post['date_posted']);
+            $activeWorksheet->setCellValue('B' . $a_value, $post['content']);
+            $activeWorksheet->setCellValue('C' . $a_value, $post['upvotes']);
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'emailposts-' . date('H-i-s') . '.xlsx';
+        $writer->save($fileName);
+
+        $fullPath = "/var/www/public/newEmail/$fileName";
+
+
+        $this->emailSSAttach($email, $user_name, $fullPath);
+        ob_end_clean();
+
+
+        chmod($fullPath, 0755);
+
+        // $file = $fullPath; //'monkey.gif';
+
+        // if (file_exists($file)) {
+        //     header('Content-Description: File Transfer');
+        //     header('Content-Type: application/xlsx'); // application/xlsx  -> text/csv
+        //     header('Content-Disposition: attachment; filename="'.basename($file).'"');
+        //     header('Expires: 0');
+        //     header('Cache-Control: must-revalidate');
+        //     header('Pragma: public');
+        //     // header('Content-Length: ' . filesize($file));
+        //     readfile($file);
+        //     exit;
+        // }
+
+        
+           
+    }
+
+    public function loadCsv()
+    {
+        session_start();
+        ob_start();
+
+        $userId = $_SESSION['userId'];
+
+
+        $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE author_id = :author_id');
+
+        $postQuery->execute([
+            'author_id' => $userId
+        ]);
+        $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
+
+        echo '"Date Posted", "Contents", "Upvotes"' . PHP_EOL;
+        foreach ($posts as $post) {
+            echo '"' . $post['date_posted'] . '", "' . $post['content'] . '", "' . $post['upvotes'] . '"' . PHP_EOL; //End of line
+        };
+// die();
+        $output = ob_get_clean();
+ 
+            header('Content-Description: File Transfer');
+            header('Content-Type: text/csv'); // application/xlsx  -> text/csv
+            header('Content-Disposition: attachment; filename="text-test.csv"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            // header('Content-Length: ' . filesize($file));
+            // readfile($file);
+            echo $output;
+            exit;
+
+
+        
+        
+        // new filename 'test.csv'
+
+        // headers
+
+
+        // echo '2019-12-24, title here..., 9''
+
+        exit;
+    }
+
+
+    // save excel file and send to email function
+    protected function emailSSAttach($email, $user_name, $fullPath) 
+    {
+
+        // $file =  $this->spreadSheetDownload();
+        // $fileName = 'email-posts-data-' . date('H-i-s') . '.xlsx';
+
+        include_once('./src/email.php');
+    //bsend bemailb, attachb
+        $emailTo = $email;
+        $emailFrom = 'EmailPostTeam@email.com';
+        $subject = 'Change Password';
+        $name = $user_name;
+        $content = '
+        <html>
+        <head>
+        </head>
+        <body>
+            <h1>Data </h1>
+
+            <b>Hi, ' . $name . ' this email contains an attach file of your data, presented in spreasheet.</b>
+            <br>
+            <p>Click the file to view your data.</p>
+            <br>
+            <br>
+            <p>Thank you,</p>
+            <p>Email Posts Team</p>
+        </body>
+        </html>
+        ';
+
+        sendEmail($emailTo, $emailFrom, $subject, $content, $fullPath);
+    }
+
+    public function loadCsvFile()
+    {
+        session_start();
+        ob_start();
+
+        $userId = $_SESSION['userId'];
+
+
+        $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE author_id = :author_id');
+
+        $postQuery->execute([
+            'author_id' => $userId
+        ]);
+        $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
+
+
+        $fileName = 'text-test-text.csv';
+
+        $fullPath = "/var/www/public/newEmail/$fileName";
+
+        $fp = fopen($fullPath, 'w');
+
+        fputcsv($fp, ['Date', 'Content', 'Upvotes']);
+        foreach ($posts as $post) {
+            // echo '"' . $post['date_posted'] . '", "' . $post['content'] . '", "' . $post['upvotes'] . '"' . PHP_EOL; //End of line
+            fputcsv($fp, [
+                $post['date_posted'], 
+                $post['content'],
+                $post['upvotes']
+            ]);
+        };
+        
+        // foreach ($list as $fields) {
+        //     // fputcsv($fp, $fields);
+        // }
+
+        fclose($fp);
+
+        // echo '"Date Posted", "Contents", "Upvotes"' . PHP_EOL;
+        // foreach ($posts as $post) {
+        //     // echo '"' . $post['date_posted'] . '", "' . $post['content'] . '", "' . $post['upvotes'] . '"' . PHP_EOL; //End of line
+        // };
+// die();
+        $output = ob_get_clean();
+ 
+            header('Content-Description: File Transfer');
+            header('Content-Type: text/csv'); // application/xlsx  -> text/csv
+            header('Content-Disposition: attachment; filename="' . $fileName . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($fullPath));
+            readfile($fullPath);
+            echo $output;
+            exit;
+
+        
+    }
 
 }
 // post_a_note

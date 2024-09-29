@@ -12,7 +12,7 @@ use PHPMailer\PHPMailer\Exception;
 //Load Composer's autoloader
 // require 'vendor/autoload.php';
 
-function sendEmail($emailTo, $emailFrom, $subject, $content)
+function sendEmail($emailTo, $emailFrom, $subject, $content, $fileName = null)
 {
     //Create an instance; passing `true` enables exceptions
     $mail = new PHPMailer(true);
@@ -39,6 +39,9 @@ function sendEmail($emailTo, $emailFrom, $subject, $content)
 
         //Attachments
         // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+        if ($fileName != null) {
+            $mail->addAttachment($fileName);
+        }
         // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
         //Content
