@@ -55,6 +55,9 @@
                 <?php if (isset($isSaved)): ?>
                     <p>Saved succesfully</p>
                 <?php endif; ?>
+                <a href="/download-xlsx" target="_blank">Download my data</a>
+                <a href="/download-csv" target="_blank">CSV File</a>
+                <a href="/download-fcsv" target="_blank">Another CSV</a>
                 <div class="posts" id="content-posts">
                     <?php
                     foreach ($posts as $a_post) {
