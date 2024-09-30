@@ -110,6 +110,9 @@ switch ($uri) {
     case '/upload-an-image':
         $post->uploadImage();
         break;
+    case '/upload-and-crop':
+        $post->uploadAndCrop();
+        break;
 
 
     
