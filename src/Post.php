@@ -724,5 +724,18 @@ class Post {
 
         exit;
     }
+
+    public function cropImage() 
+    {
+        // die('crop');
+        $im = imagecreatefromjpeg('uploads/mario.jpeg');
+        $size = min(imagesx($im), imagesy($im));
+        $im2 = imagecrop($im, ['x' => 0, 'y' => 0, 'width' => $size, 'height' => $size]);
+        if ($im2 !== FALSE) {
+            imagepng($im2, 'uploads/example-cropped-into-folder.png');
+            imagedestroy($im2);
+        }
+        imagedestroy($im);
+    }
 }
 
