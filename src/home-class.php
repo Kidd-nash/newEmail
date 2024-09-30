@@ -9,6 +9,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
+    <script>
+        function iconForm() {
+            var x = document.getElementById('icon-form');
+
+            console.log()
+            if (x.style.maxHeight == 0) {
+            x.style.maxHeight = "500px";
+            } else {
+            x.style.maxHeight = 0;
+            }
+        }
+    </script>
 
 <body>
     <div class="header body-div" id="header-div">
@@ -28,6 +40,14 @@
                 <?= $_SESSION['username'] ?>
                 <p>, hey there.</p>
                 <a class="signout" href="/new-logout">Log out</a>
+                <button onclick="iconForm()">Icon</button>
+                <div class="image-form-wrapper" id="icon-form">
+                    <form action="/upload-and-crop" method="post" enctype="multipart/form-data">
+                        <label>Select image to upload:</label>
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                        <input type="submit" value="Upload Image" name="submit">
+                    </form>
+                </div>
                 <button onclick="darkMode()">
                     <img src="bulb.svg" />
                 </button>
@@ -60,6 +80,7 @@
                 <a href="/download-fcsv" target="_blank">Another CSV</a>
                 <a href="/crop-image" target="_blank">Crop Image</a>
                 <a href="/uploading-image" target="_blank">Upload an Image?</a>
+                <a href="/upload-and-crop" target="_blank">Upload an Icon</a>
                 <div class="posts" id="content-posts">
                     <?php
                     foreach ($posts as $a_post) {
