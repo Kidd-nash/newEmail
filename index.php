@@ -104,6 +104,13 @@ switch ($uri) {
     case '/download-fcsv':
         $post->loadCsvFile();
         break;
+    case '/uploading-image':
+        include_once('./src/upload.php');
+        break;
+    case '/upload-an-image':
+        $post->uploadImage();
+        break;
+
 
     
 
