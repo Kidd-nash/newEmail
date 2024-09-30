@@ -59,6 +59,7 @@
                 <a href="/download-csv" target="_blank">CSV File</a>
                 <a href="/download-fcsv" target="_blank">Another CSV</a>
                 <a href="/crop-image" target="_blank">Crop Image</a>
+                <a href="/uploading-image" target="_blank">Upload an Image?</a>
                 <div class="posts" id="content-posts">
                     <?php
                     foreach ($posts as $a_post) {
