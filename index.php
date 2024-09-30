@@ -62,6 +62,9 @@ switch ($uri) {
     case '/class-post-updating':
         echo $post->updatingPost();
         break;
+    case '/crop-image':
+        echo $post->cropImage();
+        break;
     // case '/class-post-upvoting':
     //     echo $post->upVote();
     //     break;
