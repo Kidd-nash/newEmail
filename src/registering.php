@@ -14,15 +14,12 @@ ob_start();
 
         $userQuery->execute(['email' => $email, 'user_name' => $user_name, 'hash_password' => $hash_password]);
 
-
         // for ($ctr = 1; $ctr <= 1000; $ctr++) {
 
-        
         //   $userQuery = $db->prepare('INSERT INTO email_users (email, username, password) VALUES (:email, :user_name, :hash_password)');
 
         //   $userQuery->execute(['email' => 'dummy@gmail.com', 'user_name' => 'dummy', 'hash_password' => 'abcde']);
         // }
-
 
     }
 ob_end_clean();

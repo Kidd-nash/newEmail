@@ -55,6 +55,7 @@
                     e.target.submit();
                 }
             });
+            document.getElementById('email').focus();
         </script>
     </body>
 </html>

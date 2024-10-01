@@ -21,34 +21,19 @@ $account = new Account();
 
 
 switch ($uri) {
-    // case '/posts/create':
-    //     echo $post->createPost();
-    //     break;
-    // case '/posts/retrieve':
-    //     echo $post->listPost();
-    //     break;
+ 
+    //posts
     case '/posts/edit':
         echo $post->updatingPost();
         break;
     case '/posts/delete':
         echo $post->deletingPost();
         break;
-
-    
     case '/new-home':
         echo $post->listPost();
         break;
     case '/new-register':
         include_once('./src/register-class.php');
-        break;
-    case '/new-registering':
-        echo $signup->submitRegistration();
-        break;
-    case '/new-login':
-        include_once('./src/login-class.php');
-        break;
-    case '/new-loggingin':
-        echo $signup->submitLogin();
         break;
     case '/new-posting':
         echo $post->createPost();
@@ -65,26 +50,8 @@ switch ($uri) {
     case '/crop-image':
         echo $post->cropImage();
         break;
-    // case '/class-post-upvoting':
-    //     echo $post->upVote();
-    //     break;
     case '/class-post-upvote':
         echo $post->upVoting();
-        break;
-    case '/forgot-password':
-        include_once('./src/forgot-password.php');
-        break;
-    case '/email-change-password':
-        echo $account->changePasswordEmail();
-        break;
-    case '/change-password':
-        echo $account->changePasswordUpdate();
-        break;
-    case '/change-password-updating':
-        echo $account->changePasswordUpdating();
-        break;
-    case '/new-logout':
-        include_once('./src/new-logout.php');
         break;
     case '/all-posts':
         echo $post->allPosts();
@@ -114,10 +81,34 @@ switch ($uri) {
         $post->uploadAndCrop();
         break;
 
+    // Accounts
+    case '/new-registering':
+        echo $signup->submitRegistration();
+        break;
+    case '/new-login':
+        include_once('./src/login-class.php');
+        break;
+    case '/new-loggingin':
+        echo $signup->submitLogin();
+        break;
+    case '/forgot-password':
+        include_once('./src/forgot-password.php');
+        break;
+    case '/email-change-password':
+        echo $account->changePasswordEmail();
+        break;
+    case '/change-password':
+        echo $account->changePasswordUpdate();
+        break;
+    case '/change-password-updating':
+        echo $account->changePasswordUpdating();
+        break;
+    case '/new-logout':
+        include_once('./src/new-logout.php');
+        break;
 
-    
 
-    
+    // Non class methods/functions
     case '/home':
         include_once('./src/home.php');
         break;

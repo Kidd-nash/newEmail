@@ -1,7 +1,5 @@
 <?php
 
-// echo "deleteId";
-
 ob_start();
 
 include_once('./src/connection.php');
@@ -18,4 +16,5 @@ ob_end_clean();
 
 header("Location: http://email.api:8080/home");
 die();
+
 ?>
