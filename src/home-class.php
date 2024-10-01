@@ -26,7 +26,9 @@
     <div class="header body-div" id="header-div">
         <div class="header-logo" id="header-logo">
             <p class="p-logo">Logo</p>
-            <img />
+            <?php if ($isLoggedIn): ?>
+            <img src="<?php echo !empty($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'uploads/default-image.jpg' ?>" />
+            <?php endif ?>
         </div>
         <div class="header-text" id="header-text">
             <h1>Email Posts</h1>

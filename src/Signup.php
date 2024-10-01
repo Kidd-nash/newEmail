@@ -1,7 +1,5 @@
 <?php
 
-// include_once('./src/connection.php');
-
 namespace Root\NewEmail;
 
 use \PDO;
@@ -134,12 +132,17 @@ class Signup {
             ]);
         
             $user = $userQuery->fetch(PDO::FETCH_ASSOC);
-        
+
             $userId = $user['id'] ?? null;
         
             if (!is_null($userId)) {
                 $_SESSION['userId'] = $userId;
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['profile_pic'] = !empty($user['pfp_path'])
+                    ? Post::UPLOADS_DIR . $user['pfp_path']
+                    : 'uploads/default.jpg'
+                ;
+
                 ob_end_clean();
                 header("Location: http://email.api:8080/new-home");
                 die();

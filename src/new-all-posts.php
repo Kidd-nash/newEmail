@@ -79,30 +79,8 @@
                             document.getElementById(elementId).innerHTML = upVotes;
                         });
                     };
-                    
-                    // const contents = document.querySelectorAll('.contents');
-                    // const seeMoreButtons = document.querySelectorAll('.see-more');
-                    // const maxChars = 100;
 
-                    // contents.forEach((contentElement, index) => {
-                    //     const fullContent = contentElement.innerHTML;
-                    //     const seeMoreButton = seeMoreButtons[index];
-
-                    //     if (fullContent.length > maxChars) {
-                    //         const shortContent = fullContent.slice(100, maxChars) + '...';
-                    //         contentElement.innerHTML = shortContent;
-
-                    //         seeMoreButton.addEventListener('click', function() {
-                    //             contentElement.innerHTML = fullContent;
-                    //             seeMoreButton.style.display = 'none';
-                    //         });
-                    //     } else {
-                    //         seeMoreButton.style.display = 'none';
-                    //     };
-
-                    // });
                     document.addEventListener('DOMContentLoaded', function() {
-                        // const maxChars = 100; 
                         const posts = document.querySelectorAll('.each-post'); 
 
                         posts.forEach(post => {

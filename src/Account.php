@@ -1,7 +1,5 @@
 <?php
 
-// include_once('./src/connection.php');
-
 namespace Root\NewEmail;
 
 use \PDO;
@@ -27,8 +25,8 @@ class Account {
 
     }
 
-    public function changePasswordEmail() {
-
+    public function changePasswordEmail() 
+    {
         session_start();
         ob_start();
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -170,13 +168,10 @@ class Account {
     {
         session_start();
         if($_SERVER['REQUEST_METHOD'] == 'POST') { 
-            // include_once('./src/change-password.php');
-
 
                 if (empty($_POST['password'])) {
                     ob_start();
                     $emptyPasswordError = true;
-                    // includ change-password template/html
                     return ob_get_clean();
                 }
 
