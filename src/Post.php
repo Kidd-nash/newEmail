@@ -45,7 +45,7 @@ class Post {
             } else {
                 $_SESSION['accessDeniedError'];
                 ob_end_clean();
-                header("Location: http://email.api:8080/new-home");
+                header("Location: http://email.api:8080/home-page");
                 die();
             }
 
@@ -61,7 +61,7 @@ class Post {
         }
         ob_end_clean();
 
-        header("Location: http://email.api:8080/new-home");
+        header("Location: http://email.api:8080/home-page");
         die();
     }
 
@@ -83,7 +83,11 @@ class Post {
 
         $author_id = $id_plus;
         
-        $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE author_id = :author_id');
+        $postQuery = $this->connection->prepare(
+            'SELECT * FROM post_a_note 
+            WHERE author_id = :author_id
+            ORDER BY date_posted DESC'
+        );
 
         $postQuery->execute([
             'author_id' => $author_id,
@@ -93,7 +97,7 @@ class Post {
 
         ob_start();
 
-        include_once('./src/home-class.php');
+        include_once('./src/pages/home-page.php');
 
         return ob_get_clean();
     }
@@ -471,7 +475,9 @@ class Post {
         $userId = $_SESSION['userId'];
 
 
-        $postQuery = $this->connection->prepare('SELECT * FROM post_a_note WHERE author_id = :author_id');
+        $postQuery = $this->connection->prepare(
+            'SELECT * FROM post_a_note WHERE author_id = :author_id
+        ');
 
         $postQuery->execute([
             'author_id' => $userId
@@ -636,6 +642,8 @@ class Post {
         $newFileName = md5( date('Y-m-d H:i:s') )  . rand(111, 999) . rand(111, 999);
         $target_file = self::UPLOADS_DIR . $newFileName . '.' . $extension;
 
+        // die($extension);
+
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -676,21 +684,45 @@ class Post {
         }
         }
 
-        echo strval($target_file);
 
-        $im = imagecreatefromjpeg($target_file);
-        // $im = @imagecreatefrompng($target_file);
-        $size = 300; // min(imagesx($im), imagesy($im));
+        if ($extension == 'png') {
 
-        $imageWidth = imagesx($im);
-        $imageLength = imagesy($im);
+//         echo strval($target_file);
+// // TODO: fix
+            $im = imagecreatefrompng($target_file);
+            // $im = @imagecreatefrompng($target_file);
+            $size = 300; // min(imagesx($im), imagesy($im));
 
-        $im2 = imagecrop($im, ['x' => ($imageWidth-$size)/2, 'y' => ($imageLength-$size)/2, 'width' => $size, 'height' => $size]);
-        if ($im2 !== FALSE) {
-            imagepng($im2, 'uploads/' . $newFileName . '.png');
-            imagedestroy($im2);
+            $imageWidth = imagesx($im);
+            $imageLength = imagesy($im);
+
+            $im2 = imagecrop($im, ['x' => ($imageWidth-$size)/2, 'y' => ($imageLength-$size)/2, 'width' => $size, 'height' => $size]);
+            if ($im2 !== FALSE) {
+                imagepng($im2, 'uploads/' . $newFileName . '.png');
+                imagedestroy($im2);
+            }
+            imagedestroy($im);
+    
+        } elseif ($extension == 'jpg' || $extension == 'jpeg') {
+
+            $im = imagecreatefromjpeg($target_file);
+            // $im = @imagecreatefrompng($target_file);
+            $size = 300; // min(imagesx($im), imagesy($im));
+
+            $imageWidth = imagesx($im);
+            $imageLength = imagesy($im);
+
+            $im2 = imagecrop($im, ['x' => ($imageWidth-$size)/2, 'y' => ($imageLength-$size)/2, 'width' => $size, 'height' => $size]);
+            if ($im2 !== FALSE) {
+                imagepng($im2, 'uploads/' . $newFileName . '.png');
+                imagedestroy($im2);
+            }
+            imagedestroy($im);
+
+        } else {
+            echo 'file needs to be PNG or JPEG';
         }
-        imagedestroy($im);
+
 
         $userId = $_SESSION['userId'];
 
