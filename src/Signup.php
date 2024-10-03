@@ -144,7 +144,7 @@ class Signup {
                 ;
 
                 ob_end_clean();
-                header("Location: http://email.api:8080/new-home");
+                header("Location: http://email.api:8080/home-page");
                 die();
             }
         }

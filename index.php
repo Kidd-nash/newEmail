@@ -13,6 +13,7 @@ use Root\NewEmail\Post;
 use Root\NewEmail\Signup;
 use Root\NewEmail\Account;
 
+
 $post = new Post();
 $signup = new Signup();
 $account = new Account();
@@ -21,6 +22,13 @@ $account = new Account();
 
 
 switch ($uri) {
+
+    //compiled
+    case '/home-page':
+        echo $post->listPost();
+        break;
+
+
  
     //posts
     case '/posts/edit':
@@ -29,9 +37,9 @@ switch ($uri) {
     case '/posts/delete':
         echo $post->deletingPost();
         break;
-    case '/new-home':
-        echo $post->listPost();
-        break;
+    // case '/new-home':
+    //     echo $post->listPost();
+    //     break;
     case '/new-register':
         include_once('./src/register-class.php');
         break;
@@ -158,10 +166,10 @@ switch ($uri) {
         include_once('./src/post-updating.php');
         break;
     case '/trials':
-        include_once('./src/trials/trials.php');
+        include_once('./src/trials/proper-ui.php');
         break;
     case '/trial':
-        include_once('./src/trials/trial.php');
+        include_once('./src/trials/orientation.php');
         break;
     case '/submit':
         include_once('./src/trials/submit.php');
