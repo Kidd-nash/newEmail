@@ -24,15 +24,23 @@
 
 <body>
     <div class="header body-div" id="header-div">
-        <div class="header-logo" id="header-logo">
-            <p class="p-logo">Logo</p>
+        <div class="header-icon" id="header-icon">
             <?php if ($isLoggedIn): ?>
-            <img src="<?php echo !empty($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'uploads/default-image.jpg' ?>" />
+            <img 
+                class="img-icon"
+                src="<?php echo !empty($_SESSION['profile_pic']) ? $_SESSION['profile_pic'] : 'uploads/default-image.jpg' ?>" 
+            />
+            <div class="img-hide">Modify Icon?</div>
             <?php endif ?>
         </div>
         <div class="header-text" id="header-text">
-            <h1>Email Posts</h1>
-            <a class="menu" href="/all-posts">Menu</a>
+            <div>
+                <p class="p-logo">Logo</p>
+            </div>
+            <div>
+                <h1>Email Posts</h1>
+                <a class="menu" href="/all-posts">Menu</a>
+            </div>
         </div>
         <div class="header-signup" id="header-signup">
             <?php if (!$isLoggedIn): ?>
