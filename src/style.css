@@ -14,18 +14,32 @@ body {
 }
 
 .header {
+    height: 140px;
     display: flex;
     background-color: rgb(220, 234, 240);
+}
+
+.img-icon {
+    max-height: 82%;
+    width: 80%;
+    margin: 10px;
+    border: 2px solid rgb(66,117,116);
+    background-color: rgb(252, 225, 109);
+}
+.img-hide {
+    display: none;
+}
+img:hover {
+    border: 2px solid rgb(255, 255, 255);
 }
 
 .p-logo {
     border: 1px solid rgb(252, 225, 109);
     padding: 22px 17px;
-    margin: 15px 0px 15px 15px;
-    background-color: rgb(252, 225, 109);
+    /* margin: 15px 0px 15px 15px; */
 }
 
-.header-logo {
+.header-icon {
     display: flex;
     width: 15%;
     background-color: rgb(220, 234, 240);
@@ -33,8 +47,9 @@ body {
 
 .header-text {
     display: flex;
-    flex-flow: column wrap;
+    flex-flow: nowrap;
     align-items: center;
+    justify-content: center;
     width: 70%;
     background-color: rgb(220, 234, 240);
 }
