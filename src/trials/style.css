@@ -1,0 +1,237 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    border: 2px solid black;
+    display: flex;
+}
+
+.main-header {
+    width: 100%;
+    border: 2px solid blue;
+    display: inline-flex;
+    position: relative;
+}
+
+.main-header-icon {
+    display: flex;
+    justify-content: center;
+    width: 20%;
+    border: 2px solid orange;
+}
+
+.header-icon {
+    border-radius: 50%;
+    border: 2px solid black;
+    width: 50%;
+}
+
+.main-header-banner {
+    border: 2px solid green;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-logo {
+    width: 10%;
+    border: 1px solid black;
+}
+
+
+.nav-header {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    border: 2px solid red;
+}
+
+.icon-button {
+    background-color: rgb(47, 200, 247); 
+    border: none;
+    color: white;
+    padding: 0 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.icon-button:hover {
+    background-color: rgb(17, 170, 217);
+}
+
+.form-wrapper {
+    max-height: 0;
+    max-width: 0;
+    overflow: hidden;
+    transition: max-height 2s linear;
+    transition: max-width 2s linear;
+}
+
+.icon-form {
+    /* border: 3px solid rgb(86,137,136); */
+    border-radius: 15px;
+    padding: 10px;
+    /* margin: 30px; */
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+}
+
+.signout:link, .signout:visited {
+    background-color: rgb(252, 125, 125);
+    border: 1px solid rgb(252, 125, 125);
+    border-radius: 5px;
+    color: white;
+    padding: 6px 12px;
+    margin: 0px 2px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5;
+  }
+  
+.signout:hover, .signout:active {
+  background-color: rgb(241, 66, 66);
+}
+
+.circle {
+    border: 2px solid black;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.one {
+    border: 2px solid blue;
+    width: 100%;
+    min-height: 80px;
+    display: inline-flex;
+}
+
+.grid-button {
+    background-color: rgb(47, 200, 247); 
+    border: none;
+    color: white;
+    border: 2px solid black;
+    width: 4%;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 11px;
+}
+
+.two {
+    border: 2px solid black;
+    width: 100%;
+    display: inline-flex;
+}
+
+.grid{
+    color: white;
+    width: 85%;
+}
+
+.left {
+    max-height: 0;
+    max-width: 0;
+    overflow: hidden;
+    transition: max-height 1s linear;
+    transition: max-width 1s linear;
+}
+
+.right {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+    justify-content: center;
+    /* align-content: center; */
+}
+
+.hidden-left {
+    border: 2px solid red;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* display: none; */
+}
+
+.left-icon {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    border: 2px solid orange;
+}
+
+.nav-buttons {
+    background-color: rgb(47, 200, 247); 
+    border: none;
+    color: white;
+    padding: 0 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px 50px;
+}
+
+.posting {
+    border: 2px solid purple;
+    width: 70%;
+    min-height: 100px;
+}
+
+.posts {
+    border: 2px solid green;
+    width: 90%;
+    min-height: 500px;
+}
+
+.ui-header-banner {
+    border: 2px solid green;
+    width: 96%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.ui-header-logo {
+    width: 4%;
+    border: 1px solid black;
+}
+
+.pop-up-form {
+    width: 50%;
+    border: 3px solid rgb(86, 137, 136);
+    position: absolute;
+    height: 200px;
+    color: white;
+    background-color: black;
+    border-radius: 20px;
+}
+
+.modify-icon-form {
+    background-color: gray;
+    margin: 20px;
+}
+
+.exit-button {
+    float: right;
+}
+
+.each-user-post {
+    border: 2px solid purple;
+}
