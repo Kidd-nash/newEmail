@@ -264,3 +264,19 @@
     justify-content: space-between;
     padding: 3px;
 }
+
+.comment-area {
+    margin: 0 0 -5px;
+}
+
+.comment-form-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-width 1s linear;
+}
+
+.comment-form {
+    border: 1px solid black;
+    margin: 5px 20px;
+    padding: 5px;
+}

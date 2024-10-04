@@ -36,9 +36,9 @@
                     <?= $_SESSION['username'] ?>
                     <?php echo '</p>' ?>
                     <button class="nav-buttons" onclick="modifyIcon()" id="icon-button">Icon</button>
-                    <button class="nav-buttons">Home</button>
-                    <button class="nav-buttons">Menu</button>
-                    <button class="nav-buttons">Logout</button>
+                    <button class="nav-buttons" onclick="homePage()">Home</button>
+                    <button class="nav-buttons" onclick="menuPage()">Menu</button>
+                    <button class="nav-buttons" onclick="logOut()">Logout</button>
                 </div>
             <?php endif; ?>
         </div>
@@ -65,7 +65,8 @@
                 </div>
                 <div class="posts">
                     <h3>Posts</h3>
-                    <?php foreach($posts as $a_post): ?>
+                    <?php foreach($formattedPosts as $a_post): ?>
+                        <?php $formId = 'temp-form-' . $a_post['id']; ?>
                         <?php include('./src/pages/user-posts.php'); ?>
                     <?php endforeach; ?>
                 </div>
@@ -180,6 +181,29 @@
             parent.appendChild(newElement);
             return newElement;
         };
+
+        function commentFunction(elementId) {
+            var x = document.getElementById(elementId);
+            // console.log();
+            if (x.style.maxHeight == 0 || x.style.maxHeight == '0px') {
+                x.style.maxHeight = "500px";
+            } else {
+                x.style.maxHeight = 0;
+            }
+        }
+
+        function homePage() {
+            window.location.href = "http://email.api:8080/home-page";
+        }
+
+        function menuPage() {
+            window.location.href = "http://email.api:8080/all-posts";
+        }
+
+        function logOut() {
+            window.location.href = "http://email.api:8080/new-logout";
+        }
+
     </script>
 </body>
 
