@@ -778,7 +778,7 @@ class Post {
         $_SESSION['profile_pic'] = self::UPLOADS_DIR . $newFileName . '.png';
 
         ob_end_clean();
-        header("Location: http://email.api:8080/new-home");
+        header("Location: http://email.api:8080/home-page");
         die();
 
     }

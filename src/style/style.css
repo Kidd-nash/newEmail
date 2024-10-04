@@ -2,16 +2,18 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    background-color: rgb(242, 245, 244);
+    font-family: 'Space Mono', monospace;
 }
 
 .header {
-    border: 2px solid black;
+    /* border: 2px solid black; */
     display: flex;
 }
 
 .main-header {
     width: 100%;
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
     display: inline-flex;
     position: relative;
 }
@@ -20,17 +22,18 @@
     display: flex;
     justify-content: center;
     width: 20%;
-    border: 2px solid orange;
+    /* border: 2px solid orange; */
 }
 
 .header-icon {
+    background-color: rgb(189, 246, 209);
     border-radius: 50%;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     width: 50%;
 }
 
 .main-header-banner {
-    border: 2px solid green;
+    /* border: 2px solid green; */
     width: 80%;
     display: flex;
     align-items: center;
@@ -39,7 +42,7 @@
 
 .header-logo {
     width: 10%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 
@@ -47,7 +50,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    border: 2px solid red;
+    /* border: 2px solid red; */
 }
 
 .icon-button {
@@ -86,7 +89,7 @@
 
 .signout:link, .signout:visited {
     background-color: rgb(252, 125, 125);
-    border: 1px solid rgb(252, 125, 125);
+    /* border: 1px solid rgb(252, 125, 125); */
     border-radius: 5px;
     color: white;
     padding: 6px 12px;
@@ -111,7 +114,8 @@
 }
 
 .one {
-    border: 2px solid blue;
+    background-color: rgb(146, 237, 240);
+    /* border: 2px solid blue; */
     width: 100%;
     min-height: 80px;
     display: inline-flex;
@@ -123,7 +127,7 @@
     background-color: rgb(47, 200, 247); 
     border: none;
     color: white;
-    border: 2px solid black;
+    /* border: 2px solid black; */
     width: 15%;
     border-radius: 4px;
     text-align: center;
@@ -134,7 +138,7 @@
 }
 
 .two {
-    border: 2px solid black;
+    /* border: 2px solid black; */
     width: 100%;
     display: inline-flex;
     position: fixed;
@@ -142,6 +146,7 @@
 }
 
 .grid{
+    background-color: rgb(47, 200, 247);
     color: white;
     width: 24%;
 }
@@ -162,7 +167,7 @@
     /* flex-direction: column; */
     justify-content: center;
     /* align-content: center; */
-    border: 2px solid black;
+    /* border: 2px solid black; */
     overflow-y: scroll;
     /* left: 216px; */
     height: 100vh;
@@ -170,7 +175,10 @@
 }
 
 .hidden-left {
-    border: 2px solid red;
+    margin: 5px;
+    border-radius: 20px;
+    background-color: rgb(189, 246, 209);
+    /* border: 2px solid red; */
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -179,10 +187,12 @@
 }
 
 .left-icon {
+    background-color: rgb(189, 246, 209);
     display: flex;
     justify-content: center;
     width: 100%;
-    border: 2px solid orange;
+    border-radius: 20px;
+    /* border: 2px solid orange; */
 }
 
 .nav-buttons {
@@ -195,10 +205,15 @@
     display: inline-block;
     font-size: 16px;
     margin: 5px 50px;
+    cursor: pointer;
 }
 
 .posting {
-    border: 2px solid purple;
+    border-radius: 20px;
+    margin: 5px;
+    padding: 10px 0;
+    background-color: rgb(55, 161, 245);
+    /* border: 2px solid purple; */
     width: 70%;
     min-height: 100px;
     display: inline-flex;
@@ -207,13 +222,17 @@
 }
 
 .posts {
-    border: 2px solid green;
+    border-radius: 20px;
+    background-color: white;
+    padding: 10px;
+    /* border: 2px solid green; */
     width: 90%;
     min-height: 500px;
 }
 
 .ui-header-banner {
-    border: 2px solid green;
+    background-color: rgb(146, 237, 240);
+    /* border: 2px solid green; */
     width: 96%;
     display: flex;
     align-items: center;
@@ -221,14 +240,15 @@
 }
 
 .ui-header-logo {
+    border-radius: 50%;
     width: 4%;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 .pop-up-form {
     top: 100px;
     width: 50%;
-    border: 3px solid rgb(86, 137, 136);
+    /* border: 3px solid rgb(86, 137, 136); */
     position: absolute;
     height: 200px;
     color: white;
@@ -247,17 +267,18 @@
 
 .user-name {
     padding: 0 50px;
+    background-color: rgb(189, 246, 209);
 }
 
 .each-user-post {
-    border: 2px solid purple;
-    margin: 5px 20px;
+    /* border: 2px solid purple; */
+    margin: 20px 20px;
     border-radius: 10px;
     padding: 10px;
 }
 
 .posts-buttons {
-    border: 1px solid gray;
+    /* border: 1px solid gray; */
     width: 100%;
     display: inline-flex;
     flex-flow: row wrap;
@@ -267,6 +288,7 @@
 
 .comment-area {
     margin: 0 0 -5px;
+    height: 70px;
 }
 
 .comment-form-wrapper {
@@ -279,4 +301,23 @@
     border: 1px solid black;
     margin: 5px 20px;
     padding: 5px;
+}
+
+.page-title {
+    background-color: rgb(146, 237, 240);
+}
+
+.posts-title {
+    border-radius: 20px;
+    background-color: white;
+    padding: 10px;
+}
+
+.each-comment {
+    padding: 2px;
+    /* border: 1px solid gray; */
+}
+
+.comment-content {
+    background-color: white;
 }

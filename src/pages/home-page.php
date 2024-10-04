@@ -4,6 +4,8 @@
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="src/style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 
 <body>
@@ -14,8 +16,7 @@
         <div class="ui-header-banner">
             <img class="ui-header-logo" src="uploads/pen-icon.png">
             <div>
-                <h1>Email Posts</h1>
-                <a>Menu</a>
+                <h1 class="page-title">Email Posts</h1>
             </div>
         </div>
     </div>
@@ -64,7 +65,7 @@
                     <?php endif; ?>
                 </div>
                 <div class="posts">
-                    <h3>Posts</h3>
+                    <h3 class="posts-title">Posts</h3>
                     <?php foreach($formattedPosts as $a_post): ?>
                         <?php $formId = 'temp-form-' . $a_post['id']; ?>
                         <?php include('./src/pages/user-posts.php'); ?>
@@ -103,11 +104,13 @@
             );
 
             let formPopUp = newElementCreation(
-                'form', 'Modify-Icon', 'icon-form', ['modify-icon-form'], [{
-                    attributeName: "type",
-                    attributeValue: ""
-                }], divPopUp
+                'form', 'Modify-Icon', 'icon-form', ['modify-icon-form'], [
+                    { attributeName: "action", attributeValue: "/upload-and-crop" },
+                    { attributeName: "method", attributeValue: "POST"},
+                    { attributeName: "enctype", attributeValue: "multipart/form-data"}
+            ], divPopUp
             );
+            // action="/upload-and-crop" method="post" enctype="multipart/form-data"
 
             let inputPart = newElementCreation(
                 'input',

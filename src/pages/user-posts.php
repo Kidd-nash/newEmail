@@ -13,8 +13,8 @@
     <div class="comment-form-wrapper" id="<?php echo $formId ?>">
         <?php foreach ($a_post['comments'] as $comment): ?>
             <div class="each-comment">
-                <p><?php echo $comment['content'] ?> | by: <?php echo $comment['author_id'] ?></p>
-                <p>on: <?php echo $comment['date_posted'] ?></p>
+                <p class="comment-content"><?php echo $comment['content'] ?> | by: <?php echo $comment['author_id'] ?></p>
+                <p class="comment-content">on: <?php echo $comment['date_posted'] ?></p>
             </div>
         <?php endforeach; ?>
         <form class="comment-form" method="POST" action="/comment-post">

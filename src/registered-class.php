@@ -28,6 +28,6 @@
                 echo "Your password is: " . $password;
             ?>
         </p>
-        <a href="http://email.api:8080/new-home" target="_blank">Go back home to log in....</a>
+        <a href="http://email.api:8080/home-page" target="_blank">Go back home to log in....</a>
     </body>
 </html>
