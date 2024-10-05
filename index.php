@@ -27,6 +27,9 @@ switch ($uri) {
     case '/home-page':
         echo $post->listPost();
         break;
+    case '/search-list':
+        echo $post->searchPosts();
+        break;
 
 
  

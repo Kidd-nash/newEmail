@@ -115,34 +115,7 @@ class Post {
         ]);
 
         $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
-
-
-
-        $formattedPosts = [];
-        foreach ($posts as $post) {
-            if (!isset($formattedPosts[$post['id']])) {
-                $formattedPosts[$post['id']] = [];
-            }
-            if (!isset($formattedPosts[$post['id']]['comments'])) {
-                $formattedPosts[$post['id']]['comments'] = [];
-            }
-
-            if (!empty($post['comment_id'])) {
-                $formattedPosts[$post['id']]['comments'][] = [
-                    'id' => $post['comment_id'],
-                    'content' => $post['comment_content'],
-                    'date_posted' => $post['date_posted'],
-                    'author_id' => $post['author_id']
-                ];
-            }
-
-            $formattedPosts[$post['id']]['content'] = $post['content'];
-            $formattedPosts[$post['id']]['id'] = $post['id'];
-            $formattedPosts[$post['id']]['date_posted'] = $post['date_posted'];
-            $formattedPosts[$post['id']]['upvotes'] = $post['upvotes'];
-            $formattedPosts[$post['id']]['author_id'] = $post['author_id'];
-
-        }
+        $formattedPosts = $this->getFormattedPosts($posts);
 
         ob_start();
 
@@ -257,33 +230,7 @@ class Post {
         ]);
 
         $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
-
-        $formattedPosts = [];
-        foreach ($posts as $post) {
-            if (!isset($formattedPosts[$post['id']])) {
-                $formattedPosts[$post['id']] = [];
-            }
-            if (!isset($formattedPosts[$post['id']]['comments'])) {
-                $formattedPosts[$post['id']]['comments'] = [];
-            }
-
-            if (!empty($post['comment_id'])) {
-                $formattedPosts[$post['id']]['comments'][] = [
-                    'id' => $post['comment_id'],
-                    'content' => $post['comment_content'],
-                    'date_posted' => $post['date_posted'],
-                    'author_id' => $post['author_id']
-                ];
-            }
-
-            $formattedPosts[$post['id']]['content'] = $post['content'];
-            $formattedPosts[$post['id']]['id'] = $post['id'];
-            $formattedPosts[$post['id']]['date_posted'] = $post['date_posted'];
-            $formattedPosts[$post['id']]['upvotes'] = $post['upvotes'];
-            $formattedPosts[$post['id']]['author_id'] = $post['author_id'];
-
-        }
-
+        $formattedPosts = $this->getFormattedPosts($posts);
 
         ob_start();
 
@@ -782,5 +729,72 @@ class Post {
         die();
 
     }
+
+    public function searchPosts() 
+    {
+        session_start();
+
+        $isLoggedIn = false;
+            if (isset($_SESSION['userId'])) {
+                $isLoggedIn = true;
+            } else {
+            }
+
+        ob_start();
+        if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+
+            $search = $_POST['search'];
+
+            $searchQuery = $this->connection->prepare(
+                "SELECT * FROM post_a_note WHERE author_id = :id AND content LIKE :searchTerm"
+            );
+            $searchQuery->execute([
+                'id' => $_SESSION['userId'],
+                'searchTerm' => '%' . $search . '%'
+            ]);
+
+            $searched = $searchQuery->fetchAll(PDO::FETCH_ASSOC);
+            $formattedPosts = $this->getFormattedPosts($searched);
+
+            include_once('./src/pages/home-page.php');
+    
+            return ob_get_clean();
+            
+            
+        }
+    }
+
+    private function getFormattedPosts($posts): array
+    {
+
+        $formattedPosts = [];
+        foreach ($posts as $post) {
+            if (!isset($formattedPosts[$post['id']])) {
+                $formattedPosts[$post['id']] = [];
+            }
+            if (!isset($formattedPosts[$post['id']]['comments'])) {
+                $formattedPosts[$post['id']]['comments'] = [];
+            }
+
+            if (!empty($post['comment_id'])) {
+                $formattedPosts[$post['id']]['comments'][] = [
+                    'id' => $post['comment_id'],
+                    'content' => $post['comment_content'],
+                    'date_posted' => $post['date_posted'],
+                    'author_id' => $post['author_id']
+                ];
+            }
+
+            $formattedPosts[$post['id']]['content'] = $post['content'];
+            $formattedPosts[$post['id']]['id'] = $post['id'];
+            $formattedPosts[$post['id']]['date_posted'] = $post['date_posted'];
+            $formattedPosts[$post['id']]['upvotes'] = $post['upvotes'];
+            $formattedPosts[$post['id']]['author_id'] = $post['author_id'];
+
+        }
+
+        return $formattedPosts;
+    }
+    
 }
 

@@ -152,6 +152,7 @@
 }
 
 .left {
+    margin: 5px;
     max-height: 0;
     max-width: 0;
     overflow: hidden;
@@ -175,7 +176,6 @@
 }
 
 .hidden-left {
-    margin: 5px;
     border-radius: 20px;
     background-color: rgb(189, 246, 209);
     /* border: 2px solid red; */

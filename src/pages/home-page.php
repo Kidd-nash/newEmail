@@ -19,6 +19,13 @@
                 <h1 class="page-title">Email Posts</h1>
             </div>
         </div>
+        <div class="header-search-bar">
+            <form method="POST" action="/search-list" id="search-form">
+                <span>Search:</span>
+                <input type="text" name="search"  placeholder="Type something"/>
+                <button type="submit"><img src="magnifying.svg" /></button>
+            </form>
+        </div>
     </div>
     <div class="two">
         <div class="left" id="left">
