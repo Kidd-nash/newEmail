@@ -1,14 +1,18 @@
 <div class="each-user-post">
     <div>
-        <p>Author ID: <?php echo $a_post['author_id'] ?></p>
-        <p><?php echo $a_post['date_posted'] ?></p>
-        <p><?php echo $a_post['content'] ?></p>
+        <p class="each-post each-post-contents">Author ID: <?php echo $a_post['author_id'] ?></p>
+        <p class="each-post each-post-contents"><?php echo $a_post['date_posted'] ?></p>
+        <p class="each-post each-post-contents"><?php echo $a_post['content'] ?></p>
     </div>
-    <p><?php echo count($a_post['comments']) ?> comments</p>
-    <div class="posts-buttons">
-        <a href='http://email.api:8080/class-post-editing?editingId=<?php echo $a_post["id"] ?>'><img src="edit.svg" /></a>
-        <button onclick="commentFunction('<?php echo $formId ?>')">Comment</button>
-        <a href='http://email.api:8080/class-post-delete?deleteId=<?php echo $a_post["id"] ?>'><img src="delete.svg" /></a>
+    <p class="each-post each-post-contents"><?php echo count($a_post['comments']) ?> comments</p>
+    <div class="posts-buttons each-post">
+        <a class="button-link" href='http://email.api:8080/class-post-editing?editingId=<?php echo $a_post["id"] ?>'>
+            <img class="each-post post-button each-post-button" src="edit.svg" />
+        </a>
+        <button class="each-post comment-button-post each-post-button" onclick="commentFunction('<?php echo $formId ?>')">Comment</button>
+        <a class="button-link" href='http://email.api:8080/class-post-delete?deleteId=<?php echo $a_post["id"] ?>'>
+            <img class="each-post post-button each-post-button" src="delete.svg" />
+        </a>
     </div>
     <div class="comment-form-wrapper" id="<?php echo $formId ?>">
         <?php foreach ($a_post['comments'] as $comment): ?>

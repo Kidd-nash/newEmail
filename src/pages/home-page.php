@@ -20,10 +20,16 @@
             </div>
         </div>
         <div class="header-search-bar">
-            <form method="POST" action="/search-list" id="search-form">
-                <span>Search:</span>
-                <input type="text" name="search"  placeholder="Type something"/>
-                <button type="submit"><img src="magnifying.svg" /></button>
+            <form class="header-search" method="POST" action="/search-list" id="search-form">
+                <div class="form-parts">
+                    <label class="form-parts search-text">Search:</label>
+                </div>
+                <div class="search-form">
+                    <input class="search-input" type="text" name="search"  placeholder="Type something" class="form-parts"
+                        value="<?php echo !empty($search) ? $search : ''?>"
+                    />
+                    <button class="form-parts search-button-icon" type="submit"><img class="search-icon" src="magnifying.svg" /></button>
+                </div>
             </form>
         </div>
     </div>
@@ -43,29 +49,29 @@
                     <?php echo '<p class="user-name">' ?>
                     <?= $_SESSION['username'] ?>
                     <?php echo '</p>' ?>
-                    <button class="nav-buttons" onclick="modifyIcon()" id="icon-button">Icon</button>
-                    <button class="nav-buttons" onclick="homePage()">Home</button>
-                    <button class="nav-buttons" onclick="menuPage()">Menu</button>
-                    <button class="nav-buttons" onclick="logOut()">Logout</button>
+                    <button class="nav-buttons icon-button" onclick="modifyIcon()" id="icon-button">Icon</button>
+                    <button class="nav-buttons home-button" onclick="homePage()">Home</button>
+                    <button class="nav-buttons menu-button" onclick="menuPage()">Menu</button>
+                    <button class="nav-buttons logout-button" onclick="logOut()">Logout</button>
                 </div>
             <?php endif; ?>
         </div>
         <div class="right" id="main">
             <?php if (!$isLoggedIn): ?>
                 <div class="posting">
-                    <p>You can post stuff in here, but you have to be logged in first</p>
+                    <p class="page-title">You can post stuff in here, but you have to be logged in first</p>
                     <a class="nav-buttons" href="/new-register" target="_self">Register</a>
                     <a class="nav-buttons" href="/new-login" target="_self">Log In</a>
                 </div>
             <?php else: ?>
                 <div class="posting">
-                    <h3>Posting Something?</h3>
+                    <h3 class="post-content">Posting Something?</h3>
                     <form class="post-content" method="POST" action="/new-posting" id="content-form">
-                        <label>Enter Post...</label>
+                        <label class="post-content">Enter Post...</label>
                         <br>
-                        <textarea name="content" rows="4" cols="50"></textarea>
+                        <textarea class="post-content-area" name="content" rows="4" cols="50"></textarea>
                         <br>
-                        <button type="submit">POST!</button>
+                        <button class="post-content post-content-button" type="submit">POST</button>
                     </form>
                     <?php if (isset($isSaved)): ?>
                         <p>Saved succesfully</p>

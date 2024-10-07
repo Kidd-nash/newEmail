@@ -2,7 +2,7 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    background-color: rgb(242, 245, 244);
+    background-color: rgb(57, 39, 82);
     font-family: 'Space Mono', monospace;
 }
 
@@ -28,8 +28,12 @@
 .header-icon {
     background-color: rgb(189, 246, 209);
     border-radius: 50%;
-    /* border: 2px solid black; */
+    border: 2px solid rgb(213, 139, 7);
     width: 50%;
+}
+
+.header-icon:hover {
+    border: 2px solid rgb(255, 189, 28);
 }
 
 .main-header-banner {
@@ -53,7 +57,7 @@
     /* border: 2px solid red; */
 }
 
-.icon-button {
+/* .icon-button {
     background-color: rgb(47, 200, 247); 
     border: none;
     color: white;
@@ -66,7 +70,7 @@
 
 .icon-button:hover {
     background-color: rgb(17, 170, 217);
-}
+} */
 
 .form-wrapper {
     max-height: 0;
@@ -114,19 +118,31 @@
 }
 
 .one {
-    background-color: rgb(146, 237, 240);
-    /* border: 2px solid blue; */
+    background-color: rgb(189, 154, 180);
+    border: 2px solid black;
     width: 100%;
     min-height: 80px;
     display: inline-flex;
     position: fixed;
+    border-radius: 15px;
     /* z-index: 10; */
 }
 
+.each-post-contents {
+    padding: 10px 0px 0px 5px;
+}
+
+.each-post-button {
+    /* border: 2px solid rgb(57, 39, 82); */
+    box-shadow: 1px 2px rgb(57, 39, 82);
+    border-radius: 7px;
+}
+
 .grid-button {
-    background-color: rgb(47, 200, 247); 
+    background-color: rgb(161, 120, 154);
+    box-shadow: 2px 4px rgb(57, 39, 82);
     border: none;
-    color: white;
+    /* color: white; */
     /* border: 2px solid black; */
     width: 15%;
     border-radius: 4px;
@@ -135,6 +151,27 @@
     display: inline-block;
     font-size: 16px;
     margin: 11px;
+    cursor: pointer;
+}
+
+.grid-button:hover {
+    border: 2px solid rgb(255, 189, 28);
+}
+
+.icon-button:hover {
+    border: 2px solid rgb(255, 189, 28);
+}
+
+.home-button:hover {
+    border: 2px solid rgb(255, 189, 28);
+}
+
+.menu-button:hover {
+    border: 2px solid rgb(255, 189, 28);
+}
+
+.logout-button:hover {
+    border: 2px solid rgb(255, 189, 28);
 }
 
 .two {
@@ -146,7 +183,7 @@
 }
 
 .grid{
-    background-color: rgb(47, 200, 247);
+    background-color: rgb(161, 120, 154);
     color: white;
     width: 24%;
 }
@@ -177,9 +214,9 @@
 
 .hidden-left {
     border-radius: 20px;
-    background-color: rgb(189, 246, 209);
-    /* border: 2px solid red; */
-    width: 100%;
+    background-color: rgb(189, 154, 180);
+    border: 2px solid black;
+    width: 98%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -187,7 +224,7 @@
 }
 
 .left-icon {
-    background-color: rgb(189, 246, 209);
+    background-color: rgb(189, 154, 180);
     display: flex;
     justify-content: center;
     width: 100%;
@@ -196,15 +233,30 @@
 }
 
 .nav-buttons {
-    background-color: rgb(47, 200, 247); 
+    border-radius: 5px;
+    box-shadow: 1px 2px;
+    background-color: rgb(161, 120, 154);
     border: none;
-    color: white;
-    padding: 0 32px;
+    padding: 5px 30px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 5px 50px;
+    margin: 10px 50px;
+    cursor: pointer;
+}
+
+.post-button {
+    width: 30px;
+}
+
+.button-link {
+    background-color: rgb(161, 120, 154);
+}
+
+.comment-button-post {
+    padding: 5px 15px;
+    font-size: 16px;
     cursor: pointer;
 }
 
@@ -212,8 +264,8 @@
     border-radius: 20px;
     margin: 5px;
     padding: 10px 0;
-    background-color: rgb(55, 161, 245);
-    /* border: 2px solid purple; */
+    background-color: rgb(189, 154, 180);
+    border: 2px solid black;
     width: 70%;
     min-height: 100px;
     display: inline-flex;
@@ -221,17 +273,44 @@
     align-content: center;
 }
 
+.post-content {
+    background-color: rgb(189, 154, 180);
+
+}
+
+.post-content-area {
+    background-color: white;
+    padding: 5px;
+}
+
+.post-content-area:hover {
+    border: 2px solid rgb(255, 189, 28);
+}
+
+.post-content-button {
+    border-radius: 5px;
+    padding: 5px 15px;
+    background-color: rgb(161, 120, 154);
+    border: none;
+    cursor: pointer;
+    box-shadow: 1px 2px rgb(57, 39, 82);
+}
+
+.post-content-button:hover {
+    border: 2px solid rgb(255, 189, 28);
+}
+
 .posts {
     border-radius: 20px;
-    background-color: white;
+    background-color: rgb(189, 154, 180);
     padding: 10px;
-    /* border: 2px solid green; */
+    border: 2px solid black;
     width: 90%;
     min-height: 500px;
 }
 
 .ui-header-banner {
-    background-color: rgb(146, 237, 240);
+    background-color: rgb(189, 154, 180);
     /* border: 2px solid green; */
     width: 96%;
     display: flex;
@@ -267,14 +346,20 @@
 
 .user-name {
     padding: 0 50px;
-    background-color: rgb(189, 246, 209);
+    background-color: rgb(189, 154, 180);
 }
 
 .each-user-post {
-    /* border: 2px solid purple; */
+    box-shadow: 1px 2px rgb(57, 39, 82);
+    background-color: rgb(161, 120, 154);
+    border: 1px solid black;
     margin: 20px 20px;
     border-radius: 10px;
     padding: 10px;
+}
+
+.each-post {
+    background-color: rgb(161, 120, 154);
 }
 
 .posts-buttons {
@@ -304,12 +389,12 @@
 }
 
 .page-title {
-    background-color: rgb(146, 237, 240);
+    background-color: rgb(189, 154, 180);
 }
 
 .posts-title {
     border-radius: 20px;
-    background-color: white;
+    background-color: rgb(189, 154, 180);
     padding: 10px;
 }
 
@@ -320,4 +405,62 @@
 
 .comment-content {
     background-color: white;
+}
+
+.header-search {
+    border-radius: 10px;
+    background-color: rgb(161, 120, 154);
+    top: 15px;
+    position: relative;
+    display: flex;
+    flex-flow: row;
+    box-shadow: 2px 4px rgb(57, 39, 82);
+    padding: 5px;
+}
+
+.header-search-bar {
+    padding: 10px ;
+    border-radius: 15px; 
+    background-color: rgb(189, 154, 180);
+}
+
+.search-form {
+    display: flex;
+    background-color: rgb(161, 120, 154);
+}
+
+.form-parts {
+    background-color: rgb(161, 120, 154);
+}
+
+.search-icon{
+    background-color: rgb(161, 120, 154);
+}
+
+.search-button-icon {
+    cursor: pointer;
+    margin: 2px;
+    box-shadow: 1px 2px;
+    border-radius: 3px;
+    padding: 4px;
+    border: none;
+    background-color: rgb(161, 120, 154);
+}
+
+.search-button-icon:hover {
+    border: 2px solid rgb(255, 189, 28);
+}
+
+.search-input {
+    background-color: white;
+    padding: 5px;
+}
+
+.search-input:hover {
+    border: 2px solid rgb(255, 189, 28);
+}
+
+.search-text {
+    position: relative;
+    top: 5px;
 }
