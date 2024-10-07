@@ -7,7 +7,8 @@ use Dompdf\Dompdf;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Post {
+class Post
+{
 
     protected $connection;
 
@@ -16,21 +17,20 @@ class Post {
     public function __construct()
     {
 
-                $hostname = 'db_postgres_lab'; 
+        $hostname = 'db_postgres_lab';
 
-                $dbname = 'first'; 
-        
-                $username = 'pguser'; 
-        
-                $password = 'pgpwd'; 
-        
-                $dsn = "pgsql:host=$hostname;dbname=$dbname"; 
-        
-                $this->connection = new PDO($dsn, $username, $password); 
+        $dbname = 'first';
 
+        $username = 'pguser';
+
+        $password = 'pgpwd';
+
+        $dsn = "pgsql:host=$hostname;dbname=$dbname";
+
+        $this->connection = new PDO($dsn, $username, $password);
     }
 
-    public function createPost() 
+    public function createPost()
     {
         session_start();
 
@@ -54,8 +54,19 @@ class Post {
             $content = $_POST['content'];
             $author_id = $id_plus;
 
-            $userQuery = $this->connection->prepare('INSERT INTO post_a_note (content, date_posted, author_id) VALUES (:content, :date_posted, :author_id)');
-            $userQuery->execute(['content' => $content, 'date_posted' => date('Y-m-d'), 'author_id' => $author_id]);
+            $target_file = $this->handleFileUpload();
+
+
+            $userQuery = $this->connection->prepare(
+                'INSERT INTO post_a_note (content, date_posted, author_id, img_path) VALUES (:content, :date_posted, :author_id, :img_path)'
+            );
+
+            $userQuery->execute([
+                'content' => $content,
+                'date_posted' => date('Y-m-d'),
+                'author_id' => $author_id,
+                'img_path' => $target_file
+            ]);
 
             $_SESSION['saved'] = true;
         }
@@ -83,7 +94,7 @@ class Post {
         }
 
         $author_id = $id_plus;
-        
+
 
         $query = '
             SELECT
@@ -92,6 +103,7 @@ class Post {
                 p.date_posted AS date_posted,
                 p.upvotes AS upvotes,
                 p.author_id AS author_id,
+                p.img_path AS img_path,
                 c.comment_content AS comment_content,
                 c.id AS comment_id,
                 c.date_posted AS comment_date_posted,
@@ -117,6 +129,8 @@ class Post {
         $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
         $formattedPosts = $this->getFormattedPosts($posts);
 
+        // echo '<pre>' . print_r($formattedPosts, true) . '</pre>';
+        // die();
         ob_start();
 
         include_once('./src/pages/home-page.php');
@@ -145,27 +159,26 @@ class Post {
         return ob_get_clean();
     }
 
-    public function updatingPost() 
+    public function updatingPost()
     {
         session_start();
         ob_start();
-        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $id = $_POST["id"] ?? null;
             $content = $_POST["content"] . '- edited' ?? null;
-            
+
             $userQuery = $this->connection->prepare("UPDATE post_a_note SET content = :content WHERE id = :id");
-            
+
             $userQuery->execute(['content' => $content, 'id' => $id]);
 
             $_SESSION['saved'] = true;
-
         }
         ob_end_clean();
         header("Location: http://email.api:8080/home-page");
         die();
     }
 
-    public function deletingPost() 
+    public function deletingPost()
     {
         ob_start();
 
@@ -183,7 +196,7 @@ class Post {
         die();
     }
 
-    public function allPosts() 
+    public function allPosts()
     {
         session_start();
 
@@ -200,7 +213,7 @@ class Post {
         }
 
         $author_id = $id_plus;
-        
+
         $query = '
             SELECT
                 p.id AS id,
@@ -239,7 +252,7 @@ class Post {
         return ob_get_clean();
     }
 
-    public function commentPost() 
+    public function commentPost()
     {
         session_start();
 
@@ -269,8 +282,8 @@ class Post {
                 VALUES (:comment, :date_posted, :author_id, :post_id)'
             );
             $userQuery->execute([
-                'comment' => $comment, 
-                'date_posted' => date('Y-m-d'), 
+                'comment' => $comment,
+                'date_posted' => date('Y-m-d'),
                 'author_id' => $author_id,
                 'post_id' => $post_id
             ]);
@@ -281,47 +294,46 @@ class Post {
 
         header("Location: http://email.api:8080/all-posts");
         die();
-
     }
 
-    public function upVoting() 
+    public function upVoting()
     {
         session_start();
-    
+
         if (!isset($_SESSION['userId'])) {
             echo "Access Denied: You must be logged in to upvote.";
             return;
         }
-    
+
         $userId = $_SESSION['userId'];
         $upvoteId = $_GET['upvoteId'] ?? null;
-    
+
         if ($upvoteId === null) {
             echo "Invalid post ID.";
             return;
         }
-    
+
         $selectUserQuery = $this->connection->prepare(
             'SELECT * FROM user_like_post WHERE userid = :userid AND postid = :postid'
         );
-    
+
         $selectUserQuery->execute([
             'userid' => $userId,
             'postid' => $upvoteId
         ]);
-    
+
         $accountLiked = $selectUserQuery->fetch(PDO::FETCH_ASSOC);
-    
+
         if (!$accountLiked) {
             $userLikeQuery = $this->connection->prepare(
                 'INSERT INTO user_like_post (userid, postid) VALUES (:userid, :postid)'
             );
-    
+
             $userLikeQuery->execute([
                 'userid' => $userId,
                 'postid' => $upvoteId
             ]);
-    
+
             // echo "Post liked!";
             $isLiked = true;
         } else {
@@ -342,7 +354,7 @@ class Post {
         $updatePostQuery = $this->connection->prepare(
             'UPDATE post_a_note SET upvotes = :upvotes WHERE id = :id'
         );
-    
+
         $updatePostQuery->execute([
             'upvotes' => $likeCount['count'],
             'id' => $upvoteId
@@ -351,7 +363,8 @@ class Post {
         return $likeCount['count'];
     }
 
-    public function downloadPdf() {
+    public function downloadPdf()
+    {
         $dompdf = new Dompdf();
 
         $postQuery = $this->connection->prepare('SELECT * FROM post_a_note');
@@ -361,7 +374,7 @@ class Post {
         ]);
 
         $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
-     
+
 
 
         ob_start();
@@ -371,7 +384,7 @@ class Post {
         // die($output);
 
         $dompdf->loadHtml($output);
-        
+
         $dompdf->setPaper('A4', 'portrait');
 
         // Render the HTML as PDF
@@ -450,8 +463,8 @@ class Post {
         //     exit;
         // }
 
-        
-           
+
+
     }
 
     public function loadCsv()
@@ -464,7 +477,8 @@ class Post {
 
         $postQuery = $this->connection->prepare(
             'SELECT * FROM post_a_note WHERE author_id = :author_id
-        ');
+        '
+        );
 
         $postQuery->execute([
             'author_id' => $userId
@@ -477,22 +491,22 @@ class Post {
         };
 
         $output = ob_get_clean();
- 
-            header('Content-Description: File Transfer');
-            header('Content-Type: text/csv'); // application/xlsx  -> text/csv
-            header('Content-Disposition: attachment; filename="text-test.csv"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            // header('Content-Length: ' . filesize($file));
-            // readfile($file);
-            echo $output;
-            exit;
+
+        header('Content-Description: File Transfer');
+        header('Content-Type: text/csv'); // application/xlsx  -> text/csv
+        header('Content-Disposition: attachment; filename="text-test.csv"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        // header('Content-Length: ' . filesize($file));
+        // readfile($file);
+        echo $output;
+        exit;
 
         exit;
     }
 
-    protected function emailSSAttach($email, $user_name, $fullPath) 
+    protected function emailSSAttach($email, $user_name, $fullPath)
     {
 
         include_once('./src/email.php');
@@ -562,7 +576,7 @@ class Post {
         exit;
     }
 
-    public function cropImage() 
+    public function cropImage()
     {
         $im = imagecreatefromjpeg('uploads/mario.jpeg');
         $size = min(imagesx($im), imagesy($im));
@@ -574,69 +588,17 @@ class Post {
         imagedestroy($im);
     }
 
-    public function uploadImage() 
+    public function uploadImage()
     {
         global $target_file;
         $target_dir = "uploads/";
         $target_file = self::UPLOADS_DIR . basename($_FILES["fileToUpload"]["name"]);
         $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        
-        if(isset($_POST["submit"])) { // Check if image file is a actual image or fake image
-        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        if($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".";
-            $uploadOk = 1;
-        } else {
-            echo "File is not an image.";
-            $uploadOk = 0;
-        }
-        }
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-        if (file_exists($target_file)) { // Check if file already exists
-        echo "Sorry, file already exists.";
-        $uploadOk = 0;
-        }
-
-        if ($_FILES["fileToUpload"]["size"] > 1500000000) { // Check file size
-        echo "Sorry, your file is too large.";
-        $uploadOk = 0;
-        }
-        
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" // Allow certain file formats
-        && $imageFileType != "gif" ) {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-        $uploadOk = 0;
-        }
-
-        if ($uploadOk == 0) { // Check if $uploadOk is set to 0 by an error
-        echo "Sorry, your file was not uploaded.";
-        } else { // if everything is ok, try to upload file
-        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
-        }
-    }
-
-    public function uploadAndCrop() 
-    {
-        ob_start();
-        session_start();
-        // $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-        $extension = pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION);
-        $newFileName = md5( date('Y-m-d H:i:s') )  . rand(111, 999) . rand(111, 999);
-        $target_file = self::UPLOADS_DIR . $newFileName . '.' . $extension;
-
-        // die($extension);
-
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-        if(isset($_POST["submit"])) { // Check if image file is a actual image or fake image
+        if (isset($_POST["submit"])) { // Check if image file is a actual image or fake image
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-            if($check !== false) {
+            if ($check !== false) {
                 echo "File is an image - " . $check["mime"] . ".";
                 $uploadOk = 1;
             } else {
@@ -644,38 +606,93 @@ class Post {
                 $uploadOk = 0;
             }
         }
-        
+
         if (file_exists($target_file)) { // Check if file already exists
-        echo "Sorry, file already exists.";
-        $uploadOk = 0;
+            echo "Sorry, file already exists.";
+            $uploadOk = 0;
         }
 
-        if ($_FILES["fileToUpload"]["size"] > 1500000000) { // Allow certain file formats
-        echo "Sorry, your file is too large.";
-        $uploadOk = 0;
+        if ($_FILES["fileToUpload"]["size"] > 1500000000) { // Check file size
+            echo "Sorry, your file is too large.";
+            $uploadOk = 0;
         }
 
-        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" // Allow certain file formats
-        && $imageFileType != "gif" ) {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-        $uploadOk = 0;
+        if (
+            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" // Allow certain file formats
+            && $imageFileType != "gif"
+        ) {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
         }
 
         if ($uploadOk == 0) { // Check if $uploadOk is set to 0 by an error
-        echo "Sorry, your file was not uploaded."; // if everything is ok, try to upload file  
-        } else {
-        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-        } else {
-            echo "Sorry, there was an error uploading your file.";
+            echo "Sorry, your file was not uploaded.";
+        } else { // if everything is ok, try to upload file
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
         }
+    }
+
+    public function uploadAndCrop()
+    {
+        ob_start();
+        session_start();
+        // $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $extension = pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION);
+        $newFileName = md5(date('Y-m-d H:i:s'))  . rand(111, 999) . rand(111, 999);
+        $target_file = self::UPLOADS_DIR . $newFileName . '.' . $extension;
+
+        // die($extension);
+
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        if (isset($_POST["submit"])) { // Check if image file is a actual image or fake image
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            if ($check !== false) {
+                echo "File is an image - " . $check["mime"] . ".";
+                $uploadOk = 1;
+            } else {
+                echo "File is not an image.";
+                $uploadOk = 0;
+            }
         }
 
+        if (file_exists($target_file)) { // Check if file already exists
+            echo "Sorry, file already exists.";
+            $uploadOk = 0;
+        }
+
+        if ($_FILES["fileToUpload"]["size"] > 1500000000) { // Allow certain file formats
+            echo "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+
+        if (
+            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" // Allow certain file formats
+            && $imageFileType != "gif"
+        ) {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+
+        if ($uploadOk == 0) { // Check if $uploadOk is set to 0 by an error
+            echo "Sorry, your file was not uploaded."; // if everything is ok, try to upload file  
+        } else {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
+        }
 
         if ($extension == 'png') {
 
-//         echo strval($target_file);
-// // TODO: fix
+            //         echo strval($target_file);
+            // // TODO: fix
             $im = imagecreatefrompng($target_file);
             // $im = @imagecreatefrompng($target_file);
             $size = 300; // min(imagesx($im), imagesy($im));
@@ -683,13 +700,12 @@ class Post {
             $imageWidth = imagesx($im);
             $imageLength = imagesy($im);
 
-            $im2 = imagecrop($im, ['x' => ($imageWidth-$size)/2, 'y' => ($imageLength-$size)/2, 'width' => $size, 'height' => $size]);
+            $im2 = imagecrop($im, ['x' => ($imageWidth - $size) / 2, 'y' => ($imageLength - $size) / 2, 'width' => $size, 'height' => $size]);
             if ($im2 !== FALSE) {
                 imagepng($im2, 'uploads/' . $newFileName . '.png');
                 imagedestroy($im2);
             }
             imagedestroy($im);
-    
         } elseif ($extension == 'jpg' || $extension == 'jpeg') {
 
             $im = imagecreatefromjpeg($target_file);
@@ -699,13 +715,12 @@ class Post {
             $imageWidth = imagesx($im);
             $imageLength = imagesy($im);
 
-            $im2 = imagecrop($im, ['x' => ($imageWidth-$size)/2, 'y' => ($imageLength-$size)/2, 'width' => $size, 'height' => $size]);
+            $im2 = imagecrop($im, ['x' => ($imageWidth - $size) / 2, 'y' => ($imageLength - $size) / 2, 'width' => $size, 'height' => $size]);
             if ($im2 !== FALSE) {
                 imagepng($im2, 'uploads/' . $newFileName . '.png');
                 imagedestroy($im2);
             }
             imagedestroy($im);
-
         } else {
             echo 'file needs to be PNG or JPEG';
         }
@@ -727,21 +742,20 @@ class Post {
         ob_end_clean();
         header("Location: http://email.api:8080/home-page");
         die();
-
     }
 
-    public function searchPosts() 
+    public function searchPosts()
     {
         session_start();
 
         $isLoggedIn = false;
-            if (isset($_SESSION['userId'])) {
-                $isLoggedIn = true;
-            } else {
-            }
+        if (isset($_SESSION['userId'])) {
+            $isLoggedIn = true;
+        } else {
+        }
 
         ob_start();
-        if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $search = $_POST['search'];
 
@@ -757,10 +771,8 @@ class Post {
             $formattedPosts = $this->getFormattedPosts($searched);
 
             include_once('./src/pages/home-page.php');
-    
+
             return ob_get_clean();
-            
-            
         }
     }
 
@@ -790,11 +802,64 @@ class Post {
             $formattedPosts[$post['id']]['date_posted'] = $post['date_posted'];
             $formattedPosts[$post['id']]['upvotes'] = $post['upvotes'];
             $formattedPosts[$post['id']]['author_id'] = $post['author_id'];
-
+            $formattedPosts[$post['id']]['img_path'] = $post['img_path'];
         }
 
         return $formattedPosts;
     }
-    
-}
 
+    private function handleFileUpload(): string
+    {
+        $targetFile = '';
+
+        if (!empty($_FILES["fileToUpload"]["name"])) {
+            $extension = pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION);
+            $newFileName = md5(date('Y-m-d H:i:s'))  . rand(111, 999) . rand(111, 999);
+            $target_file = self::UPLOADS_DIR . $newFileName . '.' . $extension;
+
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+            if (isset($_POST["submit"])) { // Check if image file is a actual image or fake image
+                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+                if ($check !== false) {
+                    echo "File is an image - " . $check["mime"] . ".";
+                    $uploadOk = 1;
+                } else {
+                    echo "File is not an image.";
+                    $uploadOk = 0;
+                }
+            }
+
+            if (file_exists($target_file)) { // Check if file already exists
+                echo "Sorry, file already exists.";
+                $uploadOk = 0;
+            }
+
+            if ($_FILES["fileToUpload"]["size"] > 1500000000) { // Allow certain file formats
+                echo "Sorry, your file is too large.";
+                $uploadOk = 0;
+            }
+
+            if (
+                $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" // Allow certain file formats
+                && $imageFileType != "gif"
+            ) {
+                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                $uploadOk = 0;
+            }
+
+            if ($uploadOk == 0) { // Check if $uploadOk is set to 0 by an error
+                echo "Sorry, your file was not uploaded."; // if everything is ok, try to upload file  
+            } else {
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+            }
+        }
+
+        return $target_file;
+    }
+}
