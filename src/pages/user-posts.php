@@ -1,8 +1,15 @@
 <div class="each-user-post">
-    <div>
+    <div class="contents-div">
         <p class="each-post each-post-contents">Author ID: <?php echo $a_post['author_id'] ?></p>
         <p class="each-post each-post-contents"><?php echo $a_post['date_posted'] ?></p>
         <p class="each-post each-post-contents"><?php echo $a_post['content'] ?></p>
+        <?php if (!empty($a_post['img_path'])): ?>
+        <div class="image-posted-wrapper">
+            <img 
+            src="<?php echo $a_post['img_path'] ?>" 
+            class="image-posted" />
+        </div>
+        <?php endif; ?>
     </div>
     <p class="each-post each-post-contents"><?php echo count($a_post['comments']) ?> comments</p>
     <div class="posts-buttons each-post">

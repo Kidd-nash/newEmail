@@ -66,10 +66,13 @@
             <?php else: ?>
                 <div class="posting">
                     <h3 class="post-content">Posting Something?</h3>
-                    <form class="post-content" method="POST" action="/new-posting" id="content-form">
+                    <form class="post-content" method="POST" action="/new-posting" id="content-form" enctype="multipart/form-data">
                         <label class="post-content">Enter Post...</label>
                         <br>
                         <textarea class="post-content-area" name="content" rows="4" cols="50"></textarea>
+                        <br>
+                        <label class="post-content">Select image to upload:</label>
+                        <input type="file" name="fileToUpload" id="fileToUpload" class="post-content">
                         <br>
                         <button class="post-content post-content-button" type="submit">POST</button>
                     </form>

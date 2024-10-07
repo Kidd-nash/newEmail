@@ -464,3 +464,19 @@
     position: relative;
     top: 5px;
 }
+
+.image-posted-wrapper {
+    background-color: rgb(161, 120, 154);
+    border: 2px solid black;
+    width: 25%;
+
+}
+
+.image-posted {
+    background-color: rgb(161, 120, 154);
+    width: 100%;
+}
+
+.contents-div {
+    background-color: rgb(161, 120, 154);
+}
