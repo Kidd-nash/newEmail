@@ -4,6 +4,8 @@
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="src/style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 
 <body>
@@ -14,9 +16,21 @@
         <div class="ui-header-banner">
             <img class="ui-header-logo" src="uploads/pen-icon.png">
             <div>
-                <h1>Email Posts</h1>
-                <a>Menu</a>
+                <h1 class="page-title">Email Posts</h1>
             </div>
+        </div>
+        <div class="header-search-bar">
+            <form class="header-search" method="POST" action="/search-list" id="search-form">
+                <div class="form-parts">
+                    <label class="form-parts search-text">Search:</label>
+                </div>
+                <div class="search-form">
+                    <input class="search-input" type="text" name="search"  placeholder="Type something" class="form-parts"
+                        value="<?php echo !empty($search) ? $search : ''?>"
+                    />
+                    <button class="form-parts search-button-icon" type="submit"><img class="search-icon" src="magnifying.svg" /></button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="two">
@@ -35,37 +49,38 @@
                     <?php echo '<p class="user-name">' ?>
                     <?= $_SESSION['username'] ?>
                     <?php echo '</p>' ?>
-                    <button class="nav-buttons" onclick="modifyIcon()" id="icon-button">Icon</button>
-                    <button class="nav-buttons">Home</button>
-                    <button class="nav-buttons">Menu</button>
-                    <button class="nav-buttons">Logout</button>
+                    <button class="nav-buttons icon-button" onclick="modifyIcon()" id="icon-button">Icon</button>
+                    <button class="nav-buttons home-button" onclick="homePage()">Home</button>
+                    <button class="nav-buttons menu-button" onclick="menuPage()">Menu</button>
+                    <button class="nav-buttons logout-button" onclick="logOut()">Logout</button>
                 </div>
             <?php endif; ?>
         </div>
         <div class="right" id="main">
             <?php if (!$isLoggedIn): ?>
                 <div class="posting">
-                    <p>You can post stuff in here, but you have to be logged in first</p>
+                    <p class="page-title">You can post stuff in here, but you have to be logged in first</p>
                     <a class="nav-buttons" href="/new-register" target="_self">Register</a>
                     <a class="nav-buttons" href="/new-login" target="_self">Log In</a>
                 </div>
             <?php else: ?>
                 <div class="posting">
-                    <h3>Posting Something?</h3>
+                    <h3 class="post-content">Posting Something?</h3>
                     <form class="post-content" method="POST" action="/new-posting" id="content-form">
-                        <label>Enter Post...</label>
+                        <label class="post-content">Enter Post...</label>
                         <br>
-                        <textarea name="content" rows="4" cols="50"></textarea>
+                        <textarea class="post-content-area" name="content" rows="4" cols="50"></textarea>
                         <br>
-                        <button type="submit">POST!</button>
+                        <button class="post-content post-content-button" type="submit">POST</button>
                     </form>
                     <?php if (isset($isSaved)): ?>
                         <p>Saved succesfully</p>
                     <?php endif; ?>
                 </div>
                 <div class="posts">
-                    <h3>Posts</h3>
-                    <?php foreach($posts as $a_post): ?>
+                    <h3 class="posts-title">Posts</h3>
+                    <?php foreach($formattedPosts as $a_post): ?>
+                        <?php $formId = 'temp-form-' . $a_post['id']; ?>
                         <?php include('./src/pages/user-posts.php'); ?>
                     <?php endforeach; ?>
                 </div>
@@ -102,11 +117,13 @@
             );
 
             let formPopUp = newElementCreation(
-                'form', 'Modify-Icon', 'icon-form', ['modify-icon-form'], [{
-                    attributeName: "type",
-                    attributeValue: ""
-                }], divPopUp
+                'form', 'Modify-Icon', 'icon-form', ['modify-icon-form'], [
+                    { attributeName: "action", attributeValue: "/upload-and-crop" },
+                    { attributeName: "method", attributeValue: "POST"},
+                    { attributeName: "enctype", attributeValue: "multipart/form-data"}
+            ], divPopUp
             );
+            // action="/upload-and-crop" method="post" enctype="multipart/form-data"
 
             let inputPart = newElementCreation(
                 'input',
@@ -180,6 +197,29 @@
             parent.appendChild(newElement);
             return newElement;
         };
+
+        function commentFunction(elementId) {
+            var x = document.getElementById(elementId);
+            // console.log();
+            if (x.style.maxHeight == 0 || x.style.maxHeight == '0px') {
+                x.style.maxHeight = "500px";
+            } else {
+                x.style.maxHeight = 0;
+            }
+        }
+
+        function homePage() {
+            window.location.href = "http://email.api:8080/home-page";
+        }
+
+        function menuPage() {
+            window.location.href = "http://email.api:8080/all-posts";
+        }
+
+        function logOut() {
+            window.location.href = "http://email.api:8080/new-logout";
+        }
+
     </script>
 </body>
 

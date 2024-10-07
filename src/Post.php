@@ -65,6 +65,7 @@ class Post {
         die();
     }
 
+    // home-page
     public function listPost()
     {
         session_start();
@@ -83,17 +84,38 @@ class Post {
 
         $author_id = $id_plus;
         
-        $postQuery = $this->connection->prepare(
-            'SELECT * FROM post_a_note 
-            WHERE author_id = :author_id
-            ORDER BY date_posted DESC'
-        );
 
+        $query = '
+            SELECT
+                p.id AS id,
+                p.content AS content,
+                p.date_posted AS date_posted,
+                p.upvotes AS upvotes,
+                p.author_id AS author_id,
+                c.comment_content AS comment_content,
+                c.id AS comment_id,
+                c.date_posted AS comment_date_posted,
+                c.author_id AS comment_author_id
+            FROM
+                post_a_note p
+            LEFT JOIN
+                post_a_note_comments c
+            ON
+                (p.id = c.post_id)
+            WHERE
+                p.author_id = :author_id
+            ORDER BY p.date_posted DESC
+            ;
+        ';
+
+
+        $postQuery = $this->connection->prepare($query);
         $postQuery->execute([
             'author_id' => $author_id,
         ]);
 
         $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
+        $formattedPosts = $this->getFormattedPosts($posts);
 
         ob_start();
 
@@ -139,7 +161,7 @@ class Post {
 
         }
         ob_end_clean();
-        header("Location: http://email.api:8080/new-home");
+        header("Location: http://email.api:8080/home-page");
         die();
     }
 
@@ -157,7 +179,7 @@ class Post {
 
         ob_end_clean();
 
-        header("Location: http://email.api:8080/new-home");
+        header("Location: http://email.api:8080/home-page");
         die();
     }
 
@@ -197,57 +219,22 @@ class Post {
             ON
                 (p.id = c.post_id)
             ORDER BY p.id DESC
-            LIMIT 10
+            LIMIT 20
             ;
         ';
 
         $postQuery = $this->connection->prepare($query);
-
-
-        $array = [];
-
-        $array[] = ['apple'];
-
-
-        $array = [];
-
 
         $postQuery->execute([
             // 'author_id' => $author_id,
         ]);
 
         $posts = $postQuery->fetchAll(PDO::FETCH_ASSOC);
-
-        $formattedPosts = [];
-        foreach ($posts as $post) {
-            if (!isset($formattedPosts[$post['id']])) {
-                $formattedPosts[$post['id']] = [];
-            }
-            if (!isset($formattedPosts[$post['id']]['comments'])) {
-                $formattedPosts[$post['id']]['comments'] = [];
-            }
-
-            if (!empty($post['comment_id'])) {
-                $formattedPosts[$post['id']]['comments'][] = [
-                    'id' => $post['comment_id'],
-                    'content' => $post['comment_content'],
-                    'date_posted' => $post['date_posted'],
-                    'author_id' => $post['author_id']
-                ];
-            }
-
-            $formattedPosts[$post['id']]['content'] = $post['content'];
-            $formattedPosts[$post['id']]['id'] = $post['id'];
-            $formattedPosts[$post['id']]['date_posted'] = $post['date_posted'];
-            $formattedPosts[$post['id']]['upvotes'] = $post['upvotes'];
-            $formattedPosts[$post['id']]['author_id'] = $post['author_id'];
-
-        }
-
+        $formattedPosts = $this->getFormattedPosts($posts);
 
         ob_start();
 
-        include_once('./src/new-all-posts.php');
+        include_once('./src/pages/home-page.php');
 
         return ob_get_clean();
     }
@@ -267,7 +254,7 @@ class Post {
             } else {
                 $_SESSION['accessDeniedError'];
                 ob_end_clean();
-                header("Location: http://email.api:8080/new-home");
+                header("Location: http://email.api:8080/home-page");
                 die();
             }
 
@@ -738,9 +725,76 @@ class Post {
         $_SESSION['profile_pic'] = self::UPLOADS_DIR . $newFileName . '.png';
 
         ob_end_clean();
-        header("Location: http://email.api:8080/new-home");
+        header("Location: http://email.api:8080/home-page");
         die();
 
     }
+
+    public function searchPosts() 
+    {
+        session_start();
+
+        $isLoggedIn = false;
+            if (isset($_SESSION['userId'])) {
+                $isLoggedIn = true;
+            } else {
+            }
+
+        ob_start();
+        if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+
+            $search = $_POST['search'];
+
+            $searchQuery = $this->connection->prepare(
+                "SELECT * FROM post_a_note WHERE author_id = :id AND content LIKE :searchTerm"
+            );
+            $searchQuery->execute([
+                'id' => $_SESSION['userId'],
+                'searchTerm' => '%' . $search . '%'
+            ]);
+
+            $searched = $searchQuery->fetchAll(PDO::FETCH_ASSOC);
+            $formattedPosts = $this->getFormattedPosts($searched);
+
+            include_once('./src/pages/home-page.php');
+    
+            return ob_get_clean();
+            
+            
+        }
+    }
+
+    private function getFormattedPosts($posts): array
+    {
+
+        $formattedPosts = [];
+        foreach ($posts as $post) {
+            if (!isset($formattedPosts[$post['id']])) {
+                $formattedPosts[$post['id']] = [];
+            }
+            if (!isset($formattedPosts[$post['id']]['comments'])) {
+                $formattedPosts[$post['id']]['comments'] = [];
+            }
+
+            if (!empty($post['comment_id'])) {
+                $formattedPosts[$post['id']]['comments'][] = [
+                    'id' => $post['comment_id'],
+                    'content' => $post['comment_content'],
+                    'date_posted' => $post['date_posted'],
+                    'author_id' => $post['author_id']
+                ];
+            }
+
+            $formattedPosts[$post['id']]['content'] = $post['content'];
+            $formattedPosts[$post['id']]['id'] = $post['id'];
+            $formattedPosts[$post['id']]['date_posted'] = $post['date_posted'];
+            $formattedPosts[$post['id']]['upvotes'] = $post['upvotes'];
+            $formattedPosts[$post['id']]['author_id'] = $post['author_id'];
+
+        }
+
+        return $formattedPosts;
+    }
+    
 }
 

@@ -21,6 +21,9 @@
                 <label>Password:</label>
                 <input type="password" name="password" placeholder="Create Password..."/><br>
             </div>
+            <label for="agree">
+                <input type="checkbox" id="agree"> Conditions and Terms
+            </label>
             <button type="submit">Submit</button>
         </form>
         <script>
@@ -53,6 +56,14 @@
                     document.getElementById("email-error").innerHTML = "";
                     document.getElementById("username-error").innerHTML = "";
                     e.target.submit();
+                }
+            });
+
+            document.getElementById("sign-up-form").addEventListener("submit", function(event){
+                var checkbox = document.getElementById("agree");
+                if (!checkbox.checked) {
+                    event.preventDefault(); 
+                    alert("Please read conditions and terms.");
                 }
             });
             document.getElementById('email').focus();
