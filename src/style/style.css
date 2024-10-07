@@ -468,13 +468,13 @@
 .image-posted-wrapper {
     background-color: rgb(161, 120, 154);
     border: 2px solid black;
-    width: 25%;
+    display: inline-block;
 
 }
 
 .image-posted {
     background-color: rgb(161, 120, 154);
-    width: 100%;
+    height: 150px;
 }
 
 .contents-div {
