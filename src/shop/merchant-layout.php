@@ -65,10 +65,20 @@
             </div>
         </div>
         <div class="banner_div div_positioning">
+            <div class="banner">
 
+            </div>
         </div>
         <div class="products_div div_positioning">
-
+            <div class="each_product_div">
+                <span>Product 1</span>
+            </div>
+            <div class="each_product_div">
+                <span>Product 2</span>
+            </div>
+            <div class="each_product_div">
+                <span>Product 3</span>
+            </div>
         </div>
         <div class="footer_div div_positioning">
 
