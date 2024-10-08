@@ -22,6 +22,13 @@ $account = new Account();
 
 
 switch ($uri) {
+    //shop
+    case '/merchant-shop':
+        include_once('src/shop/merchant-layout.php');
+        break;
+
+
+
 
     //compiled
     case '/home-page':
