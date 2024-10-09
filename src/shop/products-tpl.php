@@ -9,7 +9,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     </head>
-    <body>
+    <body class="products_page">
         <div class="header_div">
             <div class="header_div_container">
                 <div class="header_shop_buttons header_ui">
@@ -66,7 +66,8 @@
         </div>
         <div class="product_div div_positioning">
             <div class="product_image product_div_parts">
-                <p><?php echo $productName ?></p>
+                <!-- <p><?php //echo $productName ?></p> -->
+                <img src="/<?php echo $productImg ?>" />
             </div>
             <div class="product_info product_div_parts">
                 <div class="each_product_info">
@@ -78,9 +79,22 @@
                 <div class="each_product_info">
                     <p><?php echo $productQuantity ?></p>
                 </div>
+                <div>
+                    <form method="POST" action="/merchant-shop/product/purchase">
+                        <input type="hidden" name="product-price" value="<?php echo $productPrice ?>">
+                        <input type="hidden" name="id" value="<?php echo $productId ?>">
+                        <input type="submit" value="BUY">
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="product_info div_positioning"></div>
+        <div class="product_desc div_positioning">
+            <div class="product_description product_desc_div">
+                <?php echo $productDesc?>
+            </div>
+            <div class="product_information product_desc_div"></div>
+            <div class="product_policies product_desc_div"></div>
+        </div>
         <div class="product_footer div_positioning"></div>
     </body>
 </html>

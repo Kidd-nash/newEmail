@@ -45,6 +45,7 @@ class Shop
         $productPrice = $shopProduct['price_usd'];
         $productQuantity = $shopProduct['quantity'];
         $productDesc = $shopProduct['product_desc'];
+        $productImg = $shopProduct['img_path'];
 
         // echo '<pre>' . print_r($shopProduct) . '</pre>';
         // die();
@@ -55,5 +56,49 @@ class Shop
 
         return ob_get_clean();
 
+    }
+
+    public function purchaseProducts() {
+
+        //create a new user table for shop
+
+        session_start();
+        
+        $userId = 23; 
+        $productId = $_POST['id'];
+        $productPrice = $_POST['product-price'];
+        $date = date('Y-m-d');
+
+        //TODO: add status to order table
+
+        $this->handlePayment([
+            'user_id' => $userId,
+            'product_id' => $productId,
+            'price' => $productPrice,
+        ]);
+
+        echo "you've purhcased the product: " . $productId . " and price of: " . $productPrice;
+
+        $orderQuery = $this->connection->prepare(
+            'INSERT INTO user_order (user_id, product_id, price, date) VALUES (:user_id, :product_id, :price, :date)' 
+        );
+
+        $orderQuery->execute([
+            'user_id' => $userId,
+            'product_id' => $productId,
+            'price' => $productPrice,
+            'date' => $date
+        ]);
+
+    }
+
+    private function handlePayment($details) : void
+    {
+        //query for user,
+        //query product
+
+        //create stripe customer
+        //create stripe product
+        //create stripe payment
     }
 };
