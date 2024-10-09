@@ -72,17 +72,20 @@
         <div class="products_div div_positioning">
             <div class="each_product_div">
                 <a href='http://email.api:8080/merchant-shop/product?productId=1'>
-                    <span>Product 1</span>
+                    <!-- <span>Product 1</span> -->
+                     <img class="product_images" src="uploads/gundam_rx.jpg">
                 </a>
             </div>
             <div class="each_product_div">
                 <a href='http://email.api:8080/merchant-shop/product?productId=2'>
-                    <span>Product 2</span>
+                    <!-- <span>Product 2</span> -->
+                    <img class="product_images" src="uploads/gundam_wing.jpg">
                 </a>
             </div>
             <div class="each_product_div">
                 <a href='http://email.api:8080/merchant-shop/product?productId=3'>
-                    <span>Product 3</span>
+                    <!-- <span>Product 3</span> -->
+                    <img class="product_images" src="uploads/gundam_nu.jpg">
                 </a>
             </div>
         </div>
