@@ -11,6 +11,8 @@ class Shop
 
     public const UPLOADS_DIR = 'uploads/';
 
+    private $secretKey = 'sk_test_51Q7uZNA0QEiadHV66BfQeb38KQuoobRgWvnG1hxyhVTo8u5A96iG4bwus6vdDNnyKgp4OdRmyVIjJ9ZbbvfrBH5z00o0POGVEc';
+
     public function __construct()
     {
 
@@ -125,7 +127,25 @@ class Shop
         echo '<pre>' . print_r($product) . '</pre>';
 
         //create stripe customer
+
+        //if ( no stripe key for customer)
+        // $stripe = new \Stripe\StripeClient($this->secretKey); 
+        // $customer = $stripe->customers->create([
+        //     'description' => 'example customer',
+        //     'email' => 'email@example.com', // cus_QzuqtrX8JG6cSJ
+        //     'payment_method' => 'pm_card_visa',
+        // ]);
+        // var_dump($customer);
         //create stripe product
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $product = $stripe->products->create([
+        //     'name' => 'test product',  //prod_QzvCqkW58uIrED
+        //     'description' => 'this is a trial product, for testing...'
+        // ]);
+
+        // var_dump($product);
+
         //create stripe payment
     }
 };
+
