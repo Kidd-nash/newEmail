@@ -8,6 +8,7 @@
     "require": {
         "phpmailer/phpmailer": "^6.9",
         "dompdf/dompdf": "^3.0",
-        "phpoffice/phpspreadsheet": "^2.2"
+        "phpoffice/phpspreadsheet": "^2.2",
+        "stripe/stripe-php": "^16.1"
     }
 }
