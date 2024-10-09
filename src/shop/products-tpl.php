@@ -2,9 +2,9 @@
 <html>
     <head>
         <title>
-            Merchant Shop
+            Product <?php echo $productId ?>
         </title>
-        <link rel="stylesheet" href="src/shop/style.css">
+        <link rel="stylesheet" href="/src/shop/style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
                 <div class="header_shop_logo header_ui">
                     <div class="logo_wrapper">
                         <a class="logo_link">
-                            <img class="header_logo" src="uploads/icon_sss.jpg" />
+                            <img class="header_logo" src="/uploads/icon_sss.jpg" />
                         </a>
                     </div>
                 </div>
@@ -64,30 +64,23 @@
                 </div>
             </div>
         </div>
-        <div class="banner_div div_positioning">
-            <div class="banner">
-
+        <div class="product_div div_positioning">
+            <div class="product_image product_div_parts">
+                <p><?php echo $productName ?></p>
+            </div>
+            <div class="product_info product_div_parts">
+                <div class="each_product_info">
+                    <p><?php echo $productName ?></p>
+                </div>
+                <div class="each_product_info">
+                    <p>$<?php echo $productPrice ?></p>
+                </div>
+                <div class="each_product_info">
+                    <p><?php echo $productQuantity ?></p>
+                </div>
             </div>
         </div>
-        <div class="products_div div_positioning">
-            <div class="each_product_div">
-                <a href='http://email.api:8080/merchant-shop/product?productId=1'>
-                    <span>Product 1</span>
-                </a>
-            </div>
-            <div class="each_product_div">
-                <a href='http://email.api:8080/merchant-shop/product?productId=2'>
-                    <span>Product 2</span>
-                </a>
-            </div>
-            <div class="each_product_div">
-                <a href='http://email.api:8080/merchant-shop/product?productId=3'>
-                    <span>Product 3</span>
-                </a>
-            </div>
-        </div>
-        <div class="footer_div div_positioning">
-
-        </div>
+        <div class="product_info div_positioning"></div>
+        <div class="product_footer div_positioning"></div>
     </body>
 </html>

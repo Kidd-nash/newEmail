@@ -139,3 +139,33 @@ ul.user_list li {
     background-color: rgba(0, 0, 0, 1);
     height: 300px;
 }
+
+/* styles for products page */
+
+.product_div {
+    border: 2px solid black;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    height: 500px;
+    align-content: center;
+}
+
+.product_div_parts {
+    width: 40%;
+    border: 2px solid black;
+    height: 400px;
+    
+}
+
+.product_info {
+    height: 400px;
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.each_product_info {
+    border: 1px solid black;
+    margin: 40px 5px;
+}
