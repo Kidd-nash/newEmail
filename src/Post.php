@@ -54,7 +54,9 @@ class Post
             $content = $_POST['content'];
             $author_id = $id_plus;
 
-            $target_file = $this->handleFileUpload();
+
+            $fileDetails = $this->handleFileUpload();
+            $target_file = $fileDetails['target_file'];
 
 
             $userQuery = $this->connection->prepare(
@@ -448,23 +450,6 @@ class Post
 
 
         chmod($fullPath, 0755);
-
-        // $file = $fullPath; //'monkey.gif';
-
-        // if (file_exists($file)) {
-        //     header('Content-Description: File Transfer');
-        //     header('Content-Type: application/xlsx'); // application/xlsx  -> text/csv
-        //     header('Content-Disposition: attachment; filename="'.basename($file).'"');
-        //     header('Expires: 0');
-        //     header('Cache-Control: must-revalidate');
-        //     header('Pragma: public');
-        //     // header('Content-Length: ' . filesize($file));
-        //     readfile($file);
-        //     exit;
-        // }
-
-
-
     }
 
     public function loadCsv()
@@ -640,90 +625,33 @@ class Post
     {
         ob_start();
         session_start();
-        // $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-        $extension = pathinfo($_FILES["fileToUpload"]["name"], PATHINFO_EXTENSION);
-        $newFileName = md5(date('Y-m-d H:i:s'))  . rand(111, 999) . rand(111, 999);
-        $target_file = self::UPLOADS_DIR . $newFileName . '.' . $extension;
 
-        // die($extension);
+        $fileDetails = $this->handleFileUpload();
+        $extension = $fileDetails['extension'];
+        $newFileName = $fileDetails['newFileName'];
+        $target_file = $fileDetails['target_file'];
 
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-        if (isset($_POST["submit"])) { // Check if image file is a actual image or fake image
-            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-            if ($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
-                $uploadOk = 1;
-            } else {
-                echo "File is not an image.";
-                $uploadOk = 0;
-            }
-        }
-
-        if (file_exists($target_file)) { // Check if file already exists
-            echo "Sorry, file already exists.";
-            $uploadOk = 0;
-        }
-
-        if ($_FILES["fileToUpload"]["size"] > 1500000000) { // Allow certain file formats
-            echo "Sorry, your file is too large.";
-            $uploadOk = 0;
-        }
-
-        if (
-            $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" // Allow certain file formats
-            && $imageFileType != "gif"
-        ) {
-            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-            $uploadOk = 0;
-        }
-
-        if ($uploadOk == 0) { // Check if $uploadOk is set to 0 by an error
-            echo "Sorry, your file was not uploaded."; // if everything is ok, try to upload file  
-        } else {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
-            } else {
-                echo "Sorry, there was an error uploading your file.";
-            }
-        }
 
         if ($extension == 'png') {
 
-            //         echo strval($target_file);
-            // // TODO: fix
             $im = imagecreatefrompng($target_file);
-            // $im = @imagecreatefrompng($target_file);
-            $size = 300; // min(imagesx($im), imagesy($im));
-
-            $imageWidth = imagesx($im);
-            $imageLength = imagesy($im);
-
-            $im2 = imagecrop($im, ['x' => ($imageWidth - $size) / 2, 'y' => ($imageLength - $size) / 2, 'width' => $size, 'height' => $size]);
-            if ($im2 !== FALSE) {
-                imagepng($im2, 'uploads/' . $newFileName . '.png');
-                imagedestroy($im2);
-            }
-            imagedestroy($im);
         } elseif ($extension == 'jpg' || $extension == 'jpeg') {
 
             $im = imagecreatefromjpeg($target_file);
-            // $im = @imagecreatefrompng($target_file);
-            $size = 300; // min(imagesx($im), imagesy($im));
-
-            $imageWidth = imagesx($im);
-            $imageLength = imagesy($im);
-
-            $im2 = imagecrop($im, ['x' => ($imageWidth - $size) / 2, 'y' => ($imageLength - $size) / 2, 'width' => $size, 'height' => $size]);
-            if ($im2 !== FALSE) {
-                imagepng($im2, 'uploads/' . $newFileName . '.png');
-                imagedestroy($im2);
-            }
-            imagedestroy($im);
-        } else {
-            echo 'file needs to be PNG or JPEG';
         }
+
+        $size = 300;
+
+        $imageWidth = imagesx($im);
+        $imageLength = imagesy($im);
+
+        $im2 = imagecrop($im, ['x' => ($imageWidth - $size) / 2, 'y' => ($imageLength - $size) / 2, 'width' => $size, 'height' => $size]);
+        if ($im2 !== FALSE) {
+            imagepng($im2, 'uploads/' . $newFileName . '.png');
+            imagedestroy($im2);
+        }
+        imagedestroy($im);
+
 
 
         $userId = $_SESSION['userId'];
@@ -808,7 +736,7 @@ class Post
         return $formattedPosts;
     }
 
-    private function handleFileUpload(): string
+    private function handleFileUpload(): array
     {
         $targetFile = '';
 
@@ -860,6 +788,10 @@ class Post
             }
         }
 
-        return $target_file;
+        return [
+            'target_file' => $target_file,
+            'extension' => $extension,
+            'newFileName' => $newFileName
+        ];
     }
 }

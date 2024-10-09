@@ -12,16 +12,28 @@ $uri = strtok($_SERVER["REQUEST_URI"], '?');
 use Root\NewEmail\Post;
 use Root\NewEmail\Signup;
 use Root\NewEmail\Account;
+use Root\NewEmail\Shop;
 
 
 $post = new Post();
 $signup = new Signup();
 $account = new Account();
-
+$shop = new Shop();
 
 
 
 switch ($uri) {
+    //shop
+    case '/merchant-shop':
+        include_once('src/shop/merchant-layout.php');
+        break;
+    case '/merchant-shop/product':
+        echo $shop->merchantProducts();
+        break;
+
+
+
+
 
     //compiled
     case '/home-page':
