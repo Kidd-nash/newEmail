@@ -64,7 +64,7 @@ class Shop
 
         session_start();
         
-        $userId = 23; 
+        $userId = $_SESSION['userId']; 
         $productId = $_POST['id'];
         $productPrice = $_POST['product-price'];
         $date = date('Y-m-d');
@@ -94,8 +94,35 @@ class Shop
 
     private function handlePayment($details) : void
     {
+        // session_start();
         //query for user,
+        $id = $details['user_id'];
+
+        $userQuery = $this->connection->prepare(
+            'SELECT * FROM email_users WHERE id = :id'
+        );
+
+        $userQuery->execute([
+            'id' => $id
+        ]);
+
+        $user = $userQuery->fetch(PDO::FETCH_ASSOC);
+
+        echo '<pre>' . print_r($user) . '</pre>';
         //query product
+        $productId = $details['product_id'];
+
+        $productQuery = $this->connection->prepare(
+            'SELECT * FROM merchant_shop_products WHERE id = :id'
+        );
+
+        $productQuery->execute([
+            'id' => $productId
+        ]);
+
+        $product = $productQuery->fetch(PDO::FETCH_ASSOC);
+
+        echo '<pre>' . print_r($product) . '</pre>';
 
         //create stripe customer
         //create stripe product
