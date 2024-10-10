@@ -126,6 +126,10 @@ class Shop
 
         echo '<pre>' . print_r($product) . '</pre>';
 
+        // setp 1:
+        // add stripe_key to tables user from customer, product stipe key , order 2 keys: invoice key, payment key
+
+
         //create stripe customer
 
         //if ( no stripe key for customer)
@@ -135,6 +139,8 @@ class Shop
         //     'email' => 'email@example.com', // cus_QzuqtrX8JG6cSJ
         //     'payment_method' => 'pm_card_visa',
         // ]);
+
+        // TODO: SAVE KEY TO CUSTOMER
         // var_dump($customer);
 
 
@@ -145,6 +151,8 @@ class Shop
         //     'name' => 'test product',  //prod_QzvCqkW58uIrED
         //     'description' => 'this is a trial product, for testing...'
         // ]);
+
+        // SAVE KEY
         // var_dump($product);
 
 
@@ -158,6 +166,8 @@ class Shop
         // ]);
         // var_dump($productPrice);
 
+        // $response->id
+        // $response->getId()
 
         //product price using prod id
 
@@ -183,7 +193,7 @@ class Shop
         // $stripe = new \Stripe\StripeClient($this->secretKey);
         // $invoiceCustomer = $stripe->invoiceItems->create([
         //     'customer' => 'cus_QzuqtrX8JG6cSJ',
-        //     'price' => 'price_1Q8CwSA0QEiadHV6zgERchRt',
+        //     'price' => 'price_1Q8CwSA0QEiadHV6zgERchRt', //in_1Q8CcTA0QEiadHV6ibzgfTPu
         // ]);
 
         // var_dump($invoiceCustomer);
@@ -210,17 +220,118 @@ class Shop
 
         //2nd invoice item for 2nd product with new price
 
-        $stripe = new \Stripe\StripeClient($this->secretKey);
-        $invoiceCustomer = $stripe->invoiceItems->create([
-            'customer' => 'cus_QzuqtrX8JG6cSJ',
-            'price' => 'price_1Q8D6OA0QEiadHV6ouQEtqqn', //ii_1Q8DAUA0QEiadHV6m0fItklp
-        ]);
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $invoiceCustomer = $stripe->invoiceItems->create([
+        //     'customer' => 'cus_QzuqtrX8JG6cSJ',
+        //     'price' => 'price_1Q8D6OA0QEiadHV6ouQEtqqn', //ii_1Q8DAUA0QEiadHV6m0fItklp
+        // ]);
 
-        var_dump($invoiceCustomer);
+        // var_dump($invoiceCustomer);
+        
+        //update customer payment method
+        //pm_1Q7v0gA0QEiadHV68SMgnRql
+        
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $customerUpdate = $stripe->customers->update(
+        //     'cus_QzuqtrX8JG6cSJ',
+        //     ['invoice_settings' => ['default_payment_method' => 'pm_1Q7v0gA0QEiadHV68SMgnRql']]
+        // );
 
+        // var_dump($customerUpdate);
+
+
+        //updating invoice item to link in invoice
+
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $updateInvoiceItem = $stripe->invoiceItems->update(
+        //     'ii_1Q8DAUA0QEiadHV6m0fItklp',
+        //     'invoice' => 'in_1Q8CcTA0QEiadHV6ibzgfTPu'
+        // );
+
+        // var_dump($updateInvoiceItem);
+
+        //new invoice item
+
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $newInvoiceItem = $stripe->invoiceItems->create([
+        //     'customer' => 'cus_QzuqtrX8JG6cSJ',
+        //     'price' => 'price_1Q8D6OA0QEiadHV6ouQEtqqn',
+        //     'invoice' => 'in_1Q8CcTA0QEiadHV6ibzgfTPu'
+        // ]);
+
+        // var_dump($newInvoiceItem);
+
+
+        //payment 
+
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $responsePayment = $stripe->invoices->pay('in_1Q8CcTA0QEiadHV6ibzgfTPu', []); //in_1Q8CcTA0QEiadHV6ibzgfTPu
+
+        // echo '<pre>';
+        // var_dump($responsePayment);
+        // echo '</pre>';
+
+
+        // add status column to order
+
+
+        //setting payment method
+
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $customerPaymentMethod = $stripe->paymentMethods->create([
+        //     'type' => 'us_bank_account',
+        //     'us_bank_account' => [
+        //       'account_holder_type' => 'individual',
+        //       'account_number' => '000123456789',
+        //       'routing_number' => '110000000',
+        //     ],
+        //     'billing_details' => ['name' => 'John Doe'],
+        //   ]);
+
+        // $customerKey = $this->handleStripeCustomer();
+        // $productKey = $this
+        // $this->handleInvoice($customerKey, $productKey);
 
 
         //create stripe payment
+    }
+
+    // handleStripeCustomer
+      // query user table
+      // check if stripe key exists
+      // if not exist, submit to stripe
+      // update user table with stripe key of customer
+      // return stripe
+
+    public function handleProductStripe()
+    {
+        session_start();
+        
+        $userId = $_SESSION['userId']; 
+        $productId = $_POST['id'];
+        $productPrice = $_POST['product-price'];
+
+        //TODO: add status to order table
+
+        $this->handlePayment([
+            'user_id' => $userId,
+            'product_id' => $productId,
+            'price' => $productPrice,
+        ]);
+
+        echo "you've added stripe key to the product: " . $productId;
+
+        $productQuery = $this->connection->prepare(
+            'SELECT * FROM merchant_shop_products WHERE id = :id' 
+        );
+
+        $productQuery->execute([
+            'id' => $productId
+        ]);
+
+        
+
+
     }
 };
 

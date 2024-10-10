@@ -33,6 +33,9 @@ switch ($uri) {
     case '/merchant-shop/product/purchase':
         echo $shop->purchaseProducts();
         break;
+    case '/merchant-shop/product/stripe':
+        echo $shop->handleProductStripe();
+        break;
 
 
 

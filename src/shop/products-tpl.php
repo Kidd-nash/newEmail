@@ -80,10 +80,10 @@
                     <p><?php echo $productQuantity ?></p>
                 </div>
                 <div>
-                    <form method="POST" action="/merchant-shop/product/purchase">
+                    <form method="POST" action="/merchant-shop/product/stripe">
                         <input type="hidden" name="product-price" value="<?php echo $productPrice ?>">
-                        <input type="hidden" name="id" value="<?php echo $productId ?>">
-                        <input type="submit" value="BUY">
+                        <input type="hidden" name="id" value="<?php echo $productId ?>"> 
+                        <input type="submit" value="Stipe">
                     </form>
                 </div>
             </div>
