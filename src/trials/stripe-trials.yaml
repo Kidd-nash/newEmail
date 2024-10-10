@@ -1,0 +1,387 @@
+  STIPE REQs:
+    API Keys - use test mode
+
+  PUBLISHABLE KEY: pk_test_51Q7uZNA0QEiadHV6FCZicaKtfamU9fMDIjUIUcyCrdTb9BlS1Uw0TmpChueD2DxvlcTYRLitqAiXCQHOk2Dh0noh00rCttFwoV
+  SECRET KEY: sk_test_51Q7uZNA0QEiadHV66BfQeb38KQuoobRgWvnG1hxyhVTo8u5A96iG4bwus6vdDNnyKgp4OdRmyVIjJ9ZbbvfrBH5z00o0POGVEc
+
+!!!- fix product price, create invoice for payment then payment link
+
+product, then price:
+    https://docs.stripe.com/get-started/development-environment?lang=php#test-install
+
+payment, create invoice:
+    https://docs.stripe.com/payment-links
+
+# customer
+object(Stripe\Customer)#26 (22) {
+  ["id"]=>
+  string(18) "cus_QzuqtrX8JG6cSJ"
+  ["object"]=>
+  string(8) "customer"
+  ["address"]=>
+  NULL
+  ["balance"]=>
+  int(0)
+  ["created"]=>
+  int(1728461562)
+  ["currency"]=>
+  NULL
+  ["default_source"]=>
+  NULL
+  ["delinquent"]=>
+  bool(false)
+  ["description"]=>
+  string(16) "example customer"
+  ["discount"]=>
+  NULL
+  ["email"]=>
+  string(17) "email@example.com"
+  ["invoice_prefix"]=>
+  string(8) "1250F052"
+  ["invoice_settings"]=>
+  object(Stripe\StripeObject)#31 (4) {
+    ["custom_fields"]=>
+    NULL
+    ["default_payment_method"]=>
+    NULL
+    ["footer"]=>
+    NULL
+    ["rendering_options"]=>
+    NULL
+  }
+  ["livemode"]=>
+  bool(false)
+  ["metadata"]=>
+  object(Stripe\StripeObject)#32 (0) {
+  }
+  ["name"]=>
+  NULL
+  ["next_invoice_sequence"]=>
+  int(1)
+  ["phone"]=>
+  NULL
+  ["preferred_locales"]=>
+  array(0) {
+  }
+  ["shipping"]=>
+  NULL
+  ["tax_exempt"]=>
+  string(4) "none"
+  ["test_clock"]=>
+  NULL
+}
+# product
+object(Stripe\Product)#26 (20) {
+  ["id"]=>
+  string(19) "prod_QzvCqkW58uIrED"
+  ["object"]=>
+  string(7) "product"
+  ["active"]=>
+  bool(true)
+  ["attributes"]=>
+  array(0) {
+  }
+  ["created"]=>
+  int(1728462868)
+  ["default_price"]=>
+  NULL
+  ["description"]=>
+  string(39) "this is a trial product, for testing..."
+  ["images"]=>
+  array(0) {
+  }
+  ["livemode"]=>
+  bool(false)
+  ["marketing_features"]=>
+  array(0) {
+  }
+  ["metadata"]=>
+  object(Stripe\StripeObject)#31 (0) {
+  }
+  ["name"]=>
+  string(12) "test product"
+  ["package_dimensions"]=>
+  NULL
+  ["shippable"]=>
+  NULL
+  ["statement_descriptor"]=>
+  NULL
+  ["tax_code"]=>
+  NULL
+  ["type"]=>
+  string(7) "service"
+  ["unit_label"]=>
+  NULL
+  ["updated"]=>
+  int(1728462868)
+  ["url"]=>
+  NULL
+}
+# price
+object(Stripe\Price)#26 (19) {
+  ["id"]=>
+  string(30) "price_1Q8BpGA0QEiadHV6CuypomYM"
+  ["object"]=>
+  string(5) "price"
+  ["active"]=>
+  bool(true)
+  ["billing_scheme"]=>
+  string(8) "per_unit"
+  ["created"]=>
+  int(1728526202)
+  ["currency"]=>
+  string(3) "usd"
+  ["custom_unit_amount"]=>
+  NULL
+  ["livemode"]=>
+  bool(false)
+  ["lookup_key"]=>
+  NULL
+  ["metadata"]=>
+  object(Stripe\StripeObject)#31 (0) {
+  }
+  ["nickname"]=>
+  NULL
+  ["product"]=>
+  string(19) "prod_R0CDnX4hKr26bU"
+  ["recurring"]=>
+  NULL
+  ["tax_behavior"]=>
+  string(11) "unspecified"
+  ["tiers_mode"]=>
+  NULL
+  ["transform_quantity"]=>
+  NULL
+  ["type"]=>
+  string(8) "one_time"
+  ["unit_amount"]=>
+  int(50)
+  ["unit_amount_decimal"]=>
+  string(2) "50"
+}
+
+# invoice
+
+object(Stripe\Invoice)#26 (81) {
+  ["id"]=>
+  string(27) "in_1Q8CcTA0QEiadHV6ibzgfTPu"
+  ["object"]=>
+  string(7) "invoice"
+  ["account_country"]=>
+  string(2) "US"
+  ["account_name"]=>
+  NULL
+  ["account_tax_ids"]=>
+  NULL
+  ["amount_due"]=>
+  int(0)
+  ["amount_paid"]=>
+  int(0)
+  ["amount_remaining"]=>
+  int(0)
+  ["amount_shipping"]=>
+  int(0)
+  ["application"]=>
+  NULL
+  ["application_fee_amount"]=>
+  NULL
+  ["attempt_count"]=>
+  int(0)
+  ["attempted"]=>
+  bool(false)
+  ["auto_advance"]=>
+  bool(false)
+  ["automatic_tax"]=>
+  object(Stripe\StripeObject)#31 (3) {
+    ["enabled"]=>
+    bool(false)
+    ["liability"]=>
+    NULL
+    ["status"]=>
+    NULL
+  }
+  ["automatically_finalizes_at"]=>
+  NULL
+  ["billing_reason"]=>
+  string(6) "manual"
+  ["charge"]=>
+  NULL
+  ["collection_method"]=>
+  string(20) "charge_automatically"
+  ["created"]=>
+  int(1728529253)
+  ["currency"]=>
+  string(3) "usd"
+  ["custom_fields"]=>
+  NULL
+  ["customer"]=>
+  string(18) "cus_QzuqtrX8JG6cSJ"
+  ["customer_address"]=>
+  NULL
+  ["customer_email"]=>
+  string(17) "email@example.com"
+  ["customer_name"]=>
+  NULL
+  ["customer_phone"]=>
+  NULL
+  ["customer_shipping"]=>
+  NULL
+  ["customer_tax_exempt"]=>
+  string(4) "none"
+  ["customer_tax_ids"]=>
+  array(0) {
+  }
+  ["default_payment_method"]=>
+  NULL
+  ["default_source"]=>
+  NULL
+  ["default_tax_rates"]=>
+  array(0) {
+  }
+  ["description"]=>
+  NULL
+  ["discount"]=>
+  NULL
+  ["discounts"]=>
+  array(0) {
+  }
+  ["due_date"]=>
+  NULL
+  ["effective_at"]=>
+  NULL
+  ["ending_balance"]=>
+  NULL
+  ["footer"]=>
+  NULL
+  ["from_invoice"]=>
+  NULL
+  ["hosted_invoice_url"]=>
+  NULL
+  ["invoice_pdf"]=>
+  NULL
+  ["issuer"]=>
+  object(Stripe\StripeObject)#32 (1) {
+    ["type"]=>
+    string(4) "self"
+  }
+  ["last_finalization_error"]=>
+  NULL
+  ["latest_revision"]=>
+  NULL
+  ["lines"]=>
+  object(Stripe\Collection)#36 (5) {
+    ["object"]=>
+    string(4) "list"
+    ["data"]=>
+    array(0) {
+    }
+    ["has_more"]=>
+    bool(false)
+    ["total_count"]=>
+    int(0)
+    ["url"]=>
+    string(46) "/v1/invoices/in_1Q8CcTA0QEiadHV6ibzgfTPu/lines"
+  }
+  ["livemode"]=>
+  bool(false)
+  ["metadata"]=>
+  object(Stripe\StripeObject)#40 (0) {
+  }
+  ["next_payment_attempt"]=>
+  NULL
+  ["number"]=>
+  NULL
+  ["on_behalf_of"]=>
+  NULL
+  ["paid"]=>
+  bool(false)
+  ["paid_out_of_band"]=>
+  bool(false)
+  ["payment_intent"]=>
+  NULL
+  ["payment_settings"]=>
+  object(Stripe\StripeObject)#44 (3) {
+    ["default_mandate"]=>
+    NULL
+    ["payment_method_options"]=>
+    NULL
+    ["payment_method_types"]=>
+    NULL
+  }
+  ["period_end"]=>
+  int(1728529253)
+  ["period_start"]=>
+  int(1728529253)
+  ["post_payment_credit_notes_amount"]=>
+  int(0)
+  ["pre_payment_credit_notes_amount"]=>
+  int(0)
+  ["quote"]=>
+  NULL
+  ["receipt_number"]=>
+  NULL
+  ["rendering"]=>
+  object(Stripe\StripeObject)#48 (4) {
+    ["amount_tax_display"]=>
+    NULL
+    ["pdf"]=>
+    object(Stripe\StripeObject)#56 (1) {
+      ["page_size"]=>
+      string(4) "auto"
+    }
+    ["template"]=>
+    NULL
+    ["template_version"]=>
+    NULL
+  }
+  ["shipping_cost"]=>
+  NULL
+  ["shipping_details"]=>
+  NULL
+  ["starting_balance"]=>
+  int(0)
+  ["statement_descriptor"]=>
+  NULL
+  ["status"]=>
+  string(5) "draft"
+  ["status_transitions"]=>
+  object(Stripe\StripeObject)#52 (4) {
+    ["finalized_at"]=>
+    NULL
+    ["marked_uncollectible_at"]=>
+    NULL
+    ["paid_at"]=>
+    NULL
+    ["voided_at"]=>
+    NULL
+  }
+  ["subscription"]=>
+  NULL
+  ["subscription_details"]=>
+  object(Stripe\StripeObject)#57 (1) {
+    ["metadata"]=>
+    NULL
+  }
+  ["subtotal"]=>
+  int(0)
+  ["subtotal_excluding_tax"]=>
+  int(0)
+  ["tax"]=>
+  NULL
+  ["test_clock"]=>
+  NULL
+  ["total"]=>
+  int(0)
+  ["total_discount_amounts"]=>
+  array(0) {
+  }
+  ["total_excluding_tax"]=>
+  int(0)
+  ["total_tax_amounts"]=>
+  array(0) {
+  }
+  ["transfer_data"]=>
+  NULL
+  ["webhooks_delivered_at"]=>
+  int(1728529253)
+}
