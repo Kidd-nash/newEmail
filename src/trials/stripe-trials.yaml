@@ -117,7 +117,102 @@ object(Stripe\Product)#26 (20) {
   ["url"]=>
   NULL
 }
+
+# 2nd product attempt for fixing price
+
+object(Stripe\Product)#26 (20) {
+  ["id"]=>
+  string(19) "prod_R0DUxD1mLcnh7r"
+  ["object"]=>
+  string(7) "product"
+  ["active"]=>
+  bool(true)
+  ["attributes"]=>
+  array(0) {
+  }
+  ["created"]=>
+  int(1728530955)
+  ["default_price"]=>
+  NULL
+  ["description"]=>
+  string(46) "this is a second trial product, for testing..."
+  ["images"]=>
+  array(0) {
+  }
+  ["livemode"]=>
+  bool(false)
+  ["marketing_features"]=>
+  array(0) {
+  }
+  ["metadata"]=>
+  object(Stripe\StripeObject)#31 (0) {
+  }
+  ["name"]=>
+  string(14) "test 2 product"
+  ["package_dimensions"]=>
+  NULL
+  ["shippable"]=>
+  NULL
+  ["statement_descriptor"]=>
+  NULL
+  ["tax_code"]=>
+  NULL
+  ["type"]=>
+  string(7) "service"
+  ["unit_label"]=>
+  NULL
+  ["updated"]=>
+  int(1728530955)
+  ["url"]=>
+  NULL
+}
+
+# 2nd price response for the 2nd product 
+
+object(Stripe\Price)#26 (19) {
+  ["id"]=>
+  string(30) "price_1Q8D6OA0QEiadHV6ouQEtqqn"
+  ["object"]=>
+  string(5) "price"
+  ["active"]=>
+  bool(true)
+  ["billing_scheme"]=>
+  string(8) "per_unit"
+  ["created"]=>
+  int(1728531108)
+  ["currency"]=>
+  string(3) "usd"
+  ["custom_unit_amount"]=>
+  NULL
+  ["livemode"]=>
+  bool(false)
+  ["lookup_key"]=>
+  NULL
+  ["metadata"]=>
+  object(Stripe\StripeObject)#31 (0) {
+  }
+  ["nickname"]=>
+  NULL
+  ["product"]=>
+  string(19) "prod_R0DUxD1mLcnh7r"
+  ["recurring"]=>
+  NULL
+  ["tax_behavior"]=>
+  string(11) "unspecified"
+  ["tiers_mode"]=>
+  NULL
+  ["transform_quantity"]=>
+  NULL
+  ["type"]=>
+  string(8) "one_time"
+  ["unit_amount"]=>
+  int(800)
+  ["unit_amount_decimal"]=>
+  string(3) "800"
+}
+
 # price
+
 object(Stripe\Price)#26 (19) {
   ["id"]=>
   string(30) "price_1Q8BpGA0QEiadHV6CuypomYM"
@@ -158,6 +253,50 @@ object(Stripe\Price)#26 (19) {
   int(50)
   ["unit_amount_decimal"]=>
   string(2) "50"
+}
+
+#price using product id 
+
+object(Stripe\Price)#26 (19) {
+  ["id"]=>
+  string(30) "price_1Q8CwSA0QEiadHV6zgERchRt"
+  ["object"]=>
+  string(5) "price"
+  ["active"]=>
+  bool(true)
+  ["billing_scheme"]=>
+  string(8) "per_unit"
+  ["created"]=>
+  int(1728530492)
+  ["currency"]=>
+  string(3) "usd"
+  ["custom_unit_amount"]=>
+  NULL
+  ["livemode"]=>
+  bool(false)
+  ["lookup_key"]=>
+  NULL
+  ["metadata"]=>
+  object(Stripe\StripeObject)#31 (0) {
+  }
+  ["nickname"]=>
+  NULL
+  ["product"]=>
+  string(19) "prod_QzvCqkW58uIrED"
+  ["recurring"]=>
+  NULL
+  ["tax_behavior"]=>
+  string(11) "unspecified"
+  ["tiers_mode"]=>
+  NULL
+  ["transform_quantity"]=>
+  NULL
+  ["type"]=>
+  string(8) "one_time"
+  ["unit_amount"]=>
+  int(500)
+  ["unit_amount_decimal"]=>
+  string(3) "500"
 }
 
 # invoice
@@ -384,4 +523,101 @@ object(Stripe\Invoice)#26 (81) {
   NULL
   ["webhooks_delivered_at"]=>
   int(1728529253)
+}
+
+#first invoice item response for the second prodict with fixed price 
+
+object(Stripe\InvoiceItem)#26 (22) {
+  ["id"]=>
+  string(27) "ii_1Q8DAUA0QEiadHV6m0fItklp"
+  ["object"]=>
+  string(11) "invoiceitem"
+  ["amount"]=>
+  int(800)
+  ["currency"]=>
+  string(3) "usd"
+  ["customer"]=>
+  string(18) "cus_QzuqtrX8JG6cSJ"
+  ["date"]=>
+  int(1728531362)
+  ["description"]=>
+  string(14) "test 2 product"
+  ["discountable"]=>
+  bool(true)
+  ["discounts"]=>
+  array(0) {
+  }
+  ["invoice"]=>
+  NULL
+  ["livemode"]=>
+  bool(false)
+  ["metadata"]=>
+  object(Stripe\StripeObject)#31 (0) {
+  }
+  ["period"]=>
+  object(Stripe\StripeObject)#32 (2) {
+    ["end"]=>
+    int(1728531362)
+    ["start"]=>
+    int(1728531362)
+  }
+  ["plan"]=>
+  NULL
+  ["price"]=>
+  object(Stripe\Price)#36 (19) {
+    ["id"]=>
+    string(30) "price_1Q8D6OA0QEiadHV6ouQEtqqn"
+    ["object"]=>
+    string(5) "price"
+    ["active"]=>
+    bool(true)
+    ["billing_scheme"]=>
+    string(8) "per_unit"
+    ["created"]=>
+    int(1728531108)
+    ["currency"]=>
+    string(3) "usd"
+    ["custom_unit_amount"]=>
+    NULL
+    ["livemode"]=>
+    bool(false)
+    ["lookup_key"]=>
+    NULL
+    ["metadata"]=>
+    object(Stripe\StripeObject)#44 (0) {
+    }
+    ["nickname"]=>
+    NULL
+    ["product"]=>
+    string(19) "prod_R0DUxD1mLcnh7r"
+    ["recurring"]=>
+    NULL
+    ["tax_behavior"]=>
+    string(11) "unspecified"
+    ["tiers_mode"]=>
+    NULL
+    ["transform_quantity"]=>
+    NULL
+    ["type"]=>
+    string(8) "one_time"
+    ["unit_amount"]=>
+    int(800)
+    ["unit_amount_decimal"]=>
+    string(3) "800"
+  }
+  ["proration"]=>
+  bool(false)
+  ["quantity"]=>
+  int(1)
+  ["subscription"]=>
+  NULL
+  ["tax_rates"]=>
+  array(0) {
+  }
+  ["test_clock"]=>
+  NULL
+  ["unit_amount"]=>
+  int(800)
+  ["unit_amount_decimal"]=>
+  string(3) "800"
 }

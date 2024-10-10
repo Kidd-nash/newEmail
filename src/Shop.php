@@ -158,13 +158,67 @@ class Shop
         // ]);
         // var_dump($productPrice);
 
+
+        //product price using prod id
+
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $productPrice = $stripe->prices->create([
+        //     'currency' => 'usd',
+        //     'unit_amount' => 500, //in cents!!!  //price_1Q8CwSA0QEiadHV6zgERchRt
+        //     'product' => 'prod_QzvCqkW58uIrED',
+        // ]);
+        // var_dump($productPrice);
+
+
+        //invoice
+
         // $stripe = new \Stripe\StripeClient($this->secretKey);
         // $invoiceCustomer = $stripe->invoices->create([
         //     'customer' => 'cus_QzuqtrX8JG6cSJ' //in_1Q8CcTA0QEiadHV6ibzgfTPu
         // ]);
-
         // var_dump($invoiceCustomer);
         
+        //invoice items
+
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $invoiceCustomer = $stripe->invoiceItems->create([
+        //     'customer' => 'cus_QzuqtrX8JG6cSJ',
+        //     'price' => 'price_1Q8CwSA0QEiadHV6zgERchRt',
+        // ]);
+
+        // var_dump($invoiceCustomer);
+
+
+        //another product trial
+
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $product = $stripe->products->create([
+        //     'name' => 'test 2 product',  //prod_R0DUxD1mLcnh7r
+        //     'description' => 'this is a second trial product, for testing...'
+        // ]);
+        // var_dump($product);
+
+        //price for second product
+
+        // $stripe = new \Stripe\StripeClient($this->secretKey);
+        // $productPrice = $stripe->prices->create([
+        //     'currency' => 'usd',
+        //     'unit_amount' => 800, //in cents!!!   !!! first two digits are for cents .00
+        //     'product' => 'prod_R0DUxD1mLcnh7r', //price_1Q8D6OA0QEiadHV6ouQEtqqn
+        // ]);
+        // var_dump($productPrice);
+
+        //2nd invoice item for 2nd product with new price
+
+        $stripe = new \Stripe\StripeClient($this->secretKey);
+        $invoiceCustomer = $stripe->invoiceItems->create([
+            'customer' => 'cus_QzuqtrX8JG6cSJ',
+            'price' => 'price_1Q8D6OA0QEiadHV6ouQEtqqn', //ii_1Q8DAUA0QEiadHV6m0fItklp
+        ]);
+
+        var_dump($invoiceCustomer);
+
+
 
         //create stripe payment
     }
