@@ -135,6 +135,7 @@ class Shop
         //     'email' => 'email@example.com', // cus_QzuqtrX8JG6cSJ
         //     'payment_method' => 'pm_card_visa',
         // ]);
+
         // var_dump($customer);
         //create stripe product
         // $stripe = new \Stripe\StripeClient($this->secretKey);
@@ -142,8 +143,18 @@ class Shop
         //     'name' => 'test product',  //prod_QzvCqkW58uIrED
         //     'description' => 'this is a trial product, for testing...'
         // ]);
-
         // var_dump($product);
+
+        //fix product price
+        $stripe = new \Stripe\StripeClient($this->secretKey);
+        $productPrice = $stripe->prices->create([
+            'currency' => 'usd',
+            'unit_amount' => 50,
+            'product_data' => ['name' => 'test product'],
+        ]);
+        
+
+        var_dump($productPrice);
 
         //create stripe payment
     }
