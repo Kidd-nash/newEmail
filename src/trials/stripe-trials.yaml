@@ -1107,3 +1107,110 @@ object(Stripe\Invoice)#26 (81) {
   ["webhooks_delivered_at"]=>
   int(1728529253)
 }
+
+
+
+#customer list payments 
+
+object(Stripe\Collection)#46 (4) {
+  ["object"]=>
+  string(4) "list"
+  ["data"]=>
+  array(1) {
+    [0]=>
+    object(Stripe\PaymentMethod)#74 (10) {
+      ["id"]=>
+      string(27) "pm_1Q8KVIA0QEiadHV6ha5nDRJM"
+      ["object"]=>
+      string(14) "payment_method"
+      ["allow_redisplay"]=>
+      string(11) "unspecified"
+      ["billing_details"]=>
+      object(Stripe\StripeObject)#65 (4) {
+        ["address"]=>
+        object(Stripe\StripeObject)#61 (6) {
+          ["city"]=>
+          NULL
+          ["country"]=>
+          NULL
+          ["line1"]=>
+          NULL
+          ["line2"]=>
+          NULL
+          ["postal_code"]=>
+          NULL
+          ["state"]=>
+          NULL
+        }
+        ["email"]=>
+        NULL
+        ["name"]=>
+        NULL
+        ["phone"]=>
+        NULL
+      }
+      ["card"]=>
+      object(Stripe\StripeObject)#53 (13) {
+        ["brand"]=>
+        string(4) "visa"
+        ["checks"]=>
+        object(Stripe\StripeObject)#66 (3) {
+          ["address_line1_check"]=>
+          NULL
+          ["address_postal_code_check"]=>
+          NULL
+          ["cvc_check"]=>
+          string(4) "pass"
+        }
+        ["country"]=>
+        string(2) "US"
+        ["display_brand"]=>
+        string(4) "visa"
+        ["exp_month"]=>
+        int(10)
+        ["exp_year"]=>
+        int(2025)
+        ["fingerprint"]=>
+        string(16) "O9ZY7rh6O4apb3W0"
+        ["funding"]=>
+        string(6) "credit"
+        ["generated_from"]=>
+        NULL
+        ["last4"]=>
+        string(4) "4242"
+        ["networks"]=>
+        object(Stripe\StripeObject)#71 (2) {
+          ["available"]=>
+          array(1) {
+            [0]=>
+            string(4) "visa"
+          }
+          ["preferred"]=>
+          NULL
+        }
+        ["three_d_secure_usage"]=>
+        object(Stripe\StripeObject)#78 (1) {
+          ["supported"]=>
+          bool(true)
+        }
+        ["wallet"]=>
+        NULL
+      }
+      ["created"]=>
+      int(1728559560)
+      ["customer"]=>
+      string(18) "cus_R0LBmal2dRhEJU"
+      ["livemode"]=>
+      bool(false)
+      ["metadata"]=>
+      object(Stripe\StripeObject)#60 (0) {
+      }
+      ["type"]=>
+      string(4) "card"
+    }
+  }
+  ["has_more"]=>
+  bool(false)
+  ["url"]=>
+  string(48) "/v1/customers/cus_R0LBmal2dRhEJU/payment_methods"
+}

@@ -33,8 +33,18 @@ switch ($uri) {
     case '/merchant-shop/product/purchase':
         echo $shop->purchaseProducts();
         break;
-    case '/merchant-shop/product/stripe':
-        echo $shop->handleProductStripe();
+    // case '/merchant-shop/product/stripe':
+    //     echo $shop->handleProductStripe();
+    //     break;
+    case '/merchant/checkout':
+        echo $shop->checkOut();
+        break;
+    case '/checkout-success':
+        
+        echo 'success';
+        break;
+    case '/checkout-cancel':
+        echo 'cancel';
         break;
 
 
