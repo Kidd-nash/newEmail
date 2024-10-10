@@ -354,7 +354,7 @@ class Post
         $likeCount = $getPostCount->fetch(PDO::FETCH_ASSOC);
 
         $updatePostQuery = $this->connection->prepare(
-            'UPDATE post_a_note SET upvotes = :upvotes WHERE id = :id'
+            'UPDATE post_a_note SET upvotes = :upvotes  WHERE id = :id'
         );
 
         $updatePostQuery->execute([
